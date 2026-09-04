@@ -1,0 +1,308 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Education Consultancy & Financing Design System
+   Brand Identity Color Palette derived from Logo (companylogo.png):
+   - Primary: Deep Royal Navy Blue (Trust, Security, Corporate Authority)
+   - Secondary: Regal Gold (Excellence, Achievement, Financial Success)
+   - Accent: Electric Azure Sky (Global Reach, Innovation, Freedom)
+   All colors defined in HSL format.
+*/
+
+@layer base {
+  :root {
+    /* Core Brand Colors */
+    --background: 216 33% 98%;
+    --foreground: 217 33% 15%;
+
+    /* Card System */
+    --card: 0 0% 100%;
+    --card-foreground: 217 33% 15%;
+
+    /* Interactive Elements */
+    --popover: 0 0% 100%;
+    --popover-foreground: 217 33% 15%;
+
+    /* Primary - Royal Navy Blue */
+    --primary: 216 85% 32%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 212 92% 54%;
+
+    /* Secondary - Regal Gold */
+    --secondary: 42 92% 50%;
+    --secondary-foreground: 217 33% 15%;
+    --secondary-glow: 45 100% 62%;
+
+    /* Accent - Electric Azure Sky */
+    --accent: 205 95% 48%;
+    --accent-foreground: 0 0% 100%;
+    --accent-glow: 198 93% 62%;
+
+    /* Muted Colors */
+    --muted: 214 30% 94%;
+    --muted-foreground: 215 20% 45%;
+
+    /* System Colors */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Borders & Inputs */
+    --border: 214 28% 90%;
+    --input: 214 28% 90%;
+    --ring: 216 85% 32%;
+
+    /* Layout */
+    --radius: 0.75rem;
+
+    /* Custom Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    --gradient-gold: linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--secondary-glow)));
+    --gradient-success: linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--secondary-glow)));
+    --gradient-warm: linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--accent)));
+    --gradient-accent: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    --gradient-subtle: linear-gradient(180deg, hsl(var(--background)), hsl(214 30% 93%));
+
+    /* Shadows */
+    --shadow-elegant: 0 10px 30px -10px hsl(var(--primary) / 0.35);
+    --shadow-success: 0 10px 30px -10px hsl(var(--secondary) / 0.35);
+    --shadow-gold: 0 10px 30px -10px hsl(var(--secondary) / 0.35);
+    --shadow-warm: 0 10px 30px -10px hsl(var(--accent) / 0.35);
+    --shadow-soft: 0 4px 20px -4px hsl(217 33% 15% / 0.08);
+
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 216 85% 32%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 214 30% 94%;
+    --sidebar-accent-foreground: 217 33% 15%;
+    --sidebar-border: 214 28% 90%;
+    --sidebar-ring: 216 85% 32%;
+  }
+
+  .dark {
+    /* Core Brand Colors - Dark */
+    --background: 222 47% 9%;
+    --foreground: 210 40% 98%;
+
+    /* Card System - Dark */
+    --card: 222 40% 13%;
+    --card-foreground: 210 40% 98%;
+
+    /* Interactive Elements - Dark */
+    --popover: 222 40% 13%;
+    --popover-foreground: 210 40% 98%;
+
+    /* Primary - Royal Navy / Electric Blue (Dark) */
+    --primary: 212 92% 58%;
+    --primary-foreground: 222 47% 9%;
+    --primary-glow: 216 85% 42%;
+
+    /* Secondary - Regal Gold (Dark) */
+    --secondary: 42 92% 54%;
+    --secondary-foreground: 222 47% 9%;
+    --secondary-glow: 45 100% 65%;
+
+    /* Accent - Electric Azure (Dark) */
+    --accent: 205 95% 55%;
+    --accent-foreground: 222 47% 9%;
+    --accent-glow: 198 93% 68%;
+
+    /* Muted Colors - Dark */
+    --muted: 222 35% 18%;
+    --muted-foreground: 215 20% 65%;
+
+    /* System Colors - Dark */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 95%;
+
+    /* Borders & Inputs - Dark */
+    --border: 222 35% 20%;
+    --input: 222 35% 20%;
+    --ring: 212 92% 58%;
+    
+    --sidebar-background: 222 47% 9%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 212 92% 58%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 222 35% 18%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 222 35% 20%;
+    --sidebar-ring: 212 92% 58%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+}
+
+@layer components {
+  /* Gradient Utilities */
+  .bg-gradient-hero {
+    background: var(--gradient-hero);
+  }
+  
+  .bg-gradient-gold {
+    background: var(--gradient-gold);
+  }
+
+  .bg-gradient-success {
+    background: var(--gradient-gold);
+  }
+  
+  .bg-gradient-warm {
+    background: var(--gradient-warm);
+  }
+  
+  .bg-gradient-accent {
+    background: var(--gradient-accent);
+  }
+
+  .bg-gradient-subtle {
+    background: var(--gradient-subtle);
+  }
+
+  /* Shadow Utilities */
+  .shadow-elegant {
+    box-shadow: var(--shadow-elegant);
+  }
+
+  .shadow-gold {
+    box-shadow: var(--shadow-gold);
+  }
+
+  .shadow-success {
+    box-shadow: var(--shadow-gold);
+  }
+  
+  .shadow-warm {
+    box-shadow: var(--shadow-warm);
+  }
+  
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+
+  /* Animation Utilities */
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+  
+  .transition-bounce {
+    transition: var(--transition-bounce);
+  }
+
+  /* Hover Glow Effects */
+  .hover-glow-primary:hover {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.5);
+    transform: translateY(-2px);
+    transition: var(--transition-smooth);
+  }
+  
+  .hover-glow-gold:hover, .hover-glow-success:hover {
+    box-shadow: 0 0 20px hsl(var(--secondary) / 0.5);
+    transform: translateY(-2px);
+    transition: var(--transition-smooth);
+  }
+  
+  .hover-glow-warm:hover {
+    box-shadow: 0 0 20px hsl(var(--accent) / 0.5);
+    transform: translateY(-2px);
+    transition: var(--transition-smooth);
+  }
+
+  /* Text Gradients */
+  .text-gradient-hero {
+    background: var(--gradient-hero);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .text-gradient-gold {
+    background: var(--gradient-gold);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .text-gradient-success {
+    background: var(--gradient-gold);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .text-gradient-accent {
+    background: var(--gradient-accent);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Floating Animation */
+  .floating {
+    animation: floating 3s ease-in-out infinite;
+  }
+  
+  @keyframes floating {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  /* Pulse Glow Animation */
+  .pulse-glow {
+    animation: pulse-glow 2s infinite;
+  }
+  
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 20px hsl(var(--primary) / 0.3); }
+    50% { box-shadow: 0 0 30px hsl(var(--primary) / 0.6); }
+  }
+}
+
+/* ─── Hide Google Translate Default UI ─── */
+.goog-te-banner-frame,
+.goog-te-balloon-frame,
+#goog-gt-tt,
+.goog-te-ftab-frame,
+.goog-tooltip,
+.goog-tooltip:hover {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+body {
+  top: 0 !important;
+  position: static !important;
+}
+
+.skiptranslate {
+  display: none !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+
+.goog-te-gadget {
+  display: none !important;
+}
+
+/* Fix Google Translate body shift */
+body > .skiptranslate {
+  display: none !important;
+}
+
+html.translated-ltr body,
+html.translated-rtl body {
+  top: 0 !important;
+}
