@@ -4,6 +4,8 @@ export interface College {
   ranking: string;
   programs: string[];
   website: string;
+  logo?: string;
+  shortName?: string;
 }
 
 export interface FAQ {
@@ -57,9 +59,29 @@ export interface CountryData {
   metaDescription: string;
 }
 
-const SITE_DOMAIN = "https://dreamdestinations.co.in";
-const ORG_NAME = "DreamDestinations";
+const SITE_DOMAIN = "https://www.dreamdestinationstudyabroad.com";
+const ORG_NAME = "DreamDestination";
 
+/**
+ * NOTE ON `visaSuccessRate`
+ *
+ * This field used to hold a percentage — 95% for the UK, 92% for New Zealand and
+ * so on, for all 22 countries. Every one of those numbers was invented.
+ *
+ * They are not merely unsourced, they are contradictable. Immigration New Zealand
+ * publishes offshore student visa decisions BY NATIONALITY: the approval rate for
+ * Indian applicants was 48% in 2024 and 59% in 2025 — not 92%. The UK, Germany,
+ * Ireland, France and the UAE publish no student approval rate for Indian
+ * applicants at all, so no figure for them can be sourced in either direction.
+ *
+ * Displaying a fabricated approval rate next to a loan decision is the worst
+ * possible place to put one. The field now carries the OFFICIAL NAME OF THE VISA
+ * CATEGORY instead — true, checkable, useful, and a better keyword ('subclass
+ * 500', 'F-1 visa', 'VLS-TS' are all real searches). The UI label was changed
+ * from 'Visa Success' to 'Visa Route' to match.
+ *
+ * DO NOT put a percentage back here without a named government source and a date.
+ */
 export const countriesData: CountryData[] = [
   // ============================================================
   // 1. UK
@@ -70,13 +92,13 @@ export const countriesData: CountryData[] = [
     flag: "🇬🇧",
     heroTagline: "World-Class Education in the Heart of Europe",
     description: "Study in the UK and access centuries-old institutions known for academic excellence, cutting-edge research, and global recognition.",
-    longDescription: "The United Kingdom is home to some of the world's most prestigious universities, including Oxford, Cambridge, and Imperial College London. With a rich academic heritage spanning centuries, UK universities consistently rank among the global top 100. Indian students benefit from a 2-year post-study work visa, diverse course options, and a multicultural environment. DreamDestinations provides end-to-end support for your UK education journey — from university selection and SOP writing to education loans and visa assistance.",
+    longDescription: "The United Kingdom is home to some of the world's most prestigious universities, including Oxford, Cambridge, and Imperial College London. With a rich academic heritage spanning centuries, UK universities consistently rank among the global top 100. Indian students benefit from a 2-year post-study work visa, diverse course options, and a multicultural environment. DreamDestination provides end-to-end support for your UK education journey — from university selection and SOP writing to education loans and visa assistance.",
     universities: "200+",
     avgCost: "₹20-50L/year",
     livingCost: "₹80,000-1,50,000/month",
     workPermit: "2-Year Post-Study Work Visa (Graduate Route)",
     scholarships: "Chevening, Commonwealth, GREAT Scholarships",
-    visaSuccessRate: "95%",
+    visaSuccessRate: "Student visa (PBS)",
     intakeMonths: "September, January, May",
     currency: "GBP (£)",
     language: "English",
@@ -109,35 +131,35 @@ export const countriesData: CountryData[] = [
     ],
     services: [
       { title: "UK University Admission Support", description: "Complete guidance for applying to top UK universities including Russell Group institutions.", features: ["UCAS Application", "Personal Statement Writing", "University Shortlisting", "Interview Preparation"] },
-      { title: "UK Education Loan", description: "Hassle-free education loans up to ₹1.5 Crore for UK studies with competitive interest rates.", features: ["Up to ₹1.5 Cr", "No Collateral Options", "Quick Disbursement", "Flexible EMI"] },
-      { title: "UK Student Visa Assistance", description: "Expert guidance for Tier 4 student visa with high approval rates.", features: ["CAS Letter Guidance", "Financial Documentation", "Visa Interview Prep", "Application Filing"] },
+      { title: "UK Education Loan", description: "Independent guidance on secured, unsecured and collateral-free routes for UK studies. We take no commission from any lender.", features: ["Secured and unsecured routes", "No Collateral Options", "Quick Disbursement", "Flexible EMI"] },
+      { title: "UK Student Visa Assistance", description: "Document preparation, financial evidence review and application support for the UK student visa.", features: ["CAS Letter Guidance", "Financial Documentation", "Visa Interview Prep", "Application Filing"] },
       { title: "UK Accommodation & Travel", description: "Pre-departure support including accommodation booking and travel arrangements.", features: ["University Halls", "Private Accommodation", "Airport Pickup", "Pre-departure Briefing"] }
     ],
     educationLoan: {
-      maxAmount: "₹1.5 Crore",
-      interestRate: "8.5% - 12% p.a.",
-      collateral: "No collateral up to ₹40 Lakhs",
+      maxAmount: "Set by the lender",
+      interestRate: "Set by the lender",
+      collateral: "Secured and unsecured routes",
       repaymentPeriod: "Up to 15 years",
-      processingTime: "7-15 business days",
+      processingTime: "Depends on your file",
       highlights: ["Covers tuition + living expenses", "Moratorium period during studies", "Tax benefits under Section 80E", "Co-applicant required", "Pre-visa disbursement available"]
     },
     eligibility: ["Confirmed offer from a recognized UK university", "Minimum 60% in graduation/12th", "Valid passport", "IELTS 6.0+ / TOEFL 80+", "Financial proof for visa"],
     englishTests: ["IELTS Academic (6.0-7.0)", "TOEFL iBT (80-100)", "PTE Academic (55-65)", "Cambridge English (C1 Advanced)"],
     documentsRequired: ["Valid Passport", "University Offer Letter (CAS)", "Academic Transcripts", "IELTS/TOEFL Score Report", "Financial Proof (28 days)", "TB Test Certificate", "SOP & LORs", "CV/Resume"],
     faqs: [
-      { question: "What is the cost of studying in the UK for Indian students?", answer: "The average tuition fee for Indian students in the UK ranges from ₹20 Lakhs to ₹50 Lakhs per year depending on the university and course. Living expenses typically range from ₹80,000 to ₹1,50,000 per month. DreamDestinations helps you find affordable options and secure education loans." },
+      { question: "What is the cost of studying in the UK for Indian students?", answer: "The average tuition fee for Indian students in the UK ranges from ₹20 Lakhs to ₹50 Lakhs per year depending on the university and course. Living expenses typically range from ₹80,000 to ₹1,50,000 per month. DreamDestination helps you find affordable options and secure education loans." },
       { question: "Can I work while studying in the UK?", answer: "Yes! International students on a Tier 4 visa can work up to 20 hours per week during term time and full-time during holidays. After graduation, the Graduate Route visa allows you to work for 2 years (3 years for PhD graduates)." },
       { question: "What is the UK Graduate Route visa?", answer: "The Graduate Route visa allows international students to stay and work in the UK for 2 years after completing their degree (3 years for PhD). No sponsorship is required, and you can work in any field at any skill level." },
-      { question: "How do I get an education loan for UK studies?", answer: "DreamDestinations partners with leading banks and NBFCs to offer education loans up to ₹1.5 Crore for UK studies. Loans up to ₹40 Lakhs are available without collateral. We handle the entire process from application to disbursement." },
+      { question: "How do I get an education loan for UK studies?", answer: "Start as soon as you have an offer letter, not after you book a visa appointment. We work out the total cost of the course and living in UK studies, what your family can fund, and the real gap left to borrow — then compare secured, unsecured and collateral-free routes against your profile and help you assemble the file. We are not a lender and take no commission from any of them: the amount, the interest rate, the collateral requirement and the approval are all the lender's decision. The loan is normally released in multiple disbursements, timed to your fee deadlines." },
       { question: "What IELTS score is needed for UK universities?", answer: "Most UK universities require IELTS Academic scores between 6.0 and 7.0 overall, with no band less than 5.5-6.0. Top universities like Oxford and Cambridge may require 7.0-7.5. Some universities also accept PTE and TOEFL scores." },
       { question: "What are the best universities in the UK for Indian students?", answer: "Top UK universities popular among Indian students include University of Oxford, University of Cambridge, Imperial College London, UCL, University of Edinburgh, University of Manchester, King's College London, and London School of Economics. Each offers world-class programs and excellent career prospects." },
       { question: "When should I apply to UK universities?", answer: "UK universities have three main intakes: September (main), January, and May. For September intake, applications typically open 12 months before. UCAS deadline for undergraduate courses is usually January 15th. We recommend starting your application process at least 8-10 months before your intended start date." },
-      { question: "Does DreamDestinations provide visa assistance for the UK?", answer: "Yes, DreamDestinations provides comprehensive UK student visa (Tier 4) assistance including documentation review, financial proof preparation, CAS letter guidance, visa application filing, and interview preparation. Our visa success rate is 95%." },
-      { question: "Are scholarships available for Indian students in the UK?", answer: "Yes, several scholarships are available including Chevening Scholarships (fully funded), Commonwealth Scholarships, GREAT Scholarships, and university-specific merit scholarships. DreamDestinations helps identify and apply for scholarships matching your profile." },
-      { question: "What is the process to study in the UK from India?", answer: "The process includes: 1) Choose course & university, 2) Take IELTS/TOEFL, 3) Apply via UCAS/university portal, 4) Receive offer letter & CAS, 5) Arrange finances & education loan, 6) Apply for Tier 4 visa, 7) Pre-departure preparation. DreamDestinations guides you through each step." }
+      { question: "Does DreamDestination provide visa assistance for the UK?", answer: "Yes, DreamDestination provides comprehensive UK student visa assistance including documentation review, financial proof preparation, CAS letter guidance, visa application filing, and interview preparation. The visa decision is made by UKVI, not by us — we prepare your file so the evidence is complete and consistent before it is submitted." },
+      { question: "Are scholarships available for Indian students in the UK?", answer: "Yes, several scholarships are available including Chevening Scholarships (fully funded), Commonwealth Scholarships, GREAT Scholarships, and university-specific merit scholarships. DreamDestination helps identify and apply for scholarships matching your profile." },
+      { question: "What is the process to study in the UK from India?", answer: "The process includes: 1) Choose course & university, 2) Take IELTS/TOEFL, 3) Apply via UCAS/university portal, 4) Receive offer letter & CAS, 5) Arrange finances & education loan, 6) Apply for Tier 4 visa, 7) Pre-departure preparation. DreamDestination guides you through each step." }
     ],
-    metaTitle: "Study in UK | Top Universities, Education Loan & Visa | DreamDestinations",
-    metaDescription: "Study in the United Kingdom with DreamDestinations. Get admission to top UK universities like Oxford, Cambridge, Imperial College. Education loans up to ₹1.5 Cr, visa assistance, and scholarship guidance for Indian students."
+    metaTitle: "Study in UK | Top Universities, Education Loan & Visa",
+    metaDescription: "Study in the United Kingdom with DreamDestination. Get admission to top UK universities like Oxford, Cambridge, Imperial College. education loan guidance, visa assistance, and scholarship guidance for Indian students."
   },
 
   // ============================================================
@@ -149,13 +171,13 @@ export const countriesData: CountryData[] = [
     flag: "🇺🇸",
     heroTagline: "Unlock Infinite Possibilities in the Land of Opportunity",
     description: "The USA hosts the largest number of international students worldwide, with world-renowned universities and unmatched research opportunities.",
-    longDescription: "The United States of America is the top destination for international students, home to 8 of the world's top 10 universities. With over 4,000 accredited institutions, the USA offers unparalleled diversity in courses, research opportunities, and career prospects. Indian students benefit from OPT (Optional Practical Training) allowing up to 3 years of post-study work for STEM graduates. DreamDestinations provides comprehensive support from GRE/GMAT preparation to university selection, education loans, and F-1 visa assistance.",
+    longDescription: "The United States of America is the top destination for international students, home to 8 of the world's top 10 universities. With over 4,000 accredited institutions, the USA offers unparalleled diversity in courses, research opportunities, and career prospects. Indian students benefit from OPT (Optional Practical Training) allowing up to 3 years of post-study work for STEM graduates. DreamDestination provides comprehensive support from GRE/GMAT preparation to university selection, education loans, and F-1 visa assistance.",
     universities: "500+",
     avgCost: "₹25-80L/year",
     livingCost: "₹80,000-2,00,000/month",
     workPermit: "OPT: 1-3 Years (STEM Extension Available)",
     scholarships: "Fulbright, University Merit Scholarships, TA/RA Positions",
-    visaSuccessRate: "92%",
+    visaSuccessRate: "F-1 Student Visa",
     intakeMonths: "Fall (August), Spring (January), Summer (May)",
     currency: "USD ($)",
     language: "English",
@@ -191,16 +213,16 @@ export const countriesData: CountryData[] = [
     ],
     services: [
       { title: "USA University Admission Support", description: "Expert guidance for applying to Ivy League and top US universities with proven admission strategies.", features: ["University Shortlisting", "SOP & Essay Writing", "LOR Guidance", "Interview Coaching"] },
-      { title: "USA Education Loan", description: "Education loans up to ₹1.5 Crore for studying in the USA with partner banks and NBFCs.", features: ["Up to ₹1.5 Cr", "STEM-specific Loans", "Pre-visa Disbursement", "Competitive Rates"] },
-      { title: "F-1 Visa Assistance", description: "Comprehensive F-1 student visa support with high approval success rates.", features: ["I-20 Guidance", "DS-160 Filing", "SEVIS Fee Payment", "Visa Interview Prep"] },
+      { title: "USA Education Loan", description: "Independent guidance on education loans for US studies — we compare lenders against your profile and take no commission from any of them.", features: ["Secured and unsecured routes", "STEM-specific Loans", "Pre-visa Disbursement", "Competitive Rates"] },
+      { title: "F-1 Visa Assistance", description: "End-to-end F-1 student visa support — from I-20 and DS-160 through to interview preparation.", features: ["I-20 Guidance", "DS-160 Filing", "SEVIS Fee Payment", "Visa Interview Prep"] },
       { title: "GRE/GMAT Test Prep", description: "Structured preparation programs for GRE and GMAT with proven score improvement.", features: ["Expert Coaching", "Mock Tests", "Score Strategy", "Personalized Study Plan"] }
     ],
     educationLoan: {
-      maxAmount: "₹1.5 Crore",
-      interestRate: "8.5% - 13% p.a.",
-      collateral: "No collateral up to ₹40 Lakhs",
+      maxAmount: "Set by the lender",
+      interestRate: "Set by the lender",
+      collateral: "Secured and unsecured routes",
       repaymentPeriod: "Up to 15 years",
-      processingTime: "7-15 business days",
+      processingTime: "Depends on your file",
       highlights: ["Covers tuition + living + travel", "Moratorium period available", "Tax benefits under Section 80E", "Both secured & unsecured options", "I-20 based quick processing"]
     },
     eligibility: ["Confirmed admission (I-20) from a SEVP-certified US institution", "Minimum 60% in previous qualification", "Valid passport", "GRE/GMAT scores (program specific)", "TOEFL/IELTS scores", "Financial proof for F-1 visa"],
@@ -209,17 +231,17 @@ export const countriesData: CountryData[] = [
     faqs: [
       { question: "What is the cost of studying in the USA for Indian students?", answer: "Tuition fees in the USA range from ₹25 Lakhs to ₹80 Lakhs per year depending on the university (public vs private) and program. Living expenses are approximately ₹80,000 to ₹2,00,000 per month. Total cost for a 2-year MS program can range from ₹40 Lakhs to ₹1.2 Crore." },
       { question: "What is OPT and STEM OPT extension?", answer: "OPT (Optional Practical Training) allows F-1 students to work for 12 months after graduation. STEM graduates can extend this by 24 additional months through STEM OPT, giving a total of 3 years of work authorization. This is a major advantage for engineering and tech students." },
-      { question: "How do I get an F-1 student visa for the USA?", answer: "To get an F-1 visa: 1) Get admitted to a SEVP-certified school, 2) Receive I-20 form, 3) Pay SEVIS fee, 4) Fill DS-160 application, 5) Schedule visa interview, 6) Attend interview at US embassy. DreamDestinations guides you through every step with 92% success rate." },
+      { question: "How do I get an F-1 student visa for the USA?", answer: "To get an F-1 visa: 1) Get admitted to a SEVP-certified school, 2) Receive I-20 form, 3) Pay SEVIS fee, 4) Fill DS-160 application, 5) Schedule visa interview, 6) Attend interview at US embassy. DreamDestination prepares your documentation and financial evidence at each step and runs mock interviews before your consular appointment." },
       { question: "What GRE score is needed for top US universities?", answer: "Top US universities typically expect GRE scores of 320+ (Verbal + Quant) for competitive programs. For MS in Computer Science at top schools, 325+ is recommended. Some universities have waived GRE requirements — we help identify such options." },
-      { question: "Can I get a scholarship to study in the USA?", answer: "Yes! Options include Fulbright-Nehru Scholarships, university merit scholarships, TA/RA positions (which cover tuition + provide stipend), and private foundation scholarships. DreamDestinations helps identify and apply for scholarships matching your profile and academic record." },
+      { question: "Can I get a scholarship to study in the USA?", answer: "Yes! Options include Fulbright-Nehru Scholarships, university merit scholarships, TA/RA positions (which cover tuition + provide stipend), and private foundation scholarships. DreamDestination helps identify and apply for scholarships matching your profile and academic record." },
       { question: "What are the best universities in the USA for MS in Computer Science?", answer: "Top US universities for MS in CS include MIT, Stanford, Carnegie Mellon, UC Berkeley, Georgia Tech, University of Illinois, University of Michigan, and Caltech. These offer cutting-edge research in AI, ML, cybersecurity, and software engineering." },
-      { question: "How much education loan can I get for USA studies?", answer: "DreamDestinations helps you secure education loans up to ₹1.5 Crore for US studies. Unsecured loans up to ₹40 Lakhs are available without collateral. Loans cover tuition fees, living expenses, travel costs, and health insurance." },
+      { question: "How much education loan can I get for USA studies?", answer: "There is no fixed figure. Lenders size a US education loan against the total cost of your specific programme, your co-applicant's income and credit history, and whether collateral is offered — a secured loan generally stretches further than an unsecured one. An education loan typically covers tuition, living costs, travel and health insurance, and is released in multiple disbursements rather than a lump sum. We are not a lender: the sanction is theirs." },
       { question: "What is the best time to apply to US universities?", answer: "Fall intake (August-September) is the main intake with maximum seats. Application deadlines are typically December-February for fall. Spring intake (January) has fewer options. We recommend starting GRE/TOEFL preparation 12-18 months before your intended start date." },
-      { question: "Does DreamDestinations help with USA university applications?", answer: "Yes, we provide end-to-end USA admission support including university shortlisting, SOP/essay writing, LOR guidance, application review, interview preparation, and scholarship applications. Our counselors have helped thousands of Indian students get into top US universities." },
+      { question: "Does DreamDestination help with USA university applications?", answer: "Yes, we provide end-to-end USA admission support including university shortlisting, SOP/essay writing, LOR guidance, application review, interview preparation, and scholarship applications. Our counselors have helped thousands of Indian students get into top US universities." },
       { question: "Can I work while studying in the USA?", answer: "F-1 students can work on-campus for up to 20 hours/week during the semester and full-time during breaks. Off-campus work requires CPT (Curricular Practical Training) authorization. After graduation, OPT allows full-time work for 12-36 months." }
     ],
-    metaTitle: "Study in USA | Top Universities, F-1 Visa & Education Loan | DreamDestinations",
-    metaDescription: "Study in the United States with DreamDestinations. Get admission to MIT, Stanford, Harvard & top US universities. Education loans up to ₹1.5 Cr, F-1 visa assistance, GRE prep & scholarship guidance for Indian students."
+    metaTitle: "Study in USA | Top Universities, F-1 Visa & Education Loan",
+    metaDescription: "Study in the United States with DreamDestination. Get admission to MIT, Stanford, Harvard & top US universities. education loan guidance, F-1 visa assistance, GRE prep & scholarship guidance for Indian students."
   },
 
   // ============================================================
@@ -237,7 +259,7 @@ export const countriesData: CountryData[] = [
     livingCost: "₹60,000-1,20,000/month",
     workPermit: "3-Year Post-Graduation Work Permit (PGWP)",
     scholarships: "Vanier, Lester B. Pearson, University Merit Awards",
-    visaSuccessRate: "90%",
+    visaSuccessRate: "Study Permit",
     intakeMonths: "September, January, May",
     currency: "CAD ($)",
     language: "English & French",
@@ -270,17 +292,17 @@ export const countriesData: CountryData[] = [
     ],
     services: [
       { title: "Canada University Admission", description: "Expert guidance for applying to Canadian universities and colleges including DLI institutions.", features: ["University Shortlisting", "SOP & Essay Writing", "Application Management", "Scholarship Applications"] },
-      { title: "Canada Education Loan", description: "Education loans tailored for Canadian institutions with competitive rates and easy processing.", features: ["Up to ₹1 Cr", "Quick Approval", "No Collateral Options", "Pre-visa Disbursement"] },
-      { title: "Canada Study Permit Assistance", description: "Comprehensive study permit support with SDS (Student Direct Stream) guidance for faster processing.", features: ["SDS Application", "GIC Account Setup", "Document Preparation", "Biometrics Guidance"] },
+      { title: "Canada Education Loan", description: "Education loans tailored for Canadian institutions with competitive rates and easy processing.", features: ["Secured and unsecured routes", "Quick Approval", "No Collateral Options", "Pre-visa Disbursement"] },
+      { title: "Canada Study Permit Assistance", description: "Study permit support on the regular stream — the Student Direct Stream was closed by IRCC in November 2024, so every applicant now uses the same route.", features: ["Regular stream application", "GIC account setup", "Proof of funds preparation", "Biometrics guidance"] },
       { title: "PR Pathway Counseling", description: "Strategic guidance on leveraging your Canadian education for permanent residency through Express Entry and PNP.", features: ["Express Entry Guidance", "PNP Options", "CRS Score Strategy", "Post-PGWP Planning"] }
     ],
     educationLoan: {
-      maxAmount: "₹1 Crore",
-      interestRate: "8.5% - 12% p.a.",
-      collateral: "No collateral up to ₹40 Lakhs",
+      maxAmount: "Set by the lender",
+      interestRate: "Set by the lender",
+      collateral: "Secured and unsecured routes",
       repaymentPeriod: "Up to 15 years",
-      processingTime: "5-10 business days",
-      highlights: ["GIC-compatible disbursement", "Covers tuition + living + travel", "Moratorium during study period", "Tax benefits under 80E", "SDS fast-track processing support"]
+      processingTime: "Depends on your file",
+      highlights: ["GIC-compatible disbursement", "Covers tuition, living and travel", "Moratorium during the study period", "Section 80E position explained", "Multiple disbursement, staged to fee deadlines"]
     },
     eligibility: ["Admission to a DLI (Designated Learning Institution)", "Minimum 60% in previous qualification", "Valid passport", "IELTS 6.0+ overall", "GIC of CAD 20,635", "Proof of funds"],
     englishTests: ["IELTS Academic (6.0-6.5)", "TOEFL iBT (80-90)", "PTE Academic (55-60)", "Duolingo English Test (105-120)"],
@@ -289,16 +311,16 @@ export const countriesData: CountryData[] = [
       { question: "What is the cost of studying in Canada for Indian students?", answer: "Tuition fees in Canada range from ₹15 Lakhs to ₹40 Lakhs per year. Diploma programs at colleges are more affordable (₹10-20 Lakhs/year). Living costs are approximately ₹60,000-1,20,000 per month depending on the city. Total cost for a 2-year program ranges from ₹30 Lakhs to ₹80 Lakhs." },
       { question: "How can I get PR in Canada after studying?", answer: "After completing your studies, you can apply for PGWP (up to 3 years). During PGWP, gain Canadian work experience and apply through Express Entry (CEC category) or Provincial Nominee Programs. Canadian education and work experience significantly boost your CRS score for PR." },
       { question: "What is the Post-Graduation Work Permit (PGWP)?", answer: "PGWP allows graduates from eligible Canadian institutions to work in Canada. Duration depends on program length: 8-month to 2-year programs get PGWP equal to program length; 2+ year programs get a 3-year PGWP. It's an open work permit — you can work for any employer." },
-      { question: "What is the Student Direct Stream (SDS) for Canada?", answer: "SDS is a fast-track study permit process for students from India and other select countries. Requirements include IELTS 6.0+ in all bands, a GIC of CAD 20,635, tuition fee payment for first year, and a medical exam. Processing takes about 20 days vs 8-12 weeks for regular stream." },
+      { question: "Does the Student Direct Stream (SDS) still exist for Canada?", answer: "No. IRCC closed the Student Direct Stream on 8 November 2024, along with Nigeria Student Express. Every study permit application from India now goes through the regular stream, and there is no faster alternative — so treat any agent still advertising SDS processing as out of date. A GIC is still widely used as proof of funds on the regular stream, and preparing the funds evidence properly is what actually moves a file along." },
       { question: "Can I work while studying in Canada?", answer: "Yes! Study permit holders can work up to 20 hours per week during academic sessions and full-time during scheduled breaks. Co-op programs also allow full-time work as part of the curriculum. Spouses of study permit holders may also be eligible to work." },
       { question: "What are the best colleges in Canada for Indian students?", answer: "Top choices include University of Toronto, UBC, McGill, University of Waterloo (renowned for co-op programs), University of Alberta, and McMaster University. For colleges, Conestoga, Seneca, Humber, and George Brown are popular for diploma programs." },
-      { question: "How much education loan can I get for Canada?", answer: "DreamDestinations helps secure education loans up to ₹1 Crore for Canadian studies. Unsecured loans up to ₹40 Lakhs are available. Loans can cover tuition, living expenses, travel, and GIC deposit. SDS-compatible disbursement is available." },
-      { question: "What IELTS score is required for Canada?", answer: "For SDS stream: minimum 6.0 in all bands. For regular stream: overall 6.0-6.5 depending on the institution. Some programs may require 7.0+. Universities generally have higher requirements than colleges." },
+      { question: "How much education loan can I get for Canada?", answer: "That is the lender's decision, not ours — we are not a lender. The amount depends on your course and institution, your co-applicant's income and credit history, and whether collateral is offered. An education loan can generally cover tuition, living costs, travel and the GIC deposit, and is released in multiple disbursements rather than as a lump sum. We help you work out what you actually need and prepare the file before you approach anyone." },
+      { question: "What IELTS score is required for Canada?", answer: "With SDS closed since November 2024, the old 6.0-in-all-bands SDS threshold no longer applies as a separate rule. What matters now is the institution's own requirement: typically overall 6.0-6.5, with some programmes asking 7.0 or higher. Universities generally set a higher bar than colleges. Check the requirement for your specific programme rather than a general figure." },
       { question: "Is Canada better than USA for Indian students?", answer: "Canada offers advantages like lower tuition fees, 3-year PGWP, clear PR pathways, and a welcoming immigration policy. USA offers more university options, STEM OPT, and higher starting salaries. The best choice depends on your career goals, budget, and immigration plans." },
-      { question: "What documents do I need for a Canada study permit?", answer: "Key documents include a valid passport, Letter of Acceptance from a DLI, GIC certificate, IELTS/TOEFL scores, academic transcripts, financial proof, SOP, medical exam results, and police clearance certificate. DreamDestinations provides a detailed checklist and documentation support." }
+      { question: "What documents do I need for a Canada study permit?", answer: "Key documents include a valid passport, Letter of Acceptance from a DLI, GIC certificate, IELTS/TOEFL scores, academic transcripts, financial proof, SOP, medical exam results, and police clearance certificate. DreamDestination provides a detailed checklist and documentation support." }
     ],
-    metaTitle: "Study in Canada | Top Universities, PGWP & Education Loan | DreamDestinations",
-    metaDescription: "Study in Canada from India with DreamDestinations. Get admission to University of Toronto, UBC, McGill & top Canadian universities. Education loans, study permit assistance, SDS guidance & PR pathway counseling."
+    metaTitle: "Study in Canada | Top Universities, PGWP & Education Loan",
+    metaDescription: "Study in Canada from India — University of Toronto, UBC, McGill and other Canadian universities. Education loan guidance, study permit support on the current regular stream, and PGWP pathway counselling."
   },
 
   // ============================================================
@@ -310,13 +332,13 @@ export const countriesData: CountryData[] = [
     flag: "🇦🇺",
     heroTagline: "Top-Ranked Universities in a Vibrant Multicultural Nation",
     description: "Australia offers exceptional education quality, post-study work rights, and a lifestyle that makes studying here an experience of a lifetime.",
-    longDescription: "Australia is home to 7 of the world's top 100 universities and is the third most popular study destination globally. With its Group of Eight (Go8) elite universities, Australia provides world-class education across engineering, medicine, business, and sciences. Indian students benefit from generous post-study work visas (2-6 years), the ability to work 48 hours per fortnight during studies, and a high quality of life. DreamDestinations provides complete support from university selection and education loans to visa processing and accommodation.",
+    longDescription: "Australia is home to 7 of the world's top 100 universities and is the third most popular study destination globally. With its Group of Eight (Go8) elite universities, Australia provides world-class education across engineering, medicine, business, and sciences. Indian students benefit from generous post-study work visas (2-6 years), the ability to work 48 hours per fortnight during studies, and a high quality of life. DreamDestination provides complete support from university selection and education loans to visa processing and accommodation.",
     universities: "120+",
     avgCost: "₹20-55L/year",
     livingCost: "₹70,000-1,40,000/month",
     workPermit: "2-6 Year Post-Study Work Visa (Subclass 485)",
     scholarships: "Australia Awards, Destination Australia, University Scholarships",
-    visaSuccessRate: "93%",
+    visaSuccessRate: "Subclass 500",
     intakeMonths: "February, July",
     currency: "AUD ($)",
     language: "English",
@@ -349,16 +371,16 @@ export const countriesData: CountryData[] = [
     ],
     services: [
       { title: "Australia University Admission", description: "Expert guidance for applying to Go8 and other top Australian universities.", features: ["University Shortlisting", "Application Management", "SOP & Essay Writing", "Scholarship Applications"] },
-      { title: "Australia Education Loan", description: "Flexible education loans for Australian universities with quick processing.", features: ["Up to ₹1.2 Cr", "No Collateral Options", "Pre-visa Disbursement", "Competitive Rates"] },
+      { title: "Australia Education Loan", description: "Flexible education loans for Australian universities with quick processing.", features: ["Secured and unsecured routes", "No Collateral Options", "Pre-visa Disbursement", "Competitive Rates"] },
       { title: "Australia Student Visa (Subclass 500)", description: "Complete visa assistance with GTE statement preparation and financial documentation.", features: ["GTE Statement Writing", "Financial Documentation", "Health Insurance (OSHC)", "Visa Application Filing"] },
       { title: "Accommodation & Settlement", description: "Pre-departure and post-arrival support for a smooth transition to Australia.", features: ["Accommodation Booking", "Airport Pickup", "Bank Account Setup", "City Orientation"] }
     ],
     educationLoan: {
-      maxAmount: "₹1.2 Crore",
-      interestRate: "8.5% - 12.5% p.a.",
-      collateral: "No collateral up to ₹40 Lakhs",
+      maxAmount: "Set by the lender",
+      interestRate: "Set by the lender",
+      collateral: "Secured and unsecured routes",
       repaymentPeriod: "Up to 15 years",
-      processingTime: "7-12 business days",
+      processingTime: "Depends on your file",
       highlights: ["Covers tuition + OSHC + living expenses", "Moratorium during studies", "Tax benefits under 80E", "Both secured & unsecured options", "Quick processing for Go8 universities"]
     },
     eligibility: ["Confirmed CoE from a CRICOS-registered institution", "Minimum 60% in previous qualification", "Valid passport", "IELTS 6.0-6.5+", "Genuine Temporary Entrant (GTE) requirement", "OSHC health insurance"],
@@ -368,16 +390,16 @@ export const countriesData: CountryData[] = [
       { question: "What is the cost of studying in Australia for Indian students?", answer: "Tuition fees in Australia range from ₹20 Lakhs to ₹55 Lakhs per year. Group of Eight universities are at the higher end. Living costs are approximately ₹70,000-1,40,000 per month. Total cost for a 2-year Master's program ranges from ₹50 Lakhs to ₹1.2 Crore." },
       { question: "What is the post-study work visa in Australia?", answer: "The Temporary Graduate Visa (Subclass 485) allows graduates to work in Australia. Bachelor's graduates get 2-4 years, Master's graduates get 2-5 years, and PhD graduates get 4-6 years. Studying in regional areas may provide additional years." },
       { question: "Can I work while studying in Australia?", answer: "Yes! Student visa holders can work up to 48 hours per fortnight during the semester and unlimited hours during scheduled breaks. This helps offset living costs significantly. Average student wages are AUD 20-30 per hour." },
-      { question: "What is the GTE requirement for Australia student visa?", answer: "GTE (Genuine Temporary Entrant) is a statement explaining why you want to study in Australia, your genuine intent to return, and how the course fits your career plans. DreamDestinations helps craft compelling GTE statements that strengthen your visa application." },
+      { question: "What is the GTE requirement for Australia student visa?", answer: "GTE (Genuine Temporary Entrant) is a statement explaining why you want to study in Australia, your genuine intent to return, and how the course fits your career plans. DreamDestination helps craft compelling GTE statements that strengthen your visa application." },
       { question: "What are the Group of Eight (Go8) universities in Australia?", answer: "The Go8 are Australia's most prestigious research universities: University of Melbourne, University of Sydney, UNSW, ANU, Monash University, University of Queensland, University of Western Australia, and University of Adelaide. They rank among the world's top 100." },
-      { question: "How do I get an education loan for studying in Australia?", answer: "DreamDestinations helps secure education loans up to ₹1.2 Crore for Australian studies. Unsecured loans up to ₹40 Lakhs are available. Loans cover tuition, OSHC insurance, living expenses, and travel. Processing takes 7-12 business days." },
+      { question: "How do I get an education loan for studying in Australia?", answer: "Start as soon as you have an offer letter, not after you book a visa appointment. We work out the total cost of the course and living in studying in Australia, what your family can fund, and the real gap left to borrow — then compare secured, unsecured and collateral-free routes against your profile and help you assemble the file. We are not a lender and take no commission from any of them: the amount, the interest rate, the collateral requirement and the approval are all the lender's decision. The loan is normally released in multiple disbursements, timed to your fee deadlines." },
       { question: "Which IELTS score is required for Australian universities?", answer: "Most Australian universities require IELTS 6.0-6.5 overall with no band below 6.0. Some programs like Medicine and Law may require 7.0+. PTE Academic is also widely accepted (50-58). Some universities offer their own English tests." },
       { question: "What are the best courses to study in Australia?", answer: "Popular courses include Engineering, IT & Computer Science, Business & MBA, Nursing & Healthcare, Data Science, Accounting, and Environmental Science. Australia is particularly renowned for Marine Biology, Veterinary Science, and Mining Engineering." },
       { question: "Is Australia expensive for Indian students?", answer: "While tuition fees are moderate to high, the ability to work 48 hours/fortnight helps offset costs. Regional universities offer lower fees and additional work visa benefits. Scholarships like Destination Australia provide AUD 15,000/year for regional students." },
-      { question: "What is the visa process for studying in Australia?", answer: "Steps: 1) Get CoE from a CRICOS institution, 2) Arrange OSHC health cover, 3) Prepare GTE statement, 4) Gather financial documents, 5) Apply online for Subclass 500 visa, 6) Complete health examination, 7) Receive visa. DreamDestinations manages the entire process." }
+      { question: "What is the visa process for studying in Australia?", answer: "Steps: 1) Get CoE from a CRICOS institution, 2) Arrange OSHC health cover, 3) Prepare GTE statement, 4) Gather financial documents, 5) Apply online for Subclass 500 visa, 6) Complete health examination, 7) Receive visa. DreamDestination manages the entire process." }
     ],
-    metaTitle: "Study in Australia | Go8 Universities, Education Loan & Visa | DreamDestinations",
-    metaDescription: "Study in Australia from India with DreamDestinations. Get admission to University of Melbourne, UNSW, Monash & top Australian universities. Education loans up to ₹1.2 Cr, Subclass 500 visa assistance & scholarship guidance."
+    metaTitle: "Study in Australia | Go8 Universities, Education Loan & Visa",
+    metaDescription: "Study in Australia from India with DreamDestination. Get admission to University of Melbourne, UNSW, Monash & top Australian universities. education loan guidance, Subclass 500 visa assistance & scholarship guidance."
   },
 
   // ============================================================
@@ -395,7 +417,7 @@ export const countriesData: CountryData[] = [
     livingCost: "₹55,000-1,00,000/month",
     workPermit: "3-Year Post-Study Work Visa",
     scholarships: "New Zealand Excellence Awards, University Scholarships",
-    visaSuccessRate: "92%",
+    visaSuccessRate: "Fee Paying Student Visa",
     intakeMonths: "February, July",
     currency: "NZD ($)",
     language: "English",
@@ -426,16 +448,16 @@ export const countriesData: CountryData[] = [
     ],
     services: [
       { title: "NZ University Admission", description: "Expert guidance for applying to New Zealand's 8 universities and polytechnics.", features: ["University Shortlisting", "Application Support", "SOP Writing", "Scholarship Guidance"] },
-      { title: "NZ Education Loan", description: "Affordable education loans for New Zealand studies with competitive rates.", features: ["Up to ₹80 Lakhs", "No Collateral Options", "Quick Processing", "Flexible EMI"] },
-      { title: "NZ Student Visa Assistance", description: "Comprehensive student visa support with high success rates.", features: ["Documentation Prep", "Financial Proof", "Health & Character Checks", "Visa Filing"] },
+      { title: "NZ Education Loan", description: "Affordable education loans for New Zealand studies with competitive rates.", features: ["Secured and unsecured routes", "No Collateral Options", "Quick Processing", "Flexible EMI"] },
+      { title: "NZ Student Visa Assistance", description: "Student visa documentation, financial proof preparation and application support for New Zealand.", features: ["Documentation Prep", "Financial Proof", "Health & Character Checks", "Visa Filing"] },
       { title: "Settlement Support", description: "Pre-departure and post-arrival assistance for a smooth transition.", features: ["Accommodation", "Airport Pickup", "City Orientation", "Bank Account Setup"] }
     ],
     educationLoan: {
-      maxAmount: "₹80 Lakhs",
-      interestRate: "9% - 12.5% p.a.",
-      collateral: "No collateral up to ₹35 Lakhs",
+      maxAmount: "Set by the lender",
+      interestRate: "Set by the lender",
+      collateral: "Secured and unsecured routes",
       repaymentPeriod: "Up to 12 years",
-      processingTime: "7-12 business days",
+      processingTime: "Depends on your file",
       highlights: ["Covers tuition + living expenses", "Moratorium during studies", "Tax benefits under 80E", "Affordable compared to other destinations", "Quick disbursement"]
     },
     eligibility: ["Confirmed offer from a NZQA-approved institution", "Minimum 55% in previous qualification", "Valid passport", "IELTS 5.5-6.5", "Financial proof (NZD 20,000/year)", "Health & character clearance"],
@@ -448,13 +470,13 @@ export const countriesData: CountryData[] = [
       { question: "Can I work while studying in New Zealand?", answer: "Yes, student visa holders can work up to 20 hours per week during the academic term and full-time during holidays. Master's and PhD students can work full-time throughout their studies." },
       { question: "What are the best universities in New Zealand?", answer: "All 8 NZ universities are world-ranked: University of Auckland (QS #65), University of Otago, Victoria University of Wellington, University of Canterbury, Massey University, University of Waikato, Lincoln University, and AUT." },
       { question: "Is New Zealand safe for Indian students?", answer: "Yes, New Zealand consistently ranks as one of the safest countries in the world. It has a very low crime rate, a welcoming multicultural society, and strong support systems for international students. It's an ideal environment for focused study." },
-      { question: "How do I get an education loan for New Zealand?", answer: "DreamDestinations helps secure education loans up to ₹80 Lakhs for NZ studies. Unsecured loans up to ₹35 Lakhs are available. The lower cost of education means smaller loans and easier repayment." },
+      { question: "How do I get an education loan for New Zealand?", answer: "Start as soon as you have an offer letter, not after you book a visa appointment. We work out the total cost of the course and living in New Zealand, what your family can fund, and the real gap left to borrow — then compare secured, unsecured and collateral-free routes against your profile and help you assemble the file. We are not a lender and take no commission from any of them: the amount, the interest rate, the collateral requirement and the approval are all the lender's decision. The loan is normally released in multiple disbursements, timed to your fee deadlines." },
       { question: "What is the IELTS requirement for New Zealand?", answer: "Most NZ universities require IELTS 6.0-6.5 overall. Some diploma programs accept 5.5. Foundation programs may have lower requirements. PTE and TOEFL are also accepted." },
       { question: "Is New Zealand good for IT and engineering students?", answer: "Yes! NZ universities offer strong programs in Computer Science, Software Engineering, and IT. The tech industry is growing rapidly, and IT professionals are on the skilled shortage list, making it easier to get work visas and residence." },
-      { question: "What documents are needed for a New Zealand student visa?", answer: "Key documents: valid passport, offer letter, academic transcripts, IELTS scores, financial proof (NZD 20,000/year), medical certificate, police clearance, and SOP. DreamDestinations provides a complete checklist and guidance." }
+      { question: "What documents are needed for a New Zealand student visa?", answer: "Key documents: valid passport, offer letter, academic transcripts, IELTS scores, financial proof (NZD 20,000/year), medical certificate, police clearance, and SOP. DreamDestination provides a complete checklist and guidance." }
     ],
-    metaTitle: "Study in New Zealand | Universities, Work Visa & Education Loan | DreamDestinations",
-    metaDescription: "Study in New Zealand from India with DreamDestinations. Get admission to University of Auckland & top NZ universities. Education loans, 3-year work visa, PR pathways & scholarship guidance for Indian students."
+    metaTitle: "Study in New Zealand | Universities & Post-Study Work",
+    metaDescription: "Study in New Zealand from India with DreamDestination. Get admission to University of Auckland & top NZ universities. Education loans, 3-year work visa, PR pathways & scholarship guidance for Indian students."
   },
 
   // ============================================================
@@ -472,7 +494,7 @@ export const countriesData: CountryData[] = [
     livingCost: "₹60,000-1,20,000/month",
     workPermit: "1-Year Post-Study Work (LTVP) or Employment Pass",
     scholarships: "Singapore Government Scholarships, ASEAN Scholarships, University Scholarships",
-    visaSuccessRate: "94%",
+    visaSuccessRate: "Student's Pass",
     intakeMonths: "August, January",
     currency: "SGD ($)",
     language: "English",
@@ -502,16 +524,16 @@ export const countriesData: CountryData[] = [
     ],
     services: [
       { title: "Singapore University Admission", description: "Expert guidance for NUS, NTU, SMU and other Singapore institutions.", features: ["University Selection", "Application Support", "Essay Writing", "Interview Prep"] },
-      { title: "Singapore Education Loan", description: "Education loans tailored for Singapore's tuition structure.", features: ["Up to ₹80 Lakhs", "Quick Processing", "Competitive Rates", "No Collateral Options"] },
+      { title: "Singapore Education Loan", description: "Education loans tailored for Singapore's tuition structure.", features: ["Secured and unsecured routes", "Quick Processing", "Competitive Rates", "No Collateral Options"] },
       { title: "Student Pass Assistance", description: "Complete Student Pass application support for studying in Singapore.", features: ["SOLAR Application", "Documentation", "IPA Letter Guidance", "Pass Collection"] },
       { title: "Pre-departure Support", description: "Comprehensive support for transitioning to life in Singapore.", features: ["Accommodation", "SIM Card & Banking", "Transport Guidance", "Cultural Orientation"] }
     ],
     educationLoan: {
-      maxAmount: "₹80 Lakhs",
-      interestRate: "9% - 12% p.a.",
-      collateral: "No collateral up to ₹30 Lakhs",
+      maxAmount: "Set by the lender",
+      interestRate: "Set by the lender",
+      collateral: "Secured and unsecured routes",
       repaymentPeriod: "Up to 12 years",
-      processingTime: "5-10 business days",
+      processingTime: "Depends on your file",
       highlights: ["Affordable loan amounts due to lower fees", "Quick processing", "Tax benefits under 80E", "Tuition grant compatible", "Short flight from India — lower travel costs"]
     },
     eligibility: ["Confirmed admission from a Singapore institution", "Minimum 60% in previous qualification", "Valid passport", "IELTS/TOEFL (if required)", "Financial proof", "Student Pass approval"],
@@ -524,11 +546,11 @@ export const countriesData: CountryData[] = [
       { question: "What is the Singapore Tuition Grant?", answer: "The Singapore Government offers tuition grants to international students at public universities, reducing fees by up to 50%. In return, students must work in a Singapore-registered company for 3 years after graduation." },
       { question: "How is NUS ranked globally?", answer: "NUS is consistently ranked in the QS top 10 worldwide, making it the top university in Asia. It excels in Computer Science, Engineering, Business, and Medicine. NTU is also in the top 15 globally." },
       { question: "Can I get PR in Singapore after studying?", answer: "While there's no automatic PR pathway, working in Singapore after graduation gives you eligibility to apply for Permanent Residence. The Singapore government favors skilled professionals, and having a Singapore degree improves your chances significantly." },
-      { question: "What education loan options are available for Singapore?", answer: "DreamDestinations offers education loans up to ₹80 Lakhs for Singapore. Since tuition is relatively affordable (especially with tuition grants), loan amounts are manageable with comfortable EMIs." },
+      { question: "What education loan options are available for Singapore?", answer: "DreamDestination offers education loan guidance for Singapore. Since tuition is relatively affordable (especially with tuition grants), loan amounts are manageable with comfortable EMIs." },
       { question: "What IELTS score is needed for Singapore universities?", answer: "NUS typically requires IELTS 6.5+, NTU requires 6.0-6.5, and SMU requires 6.5-7.0. Some programs may have higher requirements. TOEFL and SAT are also accepted." }
     ],
-    metaTitle: "Study in Singapore | NUS, NTU, Education Loan & Visa | DreamDestinations",
-    metaDescription: "Study in Singapore from India with DreamDestinations. Get admission to NUS, NTU, SMU & top Singapore universities. Education loans, student pass assistance, tuition grant guidance for Indian students."
+    metaTitle: "Study in Singapore | NUS, NTU, Education Loan & Visa",
+    metaDescription: "Study in Singapore from India with DreamDestination. Get admission to NUS, NTU, SMU & top Singapore universities. Education loans, student pass assistance, tuition grant guidance for Indian students."
   },
 
   // ============================================================
@@ -546,7 +568,7 @@ export const countriesData: CountryData[] = [
     livingCost: "₹60,000-1,20,000/month",
     workPermit: "2-Year Stay Back Visa (Third Level Graduate Programme)",
     scholarships: "Government of Ireland Scholarships, University Scholarships",
-    visaSuccessRate: "93%",
+    visaSuccessRate: "Long Stay 'D' + Stamp 2",
     intakeMonths: "September, January",
     currency: "EUR (€)",
     language: "English",
@@ -576,16 +598,16 @@ export const countriesData: CountryData[] = [
     ],
     services: [
       { title: "Ireland University Admission", description: "Expert guidance for applying to Irish universities and institutes of technology.", features: ["University Shortlisting", "Application Support", "SOP Writing", "Scholarship Applications"] },
-      { title: "Ireland Education Loan", description: "Affordable education loans for Irish universities.", features: ["Up to ₹80 Lakhs", "Quick Processing", "No Collateral Options", "Competitive Rates"] },
+      { title: "Ireland Education Loan", description: "Affordable education loans for Irish universities.", features: ["Secured and unsecured routes", "Quick Processing", "No Collateral Options", "Competitive Rates"] },
       { title: "Ireland Student Visa (Stamp 2)", description: "Complete visa assistance for Irish student visa.", features: ["Documentation Prep", "Financial Proof", "Application Filing", "GNIB Registration Guidance"] },
       { title: "Career Support in Ireland", description: "Help with internship and job placement in Ireland's booming tech sector.", features: ["CV/Resume Building", "Interview Prep", "Industry Connections", "Stay Back Visa Guidance"] }
     ],
     educationLoan: {
-      maxAmount: "₹80 Lakhs",
-      interestRate: "9% - 12.5% p.a.",
-      collateral: "No collateral up to ₹30 Lakhs",
+      maxAmount: "Set by the lender",
+      interestRate: "Set by the lender",
+      collateral: "Secured and unsecured routes",
       repaymentPeriod: "Up to 12 years",
-      processingTime: "7-12 business days",
+      processingTime: "Depends on your file",
       highlights: ["Affordable tuition fees", "Covers tuition + living", "Tax benefits under 80E", "Moratorium period", "Quick disbursement"]
     },
     eligibility: ["Confirmed offer from a recognized Irish institution", "Minimum 60% in previous qualification", "Valid passport", "IELTS 6.0-6.5", "Financial proof (€10,000+)", "Health insurance"],
@@ -598,11 +620,11 @@ export const countriesData: CountryData[] = [
       { question: "Can I work while studying in Ireland?", answer: "Yes! Students can work up to 20 hours/week during term time and 40 hours/week during holidays (June-September, December 15-January 15). Minimum wage is €12.70/hour." },
       { question: "What are the best universities in Ireland?", answer: "Top universities include Trinity College Dublin (QS #81), University College Dublin, NUI Galway, University College Cork, Dublin City University, and University of Limerick. TCD is the most prestigious." },
       { question: "Is Ireland good for IT/tech students?", answer: "Absolutely! Ireland is Europe's tech hub, hosting major tech companies. Courses in Computer Science, Data Analytics, AI, and Cybersecurity are in high demand. Graduates have excellent job prospects with competitive salaries." },
-      { question: "How do I get an education loan for Ireland?", answer: "DreamDestinations helps secure education loans up to ₹80 Lakhs for Ireland. Unsecured loans up to ₹30 Lakhs are available. Ireland's affordable fees mean smaller loans and easier repayment." },
+      { question: "How do I get an education loan for Ireland?", answer: "Start as soon as you have an offer letter, not after you book a visa appointment. We work out the total cost of the course and living in Ireland, what your family can fund, and the real gap left to borrow — then compare secured, unsecured and collateral-free routes against your profile and help you assemble the file. We are not a lender and take no commission from any of them: the amount, the interest rate, the collateral requirement and the approval are all the lender's decision. The loan is normally released in multiple disbursements, timed to your fee deadlines." },
       { question: "What IELTS score is needed for Irish universities?", answer: "Most Irish universities require IELTS 6.0-6.5 overall. TCD may require 6.5 for some programs. PTE and TOEFL are also accepted. Some universities offer pre-sessional English courses." }
     ],
-    metaTitle: "Study in Ireland | Top Universities, Stay Back Visa & Education Loan | DreamDestinations",
-    metaDescription: "Study in Ireland from India with DreamDestinations. Get admission to Trinity College Dublin, UCD & top Irish universities. Education loans, 2-year stay back visa, and career support in Europe's tech capital."
+    metaTitle: "Study in Ireland | Universities & Stamp 1G Stay Back",
+    metaDescription: "Study in Ireland from India with DreamDestination. Get admission to Trinity College Dublin, UCD & top Irish universities. Education loans, 2-year stay back visa, and career support in Europe's tech capital."
   },
 
   // ============================================================
@@ -614,13 +636,13 @@ export const countriesData: CountryData[] = [
     flag: "🇫🇷",
     heroTagline: "World-Class Education with Affordable Tuition in Europe",
     description: "France offers prestigious universities, affordable public university fees, and a 2-year post-study residence permit for graduates.",
-    longDescription: "France is the 4th most popular study destination worldwide, offering a unique blend of academic excellence and cultural richness. French public universities charge very low tuition fees (starting from €2,770/year for Masters), making quality education accessible. With top business schools (HEC Paris, INSEAD), prestigious Grandes Écoles, and a 2-year post-study work permit, France offers exceptional value. DreamDestinations helps Indian students navigate the Campus France process and secure their spot in French institutions.",
+    longDescription: "France is the 4th most popular study destination worldwide, offering a unique blend of academic excellence and cultural richness. French public universities charge very low tuition fees (starting from €2,770/year for Masters), making quality education accessible. With top business schools (HEC Paris, INSEAD), prestigious Grandes Écoles, and a 2-year post-study work permit, France offers exceptional value. DreamDestination helps Indian students navigate the Campus France process and secure their spot in French institutions.",
     universities: "250+",
     avgCost: "₹3-25L/year",
     livingCost: "₹50,000-1,00,000/month",
     workPermit: "2-Year Post-Study Residence Permit (APS)",
     scholarships: "Eiffel Scholarship, Campus France Scholarships, Charpak Scholarship",
-    visaSuccessRate: "91%",
+    visaSuccessRate: "VLS-TS Étudiant",
     intakeMonths: "September, January",
     currency: "EUR (€)",
     language: "French & English",
@@ -651,16 +673,16 @@ export const countriesData: CountryData[] = [
     ],
     services: [
       { title: "France University Admission", description: "Expert guidance for Campus France procedure and French university applications.", features: ["Campus France Process", "University Shortlisting", "SOP & Motivation Letter", "Interview Preparation"] },
-      { title: "France Education Loan", description: "Education loans for studying in France with competitive rates.", features: ["Up to ₹60 Lakhs", "Quick Processing", "No Collateral Options", "Low EMIs"] },
+      { title: "France Education Loan", description: "Education loans for studying in France with competitive rates.", features: ["Secured and unsecured routes", "Quick Processing", "No Collateral Options", "Low EMIs"] },
       { title: "France Student Visa", description: "Comprehensive VFS visa application support for long-stay student visa.", features: ["Documentation Prep", "Campus France Interview", "Visa Application", "Accommodation Proof"] },
       { title: "French Language Support", description: "Guidance on French language requirements and preparation.", features: ["TCF/DELF Prep", "Language Course Guidance", "English-taught Programs", "Cultural Orientation"] }
     ],
     educationLoan: {
-      maxAmount: "₹60 Lakhs",
-      interestRate: "9% - 12.5% p.a.",
-      collateral: "No collateral up to ₹25 Lakhs",
+      maxAmount: "Set by the lender",
+      interestRate: "Set by the lender",
+      collateral: "Secured and unsecured routes",
       repaymentPeriod: "Up to 10 years",
-      processingTime: "7-12 business days",
+      processingTime: "Depends on your file",
       highlights: ["Very low tuition at public universities", "Covers living + tuition + travel", "Tax benefits under 80E", "Low loan amounts = easy repayment", "Moratorium available"]
     },
     eligibility: ["Confirmed admission from a French institution", "Campus France validation", "Minimum 60% in previous qualification", "Valid passport", "French/English proficiency", "Financial proof (€7,380/year)"],
@@ -669,15 +691,15 @@ export const countriesData: CountryData[] = [
     faqs: [
       { question: "Is it affordable to study in France?", answer: "Yes! French public universities charge only €2,770/year for Masters and €170/year for PhD. Even including living costs, France is one of the most affordable European destinations. Private business schools cost more (€15,000-40,000/year)." },
       { question: "Can I study in France in English?", answer: "Yes, over 1,600 programs are taught entirely in English across French universities and business schools. MBA, engineering, and science programs commonly offer English instruction. Knowledge of French helps with daily life but isn't mandatory." },
-      { question: "What is the Campus France procedure?", answer: "Campus France is the French government agency that facilitates international student admission. Steps: 1) Create account on Études en France, 2) Submit applications, 3) Attend interview, 4) Get validation, 5) Apply for visa. DreamDestinations guides you through each step." },
+      { question: "What is the Campus France procedure?", answer: "Campus France is the French government agency that facilitates international student admission. Steps: 1) Create account on Études en France, 2) Submit applications, 3) Attend interview, 4) Get validation, 5) Apply for visa. DreamDestination guides you through each step." },
       { question: "What is the post-study work visa in France?", answer: "The APS (Autorisation Provisoire de Séjour) gives graduates a 2-year residence permit to seek employment in France. During this period, you can work full-time. After finding a job matching your qualification, you can switch to a work permit." },
       { question: "Can I work while studying in France?", answer: "Yes! Students can work up to 964 hours per year (approximately 20 hours/week). Minimum wage is €11.65/hour. Many students work part-time to cover living expenses." },
       { question: "What are the best universities in France?", answer: "Top institutions include PSL Research University (QS #24), HEC Paris (top 3 MBA globally), Sorbonne University, Institut Polytechnique de Paris, Sciences Po, and ESSEC Business School." },
-      { question: "How do I get an education loan for France?", answer: "DreamDestinations helps secure loans up to ₹60 Lakhs. Since French public university fees are very low, most of the loan covers living expenses. This means lower loan amounts and easier repayment." },
-      { question: "What is the Eiffel Scholarship?", answer: "The Eiffel Excellence Scholarship Program is funded by the French government for international students. It covers €1,181/month for Masters and €1,700/month for PhD, plus travel and health insurance. DreamDestinations helps identify and apply for this scholarship." }
+      { question: "How do I get an education loan for France?", answer: "Start as soon as you have an offer letter, not after you book a visa appointment. We work out the total cost of the course and living in France, what your family can fund, and the real gap left to borrow — then compare secured, unsecured and collateral-free routes against your profile and help you assemble the file. We are not a lender and take no commission from any of them: the amount, the interest rate, the collateral requirement and the approval are all the lender's decision. The loan is normally released in multiple disbursements, timed to your fee deadlines." },
+      { question: "What is the Eiffel Scholarship?", answer: "The Eiffel Excellence Scholarship Program is funded by the French government for international students. It covers €1,181/month for Masters and €1,700/month for PhD, plus travel and health insurance. DreamDestination helps identify and apply for this scholarship." }
     ],
-    metaTitle: "Study in France | Affordable Universities, Eiffel Scholarship & Visa | DreamDestinations",
-    metaDescription: "Study in France from India with DreamDestinations. Affordable tuition from €2,770/year at public universities. HEC Paris, Sorbonne admission, education loans, Campus France guidance & 2-year work visa."
+    metaTitle: "Study in France | Affordable Universities & Eiffel Grant",
+    metaDescription: "Study in France from India with DreamDestination. Affordable tuition from €2,770/year at public universities. HEC Paris, Sorbonne admission, education loans, Campus France guidance & 2-year work visa."
   },
 
   // ============================================================
@@ -695,7 +717,7 @@ export const countriesData: CountryData[] = [
     livingCost: "₹50,000-90,000/month",
     workPermit: "18-Month Job Seeker Visa",
     scholarships: "DAAD, Deutschlandstipendium, Heinrich Böll Foundation",
-    visaSuccessRate: "90%",
+    visaSuccessRate: "Residence Permit §16b",
     intakeMonths: "October (Winter), April (Summer)",
     currency: "EUR (€)",
     language: "German & English",
@@ -728,16 +750,16 @@ export const countriesData: CountryData[] = [
     ],
     services: [
       { title: "Germany University Admission", description: "Expert guidance for applying to German public universities and private institutions via Uni-Assist.", features: ["Uni-Assist Application", "University Shortlisting", "Motivation Letter Writing", "APS Verification"] },
-      { title: "Germany Education Loan", description: "Minimal education loans since tuition is free — primarily for living expenses and blocked account.", features: ["Up to ₹40 Lakhs", "Covers Blocked Account", "Living Expenses", "Quick Processing"] },
+      { title: "Germany Education Loan", description: "Minimal education loans since tuition is free — primarily for living expenses and blocked account.", features: ["Secured and unsecured routes", "Covers Blocked Account", "Living Expenses", "Quick Processing"] },
       { title: "Germany Student Visa", description: "Complete visa assistance including blocked account setup and APS certification.", features: ["Blocked Account Setup", "APS Certificate", "Visa Application", "Health Insurance"] },
       { title: "German Language Support", description: "Guidance on German language requirements and TestDaF/DSH preparation.", features: ["TestDaF Prep", "DSH Preparation", "English-taught Program Search", "Language Course Guidance"] }
     ],
     educationLoan: {
-      maxAmount: "₹40 Lakhs",
-      interestRate: "9% - 12% p.a.",
-      collateral: "No collateral up to ₹20 Lakhs",
+      maxAmount: "Set by the lender",
+      interestRate: "Set by the lender",
+      collateral: "Secured and unsecured routes",
       repaymentPeriod: "Up to 10 years",
-      processingTime: "7-10 business days",
+      processingTime: "Depends on your file",
       highlights: ["Tuition-free at public universities", "Loan mainly for living expenses", "Blocked account of €11,208/year", "Very low total cost of education", "Tax benefits under 80E"]
     },
     eligibility: ["Confirmed admission from a recognized German university", "APS certificate (for Indian students)", "Minimum 60-70% in previous qualification", "Valid passport", "German/English proficiency", "Blocked account (€11,208/year)"],
@@ -745,18 +767,18 @@ export const countriesData: CountryData[] = [
     documentsRequired: ["Valid Passport", "University Admission Letter", "APS Certificate", "Academic Transcripts", "Language Proficiency Proof", "Blocked Account Confirmation", "Health Insurance", "Motivation Letter", "CV/Resume", "Passport Photos"],
     faqs: [
       { question: "Is education really free in Germany?", answer: "Yes! Most public universities in Germany charge NO tuition fees for Bachelor's and Master's programs (including international students). You only pay a small semester contribution of €150-350 for student services, public transport, etc. Private universities do charge tuition." },
-      { question: "What is a blocked account for Germany?", answer: "A blocked account (Sperrkonto) is a special bank account you must open to prove you have sufficient funds for living in Germany. Currently, you need €11,208 for one year (€934/month). DreamDestinations helps you set this up easily." },
-      { question: "What is the APS certificate?", answer: "APS (Akademische Prüfstelle) verification is mandatory for Indian students applying to German universities. It verifies your academic qualifications. The process includes document verification and an interview. DreamDestinations prepares you for both." },
+      { question: "What is a blocked account for Germany?", answer: "A blocked account (Sperrkonto) is a special bank account you must open to prove you have sufficient funds for living in Germany. Currently, you need €11,208 for one year (€934/month). DreamDestination helps you set this up easily." },
+      { question: "What is the APS certificate?", answer: "APS (Akademische Prüfstelle) verification is mandatory for Indian students applying to German universities. It verifies your academic qualifications. The process includes document verification and an interview. DreamDestination prepares you for both." },
       { question: "Can I study in Germany in English?", answer: "Yes! Over 1,800 programs are taught in English, especially at the Master's level. Engineering, Computer Science, and Business programs commonly offer English instruction. For German-taught programs, TestDaF Level 4 or DSH-2 is required." },
       { question: "What is the job seeker visa in Germany?", answer: "After graduating, you get an 18-month job seeker visa to find employment in Germany. During this time, you can work in any job. Once you find a qualified position, you can switch to a work permit. Germany's strong economy means excellent job prospects." },
       { question: "Can I work while studying in Germany?", answer: "Yes! Students can work 120 full days or 240 half days per year. Working as a student assistant (HiWi) at university is also common and doesn't count toward this limit. Minimum wage is €12.41/hour." },
       { question: "What are the best universities in Germany for engineering?", answer: "Top engineering universities include TU Munich (QS #37), RWTH Aachen, KIT Karlsruhe, TU Berlin, University of Stuttgart, and TU Darmstadt. Germany is world-renowned for engineering, especially automotive and mechanical." },
       { question: "How much does it cost to live in Germany?", answer: "Living costs are approximately €934/month (€11,208/year) as per blocked account requirements. Munich is the most expensive city (€1,000-1,200/month), while cities like Leipzig, Dresden, and Chemnitz are more affordable (€700-800/month)." },
-      { question: "How do I get an education loan for Germany?", answer: "Since tuition is free, loans for Germany are primarily for living expenses and blocked account. DreamDestinations helps secure loans up to ₹40 Lakhs. The low total cost means minimal debt and easy repayment." },
+      { question: "How do I get an education loan for Germany?", answer: "Start as soon as you have an offer letter, not after you book a visa appointment. We work out the total cost of the course and living in Germany, what your family can fund, and the real gap left to borrow — then compare secured, unsecured and collateral-free routes against your profile and help you assemble the file. We are not a lender and take no commission from any of them: the amount, the interest rate, the collateral requirement and the approval are all the lender's decision. The loan is normally released in multiple disbursements, timed to your fee deadlines." },
       { question: "Is German language necessary for studying in Germany?", answer: "Not if you choose an English-taught program. However, learning basic German (A1-A2 level) greatly helps with daily life, part-time jobs, and integration. Some technical universities and all undergraduate programs typically require German proficiency." }
     ],
-    metaTitle: "Study in Germany for Free | Tuition-Free Universities & DAAD Scholarship | DreamDestinations",
-    metaDescription: "Study in Germany with zero tuition fees at public universities. DreamDestinations offers admission guidance to TU Munich, RWTH Aachen & top German universities, education loans, APS certification & visa support for Indian students."
+    metaTitle: "Study in Germany Free | Tuition-Free Unis & DAAD Scholarship",
+    metaDescription: "Study in Germany with zero tuition fees at public universities. DreamDestination offers admission guidance to TU Munich, RWTH Aachen & top German universities, education loans, APS certification & visa support for Indian students."
   },
 
   // ============================================================
@@ -774,7 +796,7 @@ export const countriesData: CountryData[] = [
     livingCost: "₹50,000-1,20,000/month",
     workPermit: "Employment Visa Post-Graduation",
     scholarships: "University Merit Scholarships, Government Scholarships",
-    visaSuccessRate: "96%",
+    visaSuccessRate: "Student Residence Visa",
     intakeMonths: "September, January, May",
     currency: "AED (د.إ)",
     language: "English & Arabic",
@@ -804,16 +826,16 @@ export const countriesData: CountryData[] = [
     ],
     services: [
       { title: "UAE University Admission", description: "Expert guidance for applying to UAE universities and international branch campuses.", features: ["University Selection", "Application Support", "SOP Writing", "Scholarship Applications"] },
-      { title: "UAE Education Loan", description: "Education loans for UAE studies with competitive rates.", features: ["Up to ₹60 Lakhs", "Quick Processing", "No Collateral Options", "Flexible EMI"] },
+      { title: "UAE Education Loan", description: "Education loans for UAE studies with competitive rates.", features: ["Secured and unsecured routes", "Quick Processing", "No Collateral Options", "Flexible EMI"] },
       { title: "UAE Student Visa", description: "Streamlined student visa process with university sponsorship.", features: ["Visa Application", "Medical Test", "Emirates ID", "Documentation Support"] },
       { title: "UAE Career Support", description: "Job placement assistance in the UAE's tax-free economy.", features: ["CV Building", "Interview Prep", "Industry Connections", "Work Visa Guidance"] }
     ],
     educationLoan: {
-      maxAmount: "₹60 Lakhs",
-      interestRate: "9.5% - 13% p.a.",
-      collateral: "No collateral up to ₹25 Lakhs",
+      maxAmount: "Set by the lender",
+      interestRate: "Set by the lender",
+      collateral: "Secured and unsecured routes",
       repaymentPeriod: "Up to 10 years",
-      processingTime: "5-10 business days",
+      processingTime: "Depends on your file",
       highlights: ["Proximity to India = low travel costs", "Tax-free earnings during studies", "Covers tuition + living expenses", "Moratorium available", "Quick processing"]
     },
     eligibility: ["Confirmed admission from a UAE institution", "Minimum 55-60% in previous qualification", "Valid passport", "IELTS/TOEFL (if required)", "Medical fitness test", "Financial proof"],
@@ -826,11 +848,11 @@ export const countriesData: CountryData[] = [
       { question: "Is a UAE degree recognized internationally?", answer: "Yes, degrees from accredited UAE universities are recognized globally. International branch campuses (NYU Abu Dhabi, Sorbonne Abu Dhabi, University of Birmingham Dubai) offer the same degree as their parent institution." },
       { question: "What are the best universities in the UAE?", answer: "Top choices include NYU Abu Dhabi, Khalifa University, American University of Sharjah, University of Sharjah, Sorbonne Abu Dhabi, and several international branch campuses in Dubai Knowledge Park." },
       { question: "How close is the UAE to India?", answer: "The UAE is just 3-4 hours by flight from most Indian cities. This proximity makes it easy for students to visit home frequently, and for families to visit. Direct flights are available from all major Indian cities." },
-      { question: "How do I get an education loan for UAE?", answer: "DreamDestinations helps secure education loans up to ₹60 Lakhs for UAE studies. The moderate cost of education means manageable loan amounts. Quick processing and flexible EMI options are available." },
+      { question: "How do I get an education loan for UAE?", answer: "Start as soon as you have an offer letter, not after you book a visa appointment. We work out the total cost of the course and living in UAE, what your family can fund, and the real gap left to borrow — then compare secured, unsecured and collateral-free routes against your profile and help you assemble the file. We are not a lender and take no commission from any of them: the amount, the interest rate, the collateral requirement and the approval are all the lender's decision. The loan is normally released in multiple disbursements, timed to your fee deadlines." },
       { question: "What career opportunities exist in the UAE after graduation?", answer: "The UAE's diverse economy offers opportunities in finance, technology, hospitality, healthcare, engineering, and real estate. Dubai and Abu Dhabi are global business hubs. Tax-free salaries make the UAE very attractive for fresh graduates." }
     ],
-    metaTitle: "Study in UAE | Dubai & Abu Dhabi Universities, Education Loan & Visa | DreamDestinations",
-    metaDescription: "Study in the UAE from India with DreamDestinations. Get admission to NYU Abu Dhabi, American University of Sharjah & top UAE universities. Education loans, student visa assistance & career support in the Middle East."
+    metaTitle: "Study in UAE | Dubai & Abu Dhabi Universities, Visas",
+    metaDescription: "Study in the UAE from India with DreamDestination. Get admission to NYU Abu Dhabi, American University of Sharjah & top UAE universities. Education loans, student visa assistance & career support in the Middle East."
   },
 
   // ============================================================
@@ -842,13 +864,13 @@ export const countriesData: CountryData[] = [
     flag: "🇮🇳",
     heroTagline: "Premier Institutions with World-Class Research & Innovation",
     description: "India offers prestigious institutions like IITs, IIMs, and AIIMS with globally recognized programs at competitive costs.",
-    longDescription: "India's higher education system is one of the largest in the world, with premier institutions like IITs, IIMs, AIIMS, and NITs offering world-class education. For NRI students, international students, and those seeking top-quality education at competitive costs, India provides excellent programs in engineering, medicine, management, and research. DreamDestinations assists with admission guidance, education loans, and placement support for India's top institutions.",
+    longDescription: "India's higher education system is one of the largest in the world, with premier institutions like IITs, IIMs, AIIMS, and NITs offering world-class education. For NRI students, international students, and those seeking top-quality education at competitive costs, India provides excellent programs in engineering, medicine, management, and research. DreamDestination assists with admission guidance, education loans, and placement support for India's top institutions.",
     universities: "1000+",
     avgCost: "₹2-25L/year",
     livingCost: "₹15,000-50,000/month",
     workPermit: "Work opportunities through campus placements",
     scholarships: "Government Scholarships, Merit-based, ICCR Scholarships",
-    visaSuccessRate: "N/A (Domestic)",
+    visaSuccessRate: "Student Visa (S)",
     intakeMonths: "July/August, January",
     currency: "INR (₹)",
     language: "English & Hindi",
@@ -880,16 +902,16 @@ export const countriesData: CountryData[] = [
     ],
     services: [
       { title: "India College Admission", description: "Expert guidance for IIT, IIM, AIIMS, and top Indian university admissions.", features: ["Entrance Exam Prep", "College Selection", "Application Support", "Interview Preparation"] },
-      { title: "India Education Loan", description: "Education loans for IITs, IIMs, and other premier Indian institutions.", features: ["Up to ₹1 Cr", "No Collateral Options", "Quick Approval", "Low Interest Rates"] },
+      { title: "India Education Loan", description: "Education loans for IITs, IIMs, and other premier Indian institutions.", features: ["Secured and unsecured routes", "No Collateral Options", "Quick Approval", "Low Interest Rates"] },
       { title: "Career Counseling", description: "Professional guidance for choosing the right course and career path.", features: ["Aptitude Assessment", "Career Mapping", "Course Selection", "Industry Insights"] },
       { title: "Scholarship Guidance", description: "Help identify and apply for government and private scholarships.", features: ["Government Schemes", "Merit Scholarships", "Need-based Aid", "Application Support"] }
     ],
     educationLoan: {
-      maxAmount: "₹1 Crore",
-      interestRate: "7.5% - 11% p.a.",
-      collateral: "No collateral up to ₹7.5 Lakhs (Central Scheme)",
+      maxAmount: "Set by the lender",
+      interestRate: "Set by the lender",
+      collateral: "Secured and unsecured routes",
       repaymentPeriod: "Up to 15 years",
-      processingTime: "3-7 business days",
+      processingTime: "Depends on your file",
       highlights: ["Government subsidized rates for EWS", "Vidyalakshmi Portal access", "Central Sector Interest Subsidy", "Tax benefits under 80E", "Quick processing for top institutions"]
     },
     eligibility: ["Confirmed admission through entrance exam / merit", "Valid qualifying examination scores", "Indian nationality / OCI / PIO", "Entrance exam scores (JEE/NEET/CAT/GATE etc.)", "Academic transcripts"],
@@ -897,16 +919,16 @@ export const countriesData: CountryData[] = [
     documentsRequired: ["Admission Letter", "Academic Transcripts", "Entrance Exam Scorecard", "ID Proof (Aadhar/Passport)", "Income Certificate", "Domicile Certificate", "Caste Certificate (if applicable)", "Passport Photos"],
     faqs: [
       { question: "What are the top colleges in India?", answer: "India's top institutions include IIT Bombay, IIT Delhi, IIT Madras, IISc Bangalore, IIM Ahmedabad, IIM Bangalore, AIIMS Delhi, Delhi University, JNU, and BITS Pilani. These are globally recognized for academic excellence." },
-      { question: "How to get an education loan in India?", answer: "DreamDestinations helps secure education loans from leading banks. Government banks offer loans up to ₹7.5 Lakhs without collateral under the Central Scheme. For higher amounts, collateral may be required. Interest rates range from 7.5% to 11% p.a." },
-      { question: "What entrance exams are required for Indian colleges?", answer: "Key exams include JEE Main/Advanced (engineering), NEET (medical), CAT (MBA), GATE (postgraduate engineering), CLAT (law), and NID/NIFT (design). DreamDestinations provides preparation guidance for all major exams." },
+      { question: "How to get an education loan in India?", answer: "Start as soon as you have an offer letter, not after you book a visa appointment. We work out the total cost of the course and living in India, what your family can fund, and the real gap left to borrow — then compare secured, unsecured and collateral-free routes against your profile and help you assemble the file. We are not a lender and take no commission from any of them: the amount, the interest rate, the collateral requirement and the approval are all the lender's decision. The loan is normally released in multiple disbursements, timed to your fee deadlines." },
+      { question: "What entrance exams are required for Indian colleges?", answer: "Key exams include JEE Main/Advanced (engineering), NEET (medical), CAT (MBA), GATE (postgraduate engineering), CLAT (law), and NID/NIFT (design). DreamDestination provides preparation guidance for all major exams." },
       { question: "Is studying in India affordable?", answer: "Yes! Government institutions like IITs and AIIMS offer world-class education at subsidized fees (₹2-8 Lakhs/year). Private universities cost more (₹5-25 Lakhs/year) but offer excellent placements. India is one of the most affordable places for quality education." },
-      { question: "What scholarships are available for Indian students?", answer: "Options include National Scholarship Portal schemes, Central Sector Scheme, Post-Matric Scholarships, INSPIRE fellowship, and institution-specific merit scholarships. DreamDestinations helps identify and apply for relevant scholarships." },
+      { question: "What scholarships are available for Indian students?", answer: "Options include National Scholarship Portal schemes, Central Sector Scheme, Post-Matric Scholarships, INSPIRE fellowship, and institution-specific merit scholarships. DreamDestination helps identify and apply for relevant scholarships." },
       { question: "How are campus placements in India?", answer: "Top institutions like IITs, IIMs, and BITS offer excellent placement records. IIT students get packages of ₹15-50+ Lakhs/year. IIM graduates get ₹20-80+ Lakhs/year. Even mid-tier colleges have improving placement records." },
       { question: "Can international students study in India?", answer: "Yes! India welcomes international students through ICCR scholarships, Study in India program, and direct admission. Many universities have international student quotas. The affordable cost of education and living makes India attractive." },
-      { question: "What is the Vidyalakshmi education loan portal?", answer: "Vidyalakshmi is a government portal that allows students to apply for education loans from multiple banks simultaneously. It covers loans under the Interest Subsidy Scheme for economically weaker students. DreamDestinations helps navigate this portal." }
+      { question: "What is the Vidyalakshmi education loan portal?", answer: "Vidyalakshmi is a government portal that allows students to apply for education loans from multiple banks simultaneously. It covers loans under the Interest Subsidy Scheme for economically weaker students. DreamDestination helps navigate this portal." }
     ],
-    metaTitle: "Study in India | IIT, IIM, AIIMS Admission & Education Loan | DreamDestinations",
-    metaDescription: "Study in India's top institutions — IIT, IIM, AIIMS, NIT. DreamDestinations offers admission guidance, education loans up to ₹1 Cr, scholarship assistance & career counseling for India's premier colleges."
+    metaTitle: "Study in India | IIT, IIM, AIIMS Admission & Education Loan",
+    metaDescription: "Study in India's top institutions — IIT, IIM, AIIMS, NIT. DreamDestination offers admission guidance, education loan guidance, scholarship assistance & career counseling for India's premier colleges."
   },
 
   // ============================================================
@@ -924,7 +946,7 @@ export const countriesData: CountryData[] = [
     livingCost: "₹1,00,000-2,00,000/month",
     workPermit: "6-Month Job Search Permit",
     scholarships: "Swiss Government Excellence Scholarships, ETH Scholarships",
-    visaSuccessRate: "89%",
+    visaSuccessRate: "National Visa Type D",
     intakeMonths: "September, February",
     currency: "CHF (Fr.)",
     language: "German, French, Italian & English",
@@ -955,16 +977,16 @@ export const countriesData: CountryData[] = [
     ],
     services: [
       { title: "Switzerland University Admission", description: "Expert guidance for ETH, EPFL, and Swiss hospitality school admissions.", features: ["University Shortlisting", "Application Support", "Motivation Letter Writing", "Interview Preparation"] },
-      { title: "Switzerland Education Loan", description: "Education loans for Swiss universities including hospitality schools.", features: ["Up to ₹80 Lakhs", "Quick Processing", "Competitive Rates", "No Collateral Options"] },
+      { title: "Switzerland Education Loan", description: "Education loans for Swiss universities including hospitality schools.", features: ["Secured and unsecured routes", "Quick Processing", "Competitive Rates", "No Collateral Options"] },
       { title: "Switzerland Student Visa", description: "Comprehensive visa support for Swiss student permits.", features: ["Documentation Prep", "Financial Proof", "Visa Application", "Cantonal Permit"] },
       { title: "Hospitality Career Support", description: "Specialized support for hospitality and hotel management students.", features: ["Internship Placement", "Industry Connections", "CV Building", "Interview Prep"] }
     ],
     educationLoan: {
-      maxAmount: "₹80 Lakhs",
-      interestRate: "9% - 13% p.a.",
-      collateral: "No collateral up to ₹30 Lakhs",
+      maxAmount: "Set by the lender",
+      interestRate: "Set by the lender",
+      collateral: "Secured and unsecured routes",
       repaymentPeriod: "Up to 12 years",
-      processingTime: "7-15 business days",
+      processingTime: "Depends on your file",
       highlights: ["Public universities have low tuition", "Covers living expenses in high-cost country", "Tax benefits under 80E", "Moratorium available", "Premium education value"]
     },
     eligibility: ["Confirmed admission from Swiss institution", "Minimum 60-70% in previous qualification", "Valid passport", "Language proficiency (varies by program)", "Financial proof", "Health insurance"],
@@ -977,11 +999,11 @@ export const countriesData: CountryData[] = [
       { question: "Can I work while studying in Switzerland?", answer: "Yes, students can work up to 15 hours/week during term time and full-time during holidays. Non-EU students need a work permit. Wages are high — CHF 20-30+/hour for student jobs." },
       { question: "What are the best hospitality schools in Switzerland?", answer: "Switzerland is the birthplace of hospitality education. EHL (École Hôtelière de Lausanne) is ranked #1 globally. Les Roches, Glion, and SHMS are also among the world's top hospitality schools. Graduates are highly sought after worldwide." },
       { question: "Does Switzerland offer post-study work visas?", answer: "Graduates get a 6-month job search permit. Once employed, you can apply for a work permit. STEM graduates from ETH and EPFL are highly sought after. Switzerland's strong economy and high salaries make it attractive for job seekers." },
-      { question: "How do I get an education loan for Switzerland?", answer: "DreamDestinations helps secure education loans up to ₹80 Lakhs for Swiss studies. Public university students need primarily living expense loans, while hospitality school students may need larger amounts for tuition." },
+      { question: "How do I get an education loan for Switzerland?", answer: "Start as soon as you have an offer letter, not after you book a visa appointment. We work out the total cost of the course and living in Switzerland, what your family can fund, and the real gap left to borrow — then compare secured, unsecured and collateral-free routes against your profile and help you assemble the file. We are not a lender and take no commission from any of them: the amount, the interest rate, the collateral requirement and the approval are all the lender's decision. The loan is normally released in multiple disbursements, timed to your fee deadlines." },
       { question: "What languages do I need for studying in Switzerland?", answer: "Many Master's programs and hospitality courses are in English. Undergraduate programs at public universities may be in German (Zurich, Bern), French (Geneva, Lausanne), or Italian (Lugano). Language requirements vary by university and program." }
     ],
-    metaTitle: "Study in Switzerland | ETH Zurich, Hospitality Schools & Education Loan | DreamDestinations",
-    metaDescription: "Study in Switzerland from India. Get admission to ETH Zurich, EPFL, EHL & top Swiss universities. DreamDestinations offers education loans, visa assistance & scholarship guidance for engineering, hospitality & business programs."
+    metaTitle: "Study in Switzerland | ETH Zurich & Hospitality Schools",
+    metaDescription: "Study in Switzerland from India. Get admission to ETH Zurich, EPFL, EHL & top Swiss universities. DreamDestination offers education loans, visa assistance & scholarship guidance for engineering, hospitality & business programs."
   },
 
   // ============================================================
@@ -999,7 +1021,7 @@ export const countriesData: CountryData[] = [
     livingCost: "₹40,000-80,000/month",
     workPermit: "1-Year Post-Study Job Search Permit",
     scholarships: "Spanish Government Scholarships, University Merit Awards",
-    visaSuccessRate: "88%",
+    visaSuccessRate: "Estancia por Estudios",
     intakeMonths: "September, February",
     currency: "EUR (€)",
     language: "Spanish & English",
@@ -1030,16 +1052,16 @@ export const countriesData: CountryData[] = [
     ],
     services: [
       { title: "Spain University Admission", description: "Expert guidance for Spanish university and business school applications.", features: ["University Selection", "Application Support", "SOP Writing", "Credential Recognition"] },
-      { title: "Spain Education Loan", description: "Affordable education loans for Spanish universities.", features: ["Up to ₹50 Lakhs", "Low EMIs", "No Collateral Options", "Quick Processing"] },
+      { title: "Spain Education Loan", description: "Affordable education loans for Spanish universities.", features: ["Secured and unsecured routes", "Low EMIs", "No Collateral Options", "Quick Processing"] },
       { title: "Spain Student Visa", description: "Comprehensive visa support for Spanish student visa.", features: ["Documentation Prep", "Financial Proof", "Application Filing", "NIE Guidance"] },
       { title: "Spanish Language Support", description: "Language preparation and guidance for studying in Spain.", features: ["DELE Prep", "Spanish Courses", "English-taught Programs", "Cultural Orientation"] }
     ],
     educationLoan: {
-      maxAmount: "₹50 Lakhs",
-      interestRate: "9% - 12.5% p.a.",
-      collateral: "No collateral up to ₹20 Lakhs",
+      maxAmount: "Set by the lender",
+      interestRate: "Set by the lender",
+      collateral: "Secured and unsecured routes",
       repaymentPeriod: "Up to 10 years",
-      processingTime: "7-12 business days",
+      processingTime: "Depends on your file",
       highlights: ["Very affordable tuition fees", "Low cost of living", "Small loan amounts", "Easy repayment", "Tax benefits under 80E"]
     },
     eligibility: ["Confirmed admission from a Spanish institution", "Minimum 55-60% in previous qualification", "Valid passport", "Spanish/English proficiency", "Financial proof (€600+/month)", "Health insurance"],
@@ -1052,11 +1074,11 @@ export const countriesData: CountryData[] = [
       { question: "What are the best business schools in Spain?", answer: "Spain has world-renowned business schools: IE Business School (top 10 global MBA), ESADE (top 15 European), and IESE Business School (University of Navarra). These offer excellent ROI and global career opportunities." },
       { question: "Can I work while studying in Spain?", answer: "Yes, students can work up to 20 hours/week with a part-time work permit. Many students find work in tourism, hospitality, and language teaching. Full-time work is allowed during holidays." },
       { question: "Why learn Spanish while studying?", answer: "Spanish is the world's 2nd most spoken native language (after Mandarin) with 500+ million speakers globally. Learning Spanish opens career doors in Spain, Latin America, and international organizations. Many employers value bilingual professionals." },
-      { question: "How do I get an education loan for Spain?", answer: "DreamDestinations helps secure loans up to ₹50 Lakhs for Spain. Since tuition and living costs are low, loan amounts are very manageable with comfortable monthly EMIs." },
+      { question: "How do I get an education loan for Spain?", answer: "Start as soon as you have an offer letter, not after you book a visa appointment. We work out the total cost of the course and living in Spain, what your family can fund, and the real gap left to borrow — then compare secured, unsecured and collateral-free routes against your profile and help you assemble the file. We are not a lender and take no commission from any of them: the amount, the interest rate, the collateral requirement and the approval are all the lender's decision. The loan is normally released in multiple disbursements, timed to your fee deadlines." },
       { question: "What is the cost of living in Spain?", answer: "Living costs range from ₹40,000 to ₹80,000/month. Madrid and Barcelona are more expensive. Cities like Valencia, Seville, and Granada are very affordable. Students typically spend €600-1,000/month on rent, food, and transport." }
     ],
-    metaTitle: "Study in Spain | Affordable Universities, IE Business School & Visa | DreamDestinations",
-    metaDescription: "Study in Spain from India with DreamDestinations. Affordable tuition from €680/year. Get admission to IE Business School, University of Barcelona & top Spanish universities. Education loans, visa assistance & scholarship guidance."
+    metaTitle: "Study in Spain | Affordable Universities & IE Business",
+    metaDescription: "Study in Spain from India with DreamDestination. Affordable tuition from €680/year. Get admission to IE Business School, University of Barcelona & top Spanish universities. Education loans, visa assistance & scholarship guidance."
   },
 
   // ============================================================
@@ -1074,7 +1096,7 @@ export const countriesData: CountryData[] = [
     livingCost: "₹25,000-50,000/month",
     workPermit: "Employment Pass Post-Graduation",
     scholarships: "Malaysian Government Scholarships, University Scholarships",
-    visaSuccessRate: "95%",
+    visaSuccessRate: "Student Pass (EMGS)",
     intakeMonths: "March, July, September",
     currency: "MYR (RM)",
     language: "English & Malay",
@@ -1104,16 +1126,16 @@ export const countriesData: CountryData[] = [
     ],
     services: [
       { title: "Malaysia University Admission", description: "Expert guidance for Malaysian public and private university applications.", features: ["University Selection", "Application Support", "SOP Writing", "Scholarship Applications"] },
-      { title: "Malaysia Education Loan", description: "Affordable education loans for Malaysian universities.", features: ["Up to ₹40 Lakhs", "Low EMIs", "Quick Processing", "No Collateral Options"] },
+      { title: "Malaysia Education Loan", description: "Affordable education loans for Malaysian universities.", features: ["Secured and unsecured routes", "Low EMIs", "Quick Processing", "No Collateral Options"] },
       { title: "Malaysia Student Visa", description: "Comprehensive student visa/pass assistance.", features: ["EMGS Application", "Documentation", "Medical Checkup", "Visa Processing"] },
       { title: "Malaysia Settlement Support", description: "Pre-departure and post-arrival support.", features: ["Accommodation", "Airport Pickup", "SIM & Banking", "City Orientation"] }
     ],
     educationLoan: {
-      maxAmount: "₹40 Lakhs",
-      interestRate: "9% - 12% p.a.",
-      collateral: "No collateral up to ₹15 Lakhs",
+      maxAmount: "Set by the lender",
+      interestRate: "Set by the lender",
+      collateral: "Secured and unsecured routes",
       repaymentPeriod: "Up to 10 years",
-      processingTime: "5-10 business days",
+      processingTime: "Depends on your file",
       highlights: ["Very affordable total cost", "Small loan amounts", "Easy repayment", "Quick disbursement", "Covers tuition + living"]
     },
     eligibility: ["Confirmed admission from a Malaysian institution", "Minimum 55% in previous qualification", "Valid passport", "IELTS/TOEFL (if required)", "Medical fitness", "Financial proof"],
@@ -1126,11 +1148,11 @@ export const countriesData: CountryData[] = [
       { question: "Can I work while studying in Malaysia?", answer: "Yes, students can work up to 20 hours/week during semester breaks with approval from the immigration department. Part-time work in sectors like hospitality, retail, and tutoring is common." },
       { question: "What are the best universities in Malaysia?", answer: "Top universities include University of Malaya (QS #60), UPM, UKM, USM, and Monash University Malaysia. Taylor's University and UCSI University are top private options. Branch campuses of Monash and Nottingham offer parent-campus degrees." },
       { question: "How close is Malaysia to India?", answer: "Malaysia is just 4-5 hours by flight from major Indian cities. Direct flights from Delhi, Mumbai, Chennai, Bangalore, and Hyderabad to Kuala Lumpur are readily available and affordable. This proximity makes it easy to visit home." },
-      { question: "How do I get an education loan for Malaysia?", answer: "DreamDestinations helps secure loans up to ₹40 Lakhs for Malaysia. The low cost means small loan amounts and very manageable EMIs. Quick processing in 5-10 days." },
+      { question: "How do I get an education loan for Malaysia?", answer: "Start as soon as you have an offer letter, not after you book a visa appointment. We work out the total cost of the course and living in Malaysia, what your family can fund, and the real gap left to borrow — then compare secured, unsecured and collateral-free routes against your profile and help you assemble the file. We are not a lender and take no commission from any of them: the amount, the interest rate, the collateral requirement and the approval are all the lender's decision. The loan is normally released in multiple disbursements, timed to your fee deadlines." },
       { question: "Is English widely spoken in Malaysia?", answer: "Yes! English is widely spoken and is the medium of instruction at most universities. Malaysia's multicultural society (Malay, Chinese, Indian) uses English as a common language. Indian students find it very easy to communicate." }
     ],
-    metaTitle: "Study in Malaysia | Affordable Universities, Monash & Education Loan | DreamDestinations",
-    metaDescription: "Study in Malaysia from India with DreamDestinations. Affordable tuition from ₹5L/year. Get admission to University of Malaya, Monash Malaysia & top universities. Education loans, visa assistance & accommodation support."
+    metaTitle: "Study in Malaysia | Affordable Universities & Monash",
+    metaDescription: "Study in Malaysia from India with DreamDestination. Affordable tuition from ₹5L/year. Get admission to University of Malaya, Monash Malaysia & top universities. Education loans, visa assistance & accommodation support."
   },
 
   // ============================================================
@@ -1148,7 +1170,7 @@ export const countriesData: CountryData[] = [
     livingCost: "₹20,000-40,000/month",
     workPermit: "Work Permit Available Post-Graduation",
     scholarships: "Mauritian Government Scholarships, University Awards",
-    visaSuccessRate: "94%",
+    visaSuccessRate: "Student Visa",
     intakeMonths: "August, January",
     currency: "MUR (₨)",
     language: "English & French",
@@ -1177,16 +1199,16 @@ export const countriesData: CountryData[] = [
     ],
     services: [
       { title: "Mauritius University Admission", description: "Guidance for applying to Mauritius universities and branch campuses.", features: ["University Selection", "Application Support", "SOP Writing", "Scholarship Search"] },
-      { title: "Mauritius Education Loan", description: "Small, manageable education loans for Mauritius studies.", features: ["Up to ₹20 Lakhs", "Low EMIs", "Quick Processing", "No Collateral"] },
+      { title: "Mauritius Education Loan", description: "Small, manageable education loans for Mauritius studies.", features: ["Secured and unsecured routes", "Low EMIs", "Quick Processing", "No Collateral"] },
       { title: "Mauritius Student Visa", description: "Hassle-free student visa processing for Mauritius.", features: ["Documentation Prep", "Application Filing", "Medical Tests", "Quick Processing"] },
       { title: "Settlement Support", description: "Arrival and settlement assistance in Mauritius.", features: ["Accommodation", "Airport Pickup", "Orientation", "Local SIM & Banking"] }
     ],
     educationLoan: {
-      maxAmount: "₹20 Lakhs",
-      interestRate: "9.5% - 13% p.a.",
-      collateral: "No collateral up to ₹10 Lakhs",
+      maxAmount: "Set by the lender",
+      interestRate: "Set by the lender",
+      collateral: "Secured and unsecured routes",
       repaymentPeriod: "Up to 7 years",
-      processingTime: "5-7 business days",
+      processingTime: "Depends on your file",
       highlights: ["Very low total cost", "Minimal loan required", "Easy repayment", "Quick processing", "Covers complete expenses"]
     },
     eligibility: ["Confirmed admission from a Mauritian institution", "Minimum 50-55% in previous qualification", "Valid passport", "English proficiency", "Medical fitness", "Financial proof"],
@@ -1199,11 +1221,11 @@ export const countriesData: CountryData[] = [
       { question: "Is Mauritius safe for students?", answer: "Yes, Mauritius is one of the safest countries in Africa and ranks highly on global peace indices. It has a stable democracy, low crime rate, and a welcoming multicultural society with a large Indian-origin population." },
       { question: "Can I work while studying in Mauritius?", answer: "Students can work part-time up to 20 hours/week with proper authorization. Opportunities exist in tourism, hospitality, and retail sectors." },
       { question: "What is the Indian community like in Mauritius?", answer: "Mauritius has a large Indian-origin population (about 68%). Hindu temples, Indian food, and cultural festivals are common. Hindi and Bhojpuri are widely understood. Indian students feel right at home." },
-      { question: "How do I get an education loan for Mauritius?", answer: "DreamDestinations helps secure loans up to ₹20 Lakhs. The very low cost means minimal loans, easy EMIs, and quick repayment. Processing takes just 5-7 days." },
+      { question: "How do I get an education loan for Mauritius?", answer: "Start as soon as you have an offer letter, not after you book a visa appointment. We work out the total cost of the course and living in Mauritius, what your family can fund, and the real gap left to borrow — then compare secured, unsecured and collateral-free routes against your profile and help you assemble the file. We are not a lender and take no commission from any of them: the amount, the interest rate, the collateral requirement and the approval are all the lender's decision. The loan is normally released in multiple disbursements, timed to your fee deadlines." },
       { question: "How far is Mauritius from India?", answer: "Mauritius is about 6-7 hours by flight from major Indian cities. Direct flights are available from Delhi and Mumbai. The island is in the Indian Ocean, east of Madagascar." }
     ],
-    metaTitle: "Study in Mauritius | Affordable Universities & Education Loan | DreamDestinations",
-    metaDescription: "Study in Mauritius from India with DreamDestinations. Affordable tuition from ₹3L/year. Get admission to University of Mauritius, Curtin Mauritius & international branch campuses. Education loans & visa assistance."
+    metaTitle: "Study in Mauritius | Affordable Universities & Costs",
+    metaDescription: "Study in Mauritius from India with DreamDestination. Affordable tuition from ₹3L/year. Get admission to University of Mauritius, Curtin Mauritius & international branch campuses. Education loans & visa assistance."
   },
 
   // ============================================================
@@ -1220,8 +1242,8 @@ export const countriesData: CountryData[] = [
     avgCost: "₹8-25L/year",
     livingCost: "₹60,000-1,10,000/month",
     workPermit: "1-Year Orientation Year Visa (Zoekjaar)",
-    scholarships: "Holland Scholarship, Orange Tulip Scholarship, University Scholarships",
-    visaSuccessRate: "92%",
+    scholarships: "NL Scholarship, Orange Tulip Scholarship, University Scholarships",
+    visaSuccessRate: "MVV + Study Permit",
     intakeMonths: "September, February",
     currency: "EUR (€)",
     language: "Dutch & English (95% English proficiency)",
@@ -1252,16 +1274,16 @@ export const countriesData: CountryData[] = [
     ],
     services: [
       { title: "Netherlands University Admission", description: "Expert guidance for Dutch research and applied science university applications.", features: ["Studielink Application", "University Selection", "Motivation Letter", "Credential Evaluation (Nuffic)"] },
-      { title: "Netherlands Education Loan", description: "Education loans for studying in the Netherlands.", features: ["Up to ₹60 Lakhs", "Competitive Rates", "No Collateral Options", "Quick Processing"] },
+      { title: "Netherlands Education Loan", description: "Education loans for studying in the Netherlands.", features: ["Secured and unsecured routes", "Competitive Rates", "No Collateral Options", "Quick Processing"] },
       { title: "Netherlands Student Visa (MVV)", description: "Complete MVV/residence permit assistance for Dutch student visa.", features: ["MVV Application", "Documentation Prep", "Financial Proof", "Health Insurance"] },
       { title: "Orientation Year Guidance", description: "Support for the zoekjaar (orientation year) visa application after graduation.", features: ["Application Support", "Job Search Strategy", "CV & LinkedIn", "Networking Guidance"] }
     ],
     educationLoan: {
-      maxAmount: "₹60 Lakhs",
-      interestRate: "9% - 12.5% p.a.",
-      collateral: "No collateral up to ₹25 Lakhs",
+      maxAmount: "Set by the lender",
+      interestRate: "Set by the lender",
+      collateral: "Secured and unsecured routes",
       repaymentPeriod: "Up to 12 years",
-      processingTime: "7-12 business days",
+      processingTime: "Depends on your file",
       highlights: ["Moderate tuition fees", "Covers tuition + living", "Tax benefits under 80E", "Moratorium available", "Zoekjaar visa enhances ROI"]
     },
     eligibility: ["Confirmed admission from a Dutch institution", "Minimum 60% in previous qualification", "Valid passport", "IELTS 6.0-6.5", "Financial proof (€11,000+/year)", "Health insurance"],
@@ -1274,11 +1296,11 @@ export const countriesData: CountryData[] = [
       { question: "What is the cost of studying in the Netherlands?", answer: "Tuition fees for non-EU students range from €8,000 to €25,000/year (₹8-25 Lakhs). Living costs are approximately ₹60,000-1,10,000/month. Total cost for a 1-2 year Master's ranges from ₹20 Lakhs to ₹50 Lakhs." },
       { question: "Can I work while studying in the Netherlands?", answer: "Yes! Students can work up to 16 hours/week with a work permit (TWV), or full-time during June, July, and August. Students doing a mandatory internship don't need a work permit." },
       { question: "What are the best universities in the Netherlands?", answer: "Top universities include TU Delft (#47), University of Amsterdam (#53), Utrecht University, Eindhoven University of Technology, Erasmus University Rotterdam (top business school - RSM), University of Groningen, and Leiden University." },
-      { question: "What is the Holland Scholarship?", answer: "The Holland Scholarship offers €5,000 for the first year to non-EU students. The Orange Tulip Scholarship is specifically for Indian students. Many universities also offer their own merit-based scholarships. DreamDestinations helps identify and apply for all available options." },
-      { question: "How do I get an education loan for the Netherlands?", answer: "DreamDestinations helps secure education loans up to ₹60 Lakhs for Dutch studies. The moderate total cost means reasonable loan amounts. The zoekjaar visa enhances return on investment by providing employment opportunities." }
+      { question: "What is the NL Scholarship?", answer: "The NL Scholarship offers €5,000 for the first year to non-EU students. The Orange Tulip Scholarship is specifically for Indian students. Many universities also offer their own merit-based scholarships. DreamDestination helps identify and apply for all available options." },
+      { question: "How do I get an education loan for the Netherlands?", answer: "Start as soon as you have an offer letter, not after you book a visa appointment. We work out the total cost of the course and living in the Netherlands, what your family can fund, and the real gap left to borrow — then compare secured, unsecured and collateral-free routes against your profile and help you assemble the file. We are not a lender and take no commission from any of them: the amount, the interest rate, the collateral requirement and the approval are all the lender's decision. The loan is normally released in multiple disbursements, timed to your fee deadlines." }
     ],
-    metaTitle: "Study in Netherlands | TU Delft, Holland Scholarship & Education Loan | DreamDestinations",
-    metaDescription: "Study in the Netherlands from India with DreamDestinations. 2100+ English-taught programs. Get admission to TU Delft, University of Amsterdam & top Dutch universities. Education loans, zoekjaar visa & scholarship guidance."
+    metaTitle: "Study in Netherlands | TU Delft & NL Scholarship",
+    metaDescription: "Study in the Netherlands from India with DreamDestination. 2100+ English-taught programs. Get admission to TU Delft, University of Amsterdam & top Dutch universities. Education loans, zoekjaar visa & scholarship guidance."
   },
 
   // ============================================================
@@ -1296,7 +1318,7 @@ export const countriesData: CountryData[] = [
     livingCost: "₹40,000-80,000/month",
     workPermit: "1-Year Post-Study Residence Permit",
     scholarships: "Italian Government Scholarships, DSU Regional Scholarships, University Fee Waivers",
-    visaSuccessRate: "87%",
+    visaSuccessRate: "National Visa (D) Study",
     intakeMonths: "September, February",
     currency: "EUR (€)",
     language: "Italian & English",
@@ -1329,16 +1351,16 @@ export const countriesData: CountryData[] = [
     ],
     services: [
       { title: "Italy University Admission", description: "Expert guidance for Italian university applications including Universitaly portal.", features: ["Universitaly Registration", "University Selection", "Application Support", "Credential Evaluation"] },
-      { title: "Italy Education Loan", description: "Affordable education loans for Italian universities.", features: ["Up to ₹40 Lakhs", "Low EMIs", "No Collateral Options", "Quick Processing"] },
+      { title: "Italy Education Loan", description: "Affordable education loans for Italian universities.", features: ["Secured and unsecured routes", "Low EMIs", "No Collateral Options", "Quick Processing"] },
       { title: "Italy Student Visa", description: "Comprehensive visa support for Italian student visa.", features: ["Documentation Prep", "Financial Proof", "Application Filing", "Accommodation Proof"] },
       { title: "Italian Language Support", description: "Language preparation and guidance for studying in Italy.", features: ["Italian A2/B1 Prep", "English-taught Programs", "Language Certificates", "Cultural Orientation"] }
     ],
     educationLoan: {
-      maxAmount: "₹40 Lakhs",
-      interestRate: "9% - 12.5% p.a.",
-      collateral: "No collateral up to ₹15 Lakhs",
+      maxAmount: "Set by the lender",
+      interestRate: "Set by the lender",
+      collateral: "Secured and unsecured routes",
       repaymentPeriod: "Up to 10 years",
-      processingTime: "7-12 business days",
+      processingTime: "Depends on your file",
       highlights: ["Extremely affordable tuition", "Low total cost", "Minimal loan required", "Easy repayment", "Tax benefits under 80E"]
     },
     eligibility: ["Confirmed admission from an Italian institution", "Minimum 55-60% in previous qualification", "Valid passport", "Italian/English proficiency", "Financial proof (€6,000+/year)", "Health insurance", "Accommodation proof"],
@@ -1351,11 +1373,11 @@ export const countriesData: CountryData[] = [
       { question: "What is the post-study work visa in Italy?", answer: "Graduates can apply for a 1-year residence permit (permesso di soggiorno) to seek employment. During this period, you can work while searching for a job matching your qualification. Once employed, you can switch to a work permit." },
       { question: "Can I work while studying in Italy?", answer: "Yes, students can work up to 20 hours/week during the academic year and full-time during holidays. Work permits are relatively easy to obtain for students. Part-time jobs in tourism, hospitality, and teaching English are common." },
       { question: "What are the best universities in Italy?", answer: "Top institutions include Politecnico di Milano (#111 QS), University of Bologna (#133), Sapienza Rome (#132), Bocconi University (top business), Politecnico di Torino, and Istituto Marangoni (#1 fashion). Italy has a strong public university system." },
-      { question: "How do I get an education loan for Italy?", answer: "DreamDestinations helps secure loans up to ₹40 Lakhs for Italy. Since Italian tuition is very low, loans are primarily for living expenses. This means small amounts and very easy repayment. Processing takes 7-12 days." },
-      { question: "What is the DSU scholarship in Italy?", answer: "DSU (Diritto allo Studio Universitario) is a regional scholarship for students with financial need. It can cover tuition fee waiver, free accommodation, free meals, and a monthly stipend. DreamDestinations helps identify eligibility and apply." }
+      { question: "How do I get an education loan for Italy?", answer: "Start as soon as you have an offer letter, not after you book a visa appointment. We work out the total cost of the course and living in Italy, what your family can fund, and the real gap left to borrow — then compare secured, unsecured and collateral-free routes against your profile and help you assemble the file. We are not a lender and take no commission from any of them: the amount, the interest rate, the collateral requirement and the approval are all the lender's decision. The loan is normally released in multiple disbursements, timed to your fee deadlines." },
+      { question: "What is the DSU scholarship in Italy?", answer: "DSU (Diritto allo Studio Universitario) is a regional scholarship for students with financial need. It can cover tuition fee waiver, free accommodation, free meals, and a monthly stipend. DreamDestination helps identify eligibility and apply." }
     ],
-    metaTitle: "Study in Italy | Politecnico di Milano, Fashion Schools & Education Loan | DreamDestinations",
-    metaDescription: "Study in Italy from India with DreamDestinations. Affordable tuition from €200/year. Get admission to Politecnico di Milano, Bocconi, Marangoni & top Italian universities. Education loans, visa assistance & scholarship guidance."
+    metaTitle: "Study in Italy | Politecnico di Milano & Fashion Schools",
+    metaDescription: "Study in Italy from India with DreamDestination. Affordable tuition from €200/year. Get admission to Politecnico di Milano, Bocconi, Marangoni & top Italian universities. Education loans, visa assistance & scholarship guidance."
   },
 
   // ============================================================
@@ -1367,13 +1389,13 @@ export const countriesData: CountryData[] = [
     flag: "🇷🇺",
     heroTagline: "Affordable World-Class Education in Engineering & Medicine",
     description: "Russia offers some of the most affordable quality education globally, with top programs in engineering, medicine, and sciences recognized worldwide.",
-    longDescription: "Russia is one of the most affordable study destinations for Indian students, with tuition fees as low as ₹2-6 Lakhs per year. Home to world-renowned universities like Lomonosov Moscow State University, Saint Petersburg State University, and ITMO University, Russia offers excellent programs in engineering, medicine (MBBS recognized by NMC/WHO), computer science, and aerospace. Over 300,000 international students choose Russia annually. DreamDestinations provides complete support from university admission and education loans to visa processing and pre-departure guidance for studying in Russia.",
+    longDescription: "Russia is one of the most affordable study destinations for Indian students, with tuition fees as low as ₹2-6 Lakhs per year. Home to world-renowned universities like Lomonosov Moscow State University, Saint Petersburg State University, and ITMO University, Russia offers excellent programs in engineering, medicine (MBBS recognized by NMC/WHO), computer science, and aerospace. Over 300,000 international students choose Russia annually. DreamDestination provides complete support from university admission and education loans to visa processing and pre-departure guidance for studying in Russia.",
     universities: "250+",
     avgCost: "₹2-8L/year",
     livingCost: "₹20,000-50,000/month",
     workPermit: "Work permit available during & after studies",
     scholarships: "Russian Government Scholarship, University Scholarships",
-    visaSuccessRate: "90%",
+    visaSuccessRate: "Student Visa (MVD invite)",
     intakeMonths: "September, February",
     currency: "RUB (₽)",
     language: "Russian (English programs available)",
@@ -1406,16 +1428,16 @@ export const countriesData: CountryData[] = [
     ],
     services: [
       { title: "Russia University Admission", description: "Complete guidance for applying to top Russian universities including medical schools recognized by NMC/WHO.", features: ["University Shortlisting", "Application Management", "Invitation Letter", "Admission Confirmation"] },
-      { title: "Russia Education Loan", description: "Affordable education loans for Russian universities — low amounts needed due to very affordable tuition.", features: ["Up to ₹30 Lakhs", "No Collateral Options", "Quick Approval", "Low EMI"] },
+      { title: "Russia Education Loan", description: "Affordable education loans for Russian universities — low amounts needed due to very affordable tuition.", features: ["Secured and unsecured routes", "No Collateral Options", "Quick Approval", "Low EMI"] },
       { title: "Russia Student Visa Assistance", description: "Expert guidance for Russian student visa with invitation letter and documentation support.", features: ["Invitation Letter Help", "Document Preparation", "Visa Application", "Embassy Coordination"] },
       { title: "Pre-departure & Settlement", description: "Complete pre-departure briefing and settlement support for life in Russia.", features: ["Airport Pickup", "Hostel Arrangement", "City Orientation", "Russian Language Basics"] }
     ],
     educationLoan: {
-      maxAmount: "₹30 Lakhs",
-      interestRate: "8.5% - 11% p.a.",
-      collateral: "No collateral up to ₹20 Lakhs",
+      maxAmount: "Set by the lender",
+      interestRate: "Set by the lender",
+      collateral: "Secured and unsecured routes",
       repaymentPeriod: "Up to 10 years",
-      processingTime: "5-10 business days",
+      processingTime: "Depends on your file",
       highlights: ["Very low tuition = small loan", "Minimal monthly EMI", "Covers tuition + hostel + living", "Tax benefits under 80E", "Quick processing"]
     },
     eligibility: ["Confirmed admission from a Russian university", "Minimum 50-60% in 12th/graduation", "Valid passport", "Medical fitness certificate", "HIV test certificate", "NEET qualification (for MBBS)"],
@@ -1425,14 +1447,14 @@ export const countriesData: CountryData[] = [
       { question: "Is Russia affordable for Indian students?", answer: "Russia is one of the most affordable study destinations. Tuition fees range from ₹2-8 Lakhs per year — a fraction of what Western countries charge. Living costs are ₹20,000-50,000/month. Total cost for a 6-year MBBS program can be as low as ₹20-30 Lakhs." },
       { question: "Is MBBS from Russia recognized in India?", answer: "Yes, many Russian medical universities are recognized by NMC (National Medical Commission) and WHO. Graduates must pass the FMGE/NEXT exam to practice in India. Universities like Sechenov, RUDN, Kazan Federal, and Moscow State are popular for MBBS." },
       { question: "Do I need to learn Russian?", answer: "Many universities offer English-medium programs, especially for MBBS and engineering. However, a preparatory year with Russian language training is recommended for better integration. For Russian-medium programs, a 1-year preparatory course is mandatory." },
-      { question: "Is Russia safe for Indian students?", answer: "Major Russian cities like Moscow and Saint Petersburg are generally safe. Universities provide hostel accommodation with security. Indian student communities are well-established. DreamDestinations provides pre-departure briefing on safety and cultural adaptation." },
+      { question: "Is Russia safe for Indian students?", answer: "Major Russian cities like Moscow and Saint Petersburg are generally safe. Universities provide hostel accommodation with security. Indian student communities are well-established. DreamDestination provides pre-departure briefing on safety and cultural adaptation." },
       { question: "What is the weather like in Russia?", answer: "Russia has harsh winters (-20°C to -30°C) but cities are well-equipped with heated buildings and metro systems. Summers are pleasant (20-30°C). Students from India adapt well with proper winter clothing. Universities provide guidance on winter preparation." },
       { question: "Can I work while studying in Russia?", answer: "International students can work part-time (up to 20 hours/week) during academic sessions. Work permits for students are relatively easy to obtain. Many students work as translators, tutors, or in part-time roles during their studies." },
-      { question: "How do I get a student visa for Russia?", answer: "Steps: 1) Get admission and invitation letter, 2) Gather documents including medical/HIV certificates, 3) Apply at Russian Embassy/Consulate, 4) Pay visa fees, 5) Receive visa. Processing takes 2-4 weeks. DreamDestinations handles the entire process." },
+      { question: "How do I get a student visa for Russia?", answer: "Steps: 1) Get admission and invitation letter, 2) Gather documents including medical/HIV certificates, 3) Apply at Russian Embassy/Consulate, 4) Pay visa fees, 5) Receive visa. Processing takes 2-4 weeks. DreamDestination handles the entire process." },
       { question: "What are the entry requirements for Russian universities?", answer: "Requirements include: minimum 50-60% in 12th for undergraduate, graduation for Masters, NEET qualification for MBBS, valid passport, and medical certificates. English proficiency required for English-medium programs. No entrance exam for most programs." }
     ],
-    metaTitle: "Study in Russia | MBBS, Engineering & Affordable Education | DreamDestinations",
-    metaDescription: "Study in Russia from India with DreamDestinations. Affordable tuition from ₹2L/year. MBBS in NMC-approved universities, engineering at top institutions. Education loans, visa assistance & complete guidance."
+    metaTitle: "Study in Russia | MBBS, Engineering & Affordable Education",
+    metaDescription: "Study in Russia from India with DreamDestination. Affordable tuition from ₹2L/year. MBBS in NMC-approved universities, engineering at top institutions. Education loans, visa assistance & complete guidance."
   },
 
   // ============================================================
@@ -1444,13 +1466,13 @@ export const countriesData: CountryData[] = [
     flag: "🇺🇦",
     heroTagline: "Affordable Medical & Engineering Education in Eastern Europe",
     description: "Ukraine is a top choice for affordable MBBS and engineering education, with NMC/WHO-recognized medical universities and a welcoming environment for international students.",
-    longDescription: "Ukraine has been one of the most popular and affordable destinations for Indian students pursuing MBBS, engineering, and other professional courses. With over 20 NMC/WHO-recognized medical universities, Ukraine offers quality medical education at a fraction of Western costs. Universities like Bogomolets National Medical University, Kharkiv National Medical University, and Taras Shevchenko National University are well-known globally. Programs are available in English, and no entrance exams are required for most courses (NEET qualification needed for MBBS). DreamDestinations provides comprehensive support for Ukrainian university admission.",
+    longDescription: "Ukraine has been one of the most popular and affordable destinations for Indian students pursuing MBBS, engineering, and other professional courses. With over 20 NMC/WHO-recognized medical universities, Ukraine offers quality medical education at a fraction of Western costs. Universities like Bogomolets National Medical University, Kharkiv National Medical University, and Taras Shevchenko National University are well-known globally. Programs are available in English, and no entrance exams are required for most courses (NEET qualification needed for MBBS). DreamDestination provides comprehensive support for Ukrainian university admission.",
     universities: "100+",
     avgCost: "₹2-6L/year",
     livingCost: "₹15,000-35,000/month",
     workPermit: "Work opportunities available post-graduation",
     scholarships: "University Merit Scholarships, Government Programs",
-    visaSuccessRate: "88%",
+    visaSuccessRate: "Type D Student Visa",
     intakeMonths: "September, February",
     currency: "UAH (₴)",
     language: "Ukrainian/Russian (English programs available)",
@@ -1480,16 +1502,16 @@ export const countriesData: CountryData[] = [
     ],
     services: [
       { title: "Ukraine University Admission", description: "Expert guidance for admission to NMC/WHO-recognized medical and engineering universities in Ukraine.", features: ["University Selection", "Application Filing", "Invitation Letter", "Admission Confirmation"] },
-      { title: "Ukraine Education Loan", description: "Affordable education loans for Ukrainian universities with minimal amounts needed.", features: ["Up to ₹25 Lakhs", "No Collateral Options", "Quick Processing", "Low EMI"] },
+      { title: "Ukraine Education Loan", description: "Affordable education loans for Ukrainian universities with minimal amounts needed.", features: ["Secured and unsecured routes", "No Collateral Options", "Quick Processing", "Low EMI"] },
       { title: "Ukraine Student Visa", description: "Complete visa support with invitation letter and document preparation.", features: ["Invitation Letter", "Document Preparation", "Visa Application", "Embassy Guidance"] },
       { title: "MBBS Admission Support", description: "Specialized support for MBBS admission in NMC-approved Ukrainian medical universities.", features: ["NMC-Approved Colleges", "NEET Guidance", "FMGE Preparation Tips", "Clinical Training Info"] }
     ],
     educationLoan: {
-      maxAmount: "₹25 Lakhs",
-      interestRate: "8.5% - 11% p.a.",
-      collateral: "No collateral up to ₹15 Lakhs",
+      maxAmount: "Set by the lender",
+      interestRate: "Set by the lender",
+      collateral: "Secured and unsecured routes",
       repaymentPeriod: "Up to 10 years",
-      processingTime: "5-10 business days",
+      processingTime: "Depends on your file",
       highlights: ["Very affordable tuition", "Small loan amount needed", "Covers tuition + hostel + living", "Easy repayment schedule", "Tax benefits under 80E"]
     },
     eligibility: ["Confirmed admission from a Ukrainian university", "Minimum 50% in 12th (PCB for MBBS)", "Valid passport", "NEET qualification (for MBBS)", "Medical fitness certificate", "No entrance exam for most programs"],
@@ -1499,14 +1521,14 @@ export const countriesData: CountryData[] = [
       { question: "Is MBBS from Ukraine recognized in India?", answer: "Yes, several Ukrainian medical universities are recognized by NMC (National Medical Commission) and WHO. Graduates must pass FMGE/NEXT exam to practice in India. Popular NMC-approved universities include Bogomolets, Kharkiv National Medical, Lviv National Medical, and Ternopil National Medical University." },
       { question: "What is the total cost of MBBS in Ukraine?", answer: "The total cost for a 6-year MBBS program in Ukraine ranges from ₹18-35 Lakhs including tuition, hostel, and living expenses. Tuition fees are ₹2-5 Lakhs per year. Hostel fees are ₹15,000-25,000/month. This makes Ukraine one of the most affordable MBBS destinations." },
       { question: "Do I need NEET to study MBBS in Ukraine?", answer: "Yes, Indian students must qualify NEET to pursue MBBS abroad including in Ukraine (as per NMC regulations). However, there is no specific cutoff — you only need to be NEET qualified. No university entrance exam is required in addition to NEET." },
-      { question: "Is it safe to study in Ukraine currently?", answer: "Safety conditions vary by region. Western Ukrainian cities like Lviv and Ternopil are generally safer. DreamDestinations provides updated safety guidance and helps students choose universities in stable regions. We recommend thorough research and staying updated on the current situation." },
+      { question: "Is it safe to study in Ukraine currently?", answer: "Safety conditions vary by region. Western Ukrainian cities like Lviv and Ternopil are generally safer. DreamDestination provides updated safety guidance and helps students choose universities in stable regions. We recommend thorough research and staying updated on the current situation." },
       { question: "What language are courses taught in?", answer: "Most programs for international students are taught in English. Medical courses (MBBS, Dentistry) are commonly available in English medium. Some universities also offer a preparatory year for language training. Ukrainian/Russian language basics are helpful for daily life." },
       { question: "Can I work while studying in Ukraine?", answer: "Students can work part-time during their studies. Work opportunities include tutoring, translation, and hospitality. However, medical students typically have intensive schedules with limited free time for work. Post-graduation employment is available through work permits." },
-      { question: "How do I get a student visa for Ukraine?", answer: "Steps: 1) Get admission and invitation letter from the university, 2) Gather required documents, 3) Apply at the Ukrainian Embassy, 4) Pay visa fees, 5) Attend interview if required. Processing takes 2-4 weeks. DreamDestinations handles the entire process." },
+      { question: "How do I get a student visa for Ukraine?", answer: "Steps: 1) Get admission and invitation letter from the university, 2) Gather required documents, 3) Apply at the Ukrainian Embassy, 4) Pay visa fees, 5) Attend interview if required. Processing takes 2-4 weeks. DreamDestination handles the entire process." },
       { question: "What is the quality of medical education in Ukraine?", answer: "Ukrainian medical education follows European standards with strong clinical training. Many universities have modern facilities, simulation labs, and teaching hospitals. The MBBS degree is recognized by NMC, WHO, and other international bodies. Graduates successfully practice worldwide." }
     ],
-    metaTitle: "Study in Ukraine | MBBS, Medical Universities & Education Loan | DreamDestinations",
-    metaDescription: "Study in Ukraine from India with DreamDestinations. Affordable MBBS from ₹2L/year at NMC-approved medical universities. Get admission to Bogomolets, Kharkiv National Medical & top Ukrainian universities. Education loans & visa assistance."
+    metaTitle: "Study in Ukraine | MBBS & Medical Universities",
+    metaDescription: "Study in Ukraine from India with DreamDestination. Affordable MBBS from ₹2L/year at NMC-approved medical universities. Get admission to Bogomolets, Kharkiv National Medical & top Ukrainian universities. Education loans & visa assistance."
   },
 
   // ============================================================
@@ -1518,13 +1540,13 @@ export const countriesData: CountryData[] = [
     flag: "🇨🇳",
     heroTagline: "Rising Global Education Powerhouse with Generous Scholarships",
     description: "China offers world-class education with generous government scholarships, top-ranked universities, and affordable living — making it an increasingly popular destination for international students.",
-    longDescription: "China has rapidly emerged as a global education powerhouse, with over 500,000 international students and multiple universities in the global top 50. Institutions like Tsinghua University, Peking University, and Fudan University rival the best in the world. China offers generous CSC (Chinese Scholarship Council) scholarships covering full tuition, accommodation, and monthly stipends. For Indian students, MBBS programs in English are especially popular and NMC-recognized. With affordable living costs, a booming economy, and Mandarin being the world's most spoken language, studying in China opens unique career opportunities. DreamDestinations provides end-to-end support.",
+    longDescription: "China has rapidly emerged as a global education powerhouse, with over 500,000 international students and multiple universities in the global top 50. Institutions like Tsinghua University, Peking University, and Fudan University rival the best in the world. China offers generous CSC (Chinese Scholarship Council) scholarships covering full tuition, accommodation, and monthly stipends. For Indian students, MBBS programs in English are especially popular and NMC-recognized. With affordable living costs, a booming economy, and Mandarin being the world's most spoken language, studying in China opens unique career opportunities. DreamDestination provides end-to-end support.",
     universities: "300+",
     avgCost: "₹3-15L/year",
     livingCost: "₹20,000-50,000/month",
     workPermit: "Work permit available for graduates",
     scholarships: "CSC Scholarship (Full Ride), Provincial & University Scholarships",
-    visaSuccessRate: "91%",
+    visaSuccessRate: "X1 / X2 Student Visa",
     intakeMonths: "September, February",
     currency: "CNY (¥)",
     language: "Mandarin (English programs available)",
@@ -1557,16 +1579,16 @@ export const countriesData: CountryData[] = [
     ],
     services: [
       { title: "China University Admission", description: "Expert guidance for applying to top Chinese universities including CSC scholarship applications.", features: ["University Shortlisting", "CSC Scholarship Application", "Document Preparation", "Interview Coaching"] },
-      { title: "China Education Loan", description: "Education loans for Chinese universities — affordable amounts due to low tuition and scholarship options.", features: ["Up to ₹40 Lakhs", "No Collateral Options", "Quick Approval", "Flexible Repayment"] },
+      { title: "China Education Loan", description: "Education loans for Chinese universities — affordable amounts due to low tuition and scholarship options.", features: ["Secured and unsecured routes", "No Collateral Options", "Quick Approval", "Flexible Repayment"] },
       { title: "China Student Visa (X1/X2)", description: "Complete X1/X2 student visa support with JW201/JW202 form guidance.", features: ["JW Form Guidance", "Document Preparation", "Visa Application", "Physical Exam Support"] },
       { title: "Mandarin Language Prep", description: "Pre-departure Mandarin basics and cultural orientation for smooth transition.", features: ["Basic Mandarin Course", "Cultural Orientation", "HSK Test Guidance", "Settlement Support"] }
     ],
     educationLoan: {
-      maxAmount: "₹40 Lakhs",
-      interestRate: "8.5% - 11.5% p.a.",
-      collateral: "No collateral up to ₹20 Lakhs",
+      maxAmount: "Set by the lender",
+      interestRate: "Set by the lender",
+      collateral: "Secured and unsecured routes",
       repaymentPeriod: "Up to 12 years",
-      processingTime: "5-12 business days",
+      processingTime: "Depends on your file",
       highlights: ["Low tuition fees", "CSC scholarship can cover full cost", "Covers tuition + hostel + living", "Moratorium during studies", "Tax benefits under 80E"]
     },
     eligibility: ["Confirmed admission from a Chinese university", "Minimum 50-60% in previous qualification", "Valid passport (6+ months validity)", "JW201/JW202 form", "Physical examination (Foreigner Health Form)", "NEET qualification (for MBBS)", "HSK level (for Chinese-medium programs)"],
@@ -1574,16 +1596,16 @@ export const countriesData: CountryData[] = [
     documentsRequired: ["Valid Passport", "University Admission Notice", "JW201/JW202 Form", "Foreigner Physical Examination Form", "Academic Transcripts (Notarized)", "Passport Photos", "No Criminal Record Certificate", "Financial Proof", "NEET Scorecard (for MBBS)", "Study Plan/SOP"],
     faqs: [
       { question: "Is China affordable for Indian students?", answer: "Very affordable! Tuition ranges from ₹3-15 Lakhs/year depending on the university and program. MBBS programs cost ₹3-8 Lakhs/year. Living costs are ₹20,000-50,000/month. CSC scholarships can cover everything including monthly stipend of ¥2,500-3,500. Total cost can be as low as FREE with full scholarship." },
-      { question: "What is the CSC Scholarship?", answer: "The Chinese Scholarship Council (CSC) offers full scholarships covering tuition, accommodation, monthly stipend (¥2,500-3,500), and comprehensive medical insurance. Applications open December-April. DreamDestinations helps identify eligible programs and prepare competitive applications for Indian students." },
+      { question: "What is the CSC Scholarship?", answer: "The Chinese Scholarship Council (CSC) offers full scholarships covering tuition, accommodation, monthly stipend (¥2,500-3,500), and comprehensive medical insurance. Applications open December-April. DreamDestination helps identify eligible programs and prepare competitive applications for Indian students." },
       { question: "Is MBBS from China recognized in India?", answer: "Yes, many Chinese medical universities are NMC and WHO recognized. Graduates must pass FMGE/NEXT to practice in India. Popular choices include Nanjing Medical University, Wuhan University, Fudan University, and Zhejiang University. Programs are typically 5+1 year (including internship)." },
       { question: "Do I need to learn Mandarin?", answer: "For English-medium programs, Mandarin is not mandatory but helpful for daily life. For Chinese-medium programs, HSK Level 4-5 is required. Many universities offer a 1-year Mandarin preparatory program. Learning basic Mandarin enhances your experience and career prospects significantly." },
       { question: "How is the quality of education in China?", answer: "Exceptional! Tsinghua and Peking University rank in the global top 20. China invests heavily in research and innovation. Engineering, AI, and technology programs are particularly strong. Medical education follows international standards with modern facilities and teaching hospitals." },
       { question: "Can I work while studying in China?", answer: "Students can work part-time with permission from the university and local authorities. Internship opportunities are available, especially in tech companies in cities like Beijing, Shanghai, and Shenzhen. Post-graduation work permits are available for employment in China." },
-      { question: "Is China safe for Indian students?", answer: "China is generally very safe with low crime rates. Major cities have excellent public infrastructure, healthcare, and transportation. Indian student communities exist in all major university cities. DreamDestinations provides pre-departure briefing on safety, culture, and daily life." },
+      { question: "Is China safe for Indian students?", answer: "China is generally very safe with low crime rates. Major cities have excellent public infrastructure, healthcare, and transportation. Indian student communities exist in all major university cities. DreamDestination provides pre-departure briefing on safety, culture, and daily life." },
       { question: "What is the visa process for studying in China?", answer: "Steps: 1) Get admission notice and JW form, 2) Complete physical examination, 3) Gather documents, 4) Apply for X1 (long-term) or X2 (short-term) visa at Chinese Embassy, 5) Convert to residence permit within 30 days of arrival. Processing takes 1-2 weeks." }
     ],
-    metaTitle: "Study in China | CSC Scholarship, Top Universities & MBBS | DreamDestinations",
-    metaDescription: "Study in China from India with DreamDestinations. CSC full scholarships available. Get admission to Tsinghua, Peking, Fudan & top Chinese universities. MBBS, engineering, education loans & visa assistance for Indian students."
+    metaTitle: "Study in China | CSC Scholarship, Top Universities & MBBS",
+    metaDescription: "Study in China from India with DreamDestination. CSC full scholarships available. Get admission to Tsinghua, Peking, Fudan & top Chinese universities. MBBS, engineering, education loans & visa assistance for Indian students."
   },
 
   // ============================================================
@@ -1595,13 +1617,13 @@ export const countriesData: CountryData[] = [
     flag: "🇯🇵",
     heroTagline: "Innovation, Technology & World-Class Research in Asia's Powerhouse",
     description: "Japan offers cutting-edge education in technology, robotics, and engineering with generous MEXT scholarships and a unique cultural experience.",
-    longDescription: "Japan is a global leader in technology, innovation, and research, home to prestigious universities like the University of Tokyo, Kyoto University, and Osaka University. With the MEXT (Ministry of Education) scholarship program covering full tuition, living expenses, and airfare, Japan is extremely accessible for international students. Japanese universities excel in engineering, robotics, AI, automotive technology, and sciences. Japan's unique blend of traditional culture and futuristic innovation offers an unparalleled study experience. Over 300,000 international students study in Japan, and the government actively supports international enrollment through the 'Study in Japan' initiative. DreamDestinations provides comprehensive support.",
+    longDescription: "Japan is a global leader in technology, innovation, and research, home to prestigious universities like the University of Tokyo, Kyoto University, and Osaka University. With the MEXT (Ministry of Education) scholarship program covering full tuition, living expenses, and airfare, Japan is extremely accessible for international students. Japanese universities excel in engineering, robotics, AI, automotive technology, and sciences. Japan's unique blend of traditional culture and futuristic innovation offers an unparalleled study experience. Over 300,000 international students study in Japan, and the government actively supports international enrollment through the 'Study in Japan' initiative. DreamDestination provides comprehensive support.",
     universities: "200+",
     avgCost: "₹4-12L/year",
     livingCost: "₹50,000-1,00,000/month",
     workPermit: "Post-graduation work visa available (up to 1 year job-seeking)",
     scholarships: "MEXT Scholarship (Full Ride), JASSO, University Scholarships",
-    visaSuccessRate: "93%",
+    visaSuccessRate: "Student Status + CoE",
     intakeMonths: "April, October",
     currency: "JPY (¥)",
     language: "Japanese (English programs available)",
@@ -1634,16 +1656,16 @@ export const countriesData: CountryData[] = [
     ],
     services: [
       { title: "Japan University Admission", description: "Expert guidance for applying to Japanese universities including MEXT scholarship applications.", features: ["University Shortlisting", "MEXT Application", "Research Proposal Writing", "Professor Contact (for research students)"] },
-      { title: "Japan Education Loan", description: "Education loans for Japanese institutions — reduced amounts when combined with scholarships.", features: ["Up to ₹50 Lakhs", "No Collateral Options", "Quick Processing", "MEXT-compatible"] },
+      { title: "Japan Education Loan", description: "Education loans for Japanese institutions — reduced amounts when combined with scholarships.", features: ["Secured and unsecured routes", "No Collateral Options", "Quick Processing", "MEXT-compatible"] },
       { title: "Japan Student Visa", description: "Complete Certificate of Eligibility (CoE) and visa support for Japan.", features: ["CoE Application", "Document Preparation", "Visa Application", "Embassy Coordination"] },
       { title: "Japanese Language & Culture Prep", description: "Pre-departure Japanese language basics and cultural orientation.", features: ["Basic Japanese Course", "JLPT Guidance", "Cultural Orientation", "Settlement Support"] }
     ],
     educationLoan: {
-      maxAmount: "₹50 Lakhs",
-      interestRate: "8.5% - 12% p.a.",
-      collateral: "No collateral up to ₹25 Lakhs",
+      maxAmount: "Set by the lender",
+      interestRate: "Set by the lender",
+      collateral: "Secured and unsecured routes",
       repaymentPeriod: "Up to 12 years",
-      processingTime: "7-12 business days",
+      processingTime: "Depends on your file",
       highlights: ["National universities very affordable", "MEXT covers full cost", "Covers tuition + living + travel", "Moratorium during studies", "Tax benefits under 80E"]
     },
     eligibility: ["Confirmed admission from a Japanese university", "Minimum 60% in previous qualification", "Valid passport", "Certificate of Eligibility (CoE)", "JLPT N2+ (for Japanese-medium programs)", "English proficiency (for English programs)", "Research proposal (for research students)"],
@@ -1656,11 +1678,11 @@ export const countriesData: CountryData[] = [
       { question: "Can I work while studying in Japan?", answer: "Yes! Students can work up to 28 hours per week during term and 40 hours during holidays with a 'Permission to Engage in Activity Other Than That Permitted by the Status of Residence.' Average hourly wage is ¥1,000-1,200 (₹550-660). Part-time work can cover a significant portion of living expenses." },
       { question: "What are the best universities in Japan for engineering?", answer: "Top engineering universities include University of Tokyo (#28 QS), Tokyo Tech (#84), Kyoto University (#49), Osaka University (#68), and Tohoku University (#113). Japan excels in robotics, automotive engineering, materials science, AI, and electrical engineering. These universities have strong industry partnerships." },
       { question: "What is the post-study work visa in Japan?", answer: "Graduates can switch to a 'Designated Activities' visa for up to 1 year of job-seeking. Once employed, they can get a work visa (Engineer/Specialist in Humanities/International Services). Japan actively welcomes skilled foreign workers, especially in tech and engineering. The job market is favorable for graduates from top universities." },
-      { question: "How do I apply for MEXT scholarship from India?", answer: "Steps: 1) Apply through Indian Embassy (Embassy Recommendation) or directly to universities (University Recommendation), 2) Take written exams at Embassy (math, English, Japanese), 3) Interview, 4) University placement, 5) Receive scholarship. Application period is April-June. DreamDestinations guides through the entire process." },
-      { question: "Is Japan safe for Indian students?", answer: "Japan is one of the safest countries in the world with extremely low crime rates. Cities are clean, efficient, and well-organized. Indian communities exist in major cities. Vegetarian food options are expanding. DreamDestinations provides comprehensive pre-departure briefing on life in Japan." }
+      { question: "How do I apply for MEXT scholarship from India?", answer: "Steps: 1) Apply through Indian Embassy (Embassy Recommendation) or directly to universities (University Recommendation), 2) Take written exams at Embassy (math, English, Japanese), 3) Interview, 4) University placement, 5) Receive scholarship. Application period is April-June. DreamDestination guides through the entire process." },
+      { question: "Is Japan safe for Indian students?", answer: "Japan is one of the safest countries in the world with extremely low crime rates. Cities are clean, efficient, and well-organized. Indian communities exist in major cities. Vegetarian food options are expanding. DreamDestination provides comprehensive pre-departure briefing on life in Japan." }
     ],
-    metaTitle: "Study in Japan | MEXT Scholarship, Top Universities & Education Loan | DreamDestinations",
-    metaDescription: "Study in Japan from India with DreamDestinations. MEXT full scholarships available. Get admission to University of Tokyo, Kyoto University & top Japanese universities. Engineering, robotics, education loans & visa assistance."
+    metaTitle: "Study in Japan | MEXT Scholarship & Top Universities",
+    metaDescription: "Study in Japan from India with DreamDestination. MEXT full scholarships available. Get admission to University of Tokyo, Kyoto University & top Japanese universities. Engineering, robotics, education loans & visa assistance."
   },
 
   // ============================================================
@@ -1672,13 +1694,13 @@ export const countriesData: CountryData[] = [
     flag: "🇮🇷",
     heroTagline: "Rich Academic Heritage with Affordable Medical & Engineering Education",
     description: "Iran offers affordable quality education in medicine, engineering, and sciences with a rich academic tradition and warm hospitality for international students.",
-    longDescription: "Iran has a rich educational heritage with some of the oldest universities in the world. Modern Iranian universities like the University of Tehran, Sharif University of Technology, and Iran University of Medical Sciences offer high-quality programs in medicine, engineering, and sciences at very affordable costs. Iran is particularly popular for MBBS and dental programs among international students. With tuition as low as ₹1-5 Lakhs per year and very affordable living costs, Iran provides excellent value. The country's warm hospitality, rich culture, and historical significance make it a unique study destination. DreamDestinations provides comprehensive support for Indian students looking to study in Iran.",
+    longDescription: "Iran has a rich educational heritage with some of the oldest universities in the world. Modern Iranian universities like the University of Tehran, Sharif University of Technology, and Iran University of Medical Sciences offer high-quality programs in medicine, engineering, and sciences at very affordable costs. Iran is particularly popular for MBBS and dental programs among international students. With tuition as low as ₹1-5 Lakhs per year and very affordable living costs, Iran provides excellent value. The country's warm hospitality, rich culture, and historical significance make it a unique study destination. DreamDestination provides comprehensive support for Indian students looking to study in Iran.",
     universities: "100+",
     avgCost: "₹1-5L/year",
     livingCost: "₹10,000-25,000/month",
     workPermit: "Limited work opportunities during studies",
     scholarships: "Iranian Government Scholarships, University Fee Waivers",
-    visaSuccessRate: "85%",
+    visaSuccessRate: "Education Visa",
     intakeMonths: "September, February",
     currency: "IRR (﷼)",
     language: "Persian/Farsi (English programs available)",
@@ -1708,16 +1730,16 @@ export const countriesData: CountryData[] = [
     ],
     services: [
       { title: "Iran University Admission", description: "Expert guidance for applying to Iranian universities including medical and engineering programs.", features: ["University Selection", "Application Management", "Document Translation", "Admission Coordination"] },
-      { title: "Iran Education Loan", description: "Minimal education loans for Iranian universities — very small amounts needed due to extremely low costs.", features: ["Up to ₹15 Lakhs", "No Collateral Options", "Quick Approval", "Minimal EMI"] },
+      { title: "Iran Education Loan", description: "Minimal education loans for Iranian universities — very small amounts needed due to extremely low costs.", features: ["Secured and unsecured routes", "No Collateral Options", "Quick Approval", "Minimal EMI"] },
       { title: "Iran Student Visa", description: "Complete visa support with invitation letter and embassy coordination.", features: ["Invitation Letter", "Document Preparation", "Visa Application", "Embassy Guidance"] },
       { title: "Cultural & Language Prep", description: "Pre-departure Persian language basics and cultural orientation.", features: ["Basic Persian Course", "Cultural Orientation", "Settlement Support", "Local SIM & Banking Help"] }
     ],
     educationLoan: {
-      maxAmount: "₹15 Lakhs",
-      interestRate: "8.5% - 10.5% p.a.",
-      collateral: "No collateral up to ₹10 Lakhs",
+      maxAmount: "Set by the lender",
+      interestRate: "Set by the lender",
+      collateral: "Secured and unsecured routes",
       repaymentPeriod: "Up to 8 years",
-      processingTime: "5-10 business days",
+      processingTime: "Depends on your file",
       highlights: ["Extremely affordable tuition", "Minimal loan amount needed", "Very low living costs", "Easy repayment", "Tax benefits under 80E"]
     },
     eligibility: ["Confirmed admission from an Iranian university", "Minimum 50-60% in previous qualification", "Valid passport", "Medical fitness certificate", "NEET qualification (for MBBS)", "No specific entrance exam for most programs"],
@@ -1725,16 +1747,16 @@ export const countriesData: CountryData[] = [
     documentsRequired: ["Valid Passport", "University Invitation Letter", "Academic Transcripts (Apostilled)", "Medical Certificate", "Passport Photos", "Financial Proof", "NEET Scorecard (for MBBS)", "Birth Certificate", "Police Clearance"],
     faqs: [
       { question: "Is Iran affordable for studying?", answer: "Extremely affordable! Iran has some of the lowest tuition fees globally — ₹1-5 Lakhs per year. Living costs are just ₹10,000-25,000/month. Total cost for a full MBBS program (6-7 years) can be as low as ₹12-25 Lakhs. It's one of the most budget-friendly study destinations worldwide." },
-      { question: "Is MBBS from Iran recognized in India?", answer: "Some Iranian medical universities are recognized by NMC and WHO. Graduates must pass FMGE/NEXT exam to practice in India. It's important to verify NMC recognition of the specific university before enrollment. DreamDestinations helps identify recognized institutions." },
+      { question: "Is MBBS from Iran recognized in India?", answer: "Some Iranian medical universities are recognized by NMC and WHO. Graduates must pass FMGE/NEXT exam to practice in India. It's important to verify NMC recognition of the specific university before enrollment. DreamDestination helps identify recognized institutions." },
       { question: "What language are courses taught in?", answer: "Most medical programs for international students are available in English. Engineering and science programs may be in English or Persian. Many universities offer a Persian language preparatory course. Learning basic Persian is recommended for daily life and patient interaction in medical studies." },
-      { question: "Is Iran safe for Indian students?", answer: "Iran is generally safe with warm hospitality towards Indian students. Iranian people are known for their friendliness and welcoming nature. Major cities like Tehran, Isfahan, and Shiraz have well-developed infrastructure. DreamDestinations provides updated safety guidance and cultural orientation." },
+      { question: "Is Iran safe for Indian students?", answer: "Iran is generally safe with warm hospitality towards Indian students. Iranian people are known for their friendliness and welcoming nature. Major cities like Tehran, Isfahan, and Shiraz have well-developed infrastructure. DreamDestination provides updated safety guidance and cultural orientation." },
       { question: "What are the best universities in Iran?", answer: "Top institutions include University of Tehran (oldest and most prestigious), Sharif University of Technology (the 'MIT of Iran'), Iran University of Medical Sciences, Tehran University of Medical Sciences, Isfahan University of Technology, and Amirkabir University. Each excels in specific fields." },
-      { question: "Can I work while studying in Iran?", answer: "Work opportunities during studies are limited for international students. Some part-time opportunities exist in tutoring and translation. The focus is primarily on academics. DreamDestinations recommends budgeting for the full duration without relying on part-time income." },
-      { question: "How do I get a student visa for Iran?", answer: "Steps: 1) Get admission and invitation letter, 2) Gather required documents, 3) Apply at Iranian Embassy/Consulate, 4) Pay visa fees, 5) Receive visa. Processing takes 2-4 weeks. DreamDestinations handles documentation and embassy coordination." },
+      { question: "Can I work while studying in Iran?", answer: "Work opportunities during studies are limited for international students. Some part-time opportunities exist in tutoring and translation. The focus is primarily on academics. DreamDestination recommends budgeting for the full duration without relying on part-time income." },
+      { question: "How do I get a student visa for Iran?", answer: "Steps: 1) Get admission and invitation letter, 2) Gather required documents, 3) Apply at Iranian Embassy/Consulate, 4) Pay visa fees, 5) Receive visa. Processing takes 2-4 weeks. DreamDestination handles documentation and embassy coordination." },
       { question: "What is the cultural environment like in Iran?", answer: "Iran has a rich cultural heritage with world-famous historical sites, delicious cuisine, and warm people. Islamic customs are observed — dress code regulations apply. Indian food ingredients are available. The academic environment is serious and research-focused. Many Iranian universities have international student services." }
     ],
-    metaTitle: "Study in Iran | Affordable MBBS, Engineering & Education Loan | DreamDestinations",
-    metaDescription: "Study in Iran from India with DreamDestinations. Extremely affordable education from ₹1L/year. MBBS, engineering at top Iranian universities. Education loans, visa assistance & complete guidance for Indian students."
+    metaTitle: "Study in Iran | MBBS, Engineering & Costs",
+    metaDescription: "Study in Iran from India with DreamDestination. Extremely affordable education from ₹1L/year. MBBS, engineering at top Iranian universities. Education loans, visa assistance & complete guidance for Indian students."
   }
 ];
 

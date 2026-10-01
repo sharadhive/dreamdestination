@@ -1,0 +1,34 @@
+# Single-page app fallback: send every unknown path to index.html so that
+# deep links such as /admission-guidance work on refresh and direct entry.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Force the canonical https://www. host
+  RewriteCond %{HTTPS} off [OR]
+  RewriteCond %{HTTP_HOST} !^www\. [NC]
+  RewriteRule ^(.*)$ https://www.dreamdestinationstudyabroad.com/$1 [R=301,L]
+
+  # Location pages moved from /locations/<slug> to /<slug> at the site root.
+  # 301 rather than 404 so previously indexed URLs keep their value. The
+  # pattern requires something after the slash, so /locations itself — still
+  # the hub page — is left alone.
+  RewriteRule ^locations/(.+)$ /$1 [R=301,L]
+
+  # Never rewrite real files or directories
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  RewriteRule . /index.html [L]
+</IfModule>
+
+# Long cache for fingerprinted assets, no cache for the HTML shell
+<IfModule mod_headers.c>
+  <FilesMatch "\.(js|css|woff2|png|jpg|jpeg|svg|webp|avif)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.(html)$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>

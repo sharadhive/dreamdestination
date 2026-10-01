@@ -15,11 +15,40 @@ import {
 import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import RelatedLinks from "@/components/RelatedLinks";
 import SEOHead from "@/components/SEOHead";
 import { countriesData, getCountryBySlug, generateJsonLd, type CountryData } from "@/data/countryData";
-import LanguagePopup from "@/components/LanguagePopup";
+import College3DSlider from "@/components/College3DSlider";
+import ukraineBanner from "@/assets/ukraine-banner.jpg";
+import iranBanner from "@/assets/iran-banner.jpg";
 
-const SITE_DOMAIN = "https://dreamdestinations.co.in";
+/**
+ * Banner artwork for the countries that render through THIS page.
+ *
+ * Most destinations have a dedicated page (StudyInUKPage, StudyInItalyPage and
+ * so on) and get their banner from CountryHeroBanner.tsx. Ukraine and Iran do
+ * not — they render here, through the generic /countries/:slug route, which
+ * until now showed a CSS gradient and no artwork at all.
+ *
+ * Add a slug here and this hero uses the image instead of the bare gradient.
+ * The gradient stays as the fallback for any country with no banner, and as the
+ * overlay that keeps the white heading readable over the photograph.
+ */
+const COUNTRY_BANNERS: Record<string, string> = {
+  ukraine: ukraineBanner,
+  iran: iranBanner,
+};
+
+const SITE_DOMAIN = "https://www.dreamdestinationstudyabroad.com";
+
+const CUSTOM_PAGE_SLUGS = ["uk", "canada", "usa", "australia", "new-zealand", "ireland", "france", "germany", "dubai", "switzerland", "malaysia", "mauritius", "italy", "singapore", "netherlands"];
+
+const getCountryPageUrl = (slug: string): string => {
+  if (CUSTOM_PAGE_SLUGS.includes(slug.toLowerCase())) {
+    return `/study-in-${slug.toLowerCase()}`;
+  }
+  return `/countries/${slug}`;
+};
 
 const CountryPage = () => {
   const { countrySlug } = useParams<{ countrySlug: string }>();
@@ -71,11 +100,21 @@ const CountryPage = () => {
       <Header />
 
       {/* Language Popup */}
-      <LanguagePopup
-        countrySlug={country.slug}
-        countryName={country.name}
-        countryFlag={country.flag}
-      />
+      {/*
+        The language-selection popup used to render here. Removed on purpose.
+
+        It opened 1.2 seconds after the page loaded and covered the content —
+        which is exactly the intrusive-interstitial pattern Google penalises on
+        pages people arrive at from a search result. These 20 country pages are
+        the site's main search landing pages, so it was doing the most damage
+        precisely where it mattered most. It also offered the DESTINATION
+        country's language (German on the Germany page, French on France), while
+        the audience is Indian students who read the site in English.
+
+        Language can still be changed any time from the switcher in the header.
+        The sitewide enquiry form now covers these pages instead, on the same
+        20-second delay as everywhere else — see EnquiryPopup.tsx.
+      */}
 
       <main className="pt-20">
         {/* ─── Breadcrumb ─── */}
@@ -92,9 +131,43 @@ const CountryPage = () => {
         </div>
 
         {/* ─── Hero Banner ─── */}
-        <section className={`relative overflow-hidden ${country.gradient} text-white`}>
+        {/*
+          `isolate` matters here. The banner and the overlay sit at z-0 and the
+          content at z-10; without a stacking context on the section, a child at
+          a lower z-index does not reliably paint behind its parent's own
+          background. This is the same bug that made every country banner
+          invisible once before — see CountryHeroBanner.tsx.
+        */}
+        <section className={`relative isolate overflow-hidden ${country.gradient} text-white`}>
+          {/*
+            The banner, where one exists for this country. object-right keeps the
+            flag and the landmark in frame on a phone, because the artwork places
+            the subject on the right and leaves the left deliberately empty for
+            exactly this copy.
+          */}
+          {COUNTRY_BANNERS[country.slug] && (
+            <>
+              <img
+                src={COUNTRY_BANNERS[country.slug]}
+                alt={`Study in ${country.name} — flag and landmarks`}
+                width={1920}
+                height={800}
+                loading="eager"
+                decoding="async"
+                className="absolute inset-0 z-0 h-full w-full object-cover object-right pointer-events-none sm:object-center"
+              />
+              {/*
+                Readability overlay. The heading is white and the artwork is
+                bright on the right-hand side, so without this the h1 sits on a
+                pale sky and fails contrast. Heavier on the left, where the text
+                is, and lighter on the right so the landmark still reads.
+              */}
+              <div className="absolute inset-0 z-0 bg-gradient-to-r from-slate-950/90 via-slate-950/70 to-slate-950/30 pointer-events-none" />
+            </>
+          )}
+
           {/* Decorative elements */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
             <div className="absolute top-10 right-10 w-72 h-72 bg-white/5 rounded-full blur-3xl animate-float" />
             <div className="absolute bottom-10 left-10 w-56 h-56 bg-white/5 rounded-full blur-3xl" style={{ animationDelay: "1.5s" }} />
             <div className="absolute top-1/2 left-1/3 w-40 h-40 bg-white/3 rounded-full blur-2xl animate-pulse-glow" />
@@ -243,69 +316,8 @@ const CountryPage = () => {
           </div>
         </section>
 
-        {/* ─── Top Colleges ─── */}
-        <section id="colleges" className="py-16 bg-gradient-subtle">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-12 animate-fade-in">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Top Colleges & Universities in <span className="text-gradient-hero">{country.name}</span>
-              </h2>
-              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                Explore our partner universities and top-ranked institutions for Indian students
-              </p>
-            </div>
-
-            <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-6 max-w-6xl mx-auto">
-              {country.colleges.map((college, index) => (
-                <div
-                  key={index}
-                  className="bg-card rounded-xl border shadow-soft hover:shadow-elegant transition-smooth hover:-translate-y-1 p-6 group animate-slide-in-right"
-                  style={{ animationDelay: `${index * 0.05}s` }}
-                >
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex-1">
-                      <h3 className="font-bold text-base group-hover:text-primary transition-smooth leading-snug">
-                        {college.name}
-                      </h3>
-                      <div className="flex items-center gap-1.5 mt-1.5 text-sm text-muted-foreground">
-                        <MapPin className="w-3.5 h-3.5" />
-                        <span>{college.location}</span>
-                      </div>
-                    </div>
-                    <span className="shrink-0 px-2.5 py-1 bg-gradient-hero text-white text-xs font-bold rounded-lg">
-                      {college.ranking}
-                    </span>
-                  </div>
-
-                  <div className="flex flex-wrap gap-1.5 mb-4">
-                    {college.programs.slice(0, 4).map((prog, i) => (
-                      <span
-                        key={i}
-                        className="px-2 py-0.5 bg-muted text-muted-foreground text-[10px] rounded-full"
-                      >
-                        {prog}
-                      </span>
-                    ))}
-                    {college.programs.length > 4 && (
-                      <span className="px-2 py-0.5 bg-muted text-muted-foreground text-[10px] rounded-full">
-                        +{college.programs.length - 4} more
-                      </span>
-                    )}
-                  </div>
-
-                  <a
-                    href={college.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-sm text-primary font-medium hover:underline"
-                  >
-                    Visit Website <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        {/* ─── Top Colleges 3D Showcase ─── */}
+        <College3DSlider colleges={country.colleges} countryName={country.name} />
 
         {/* ─── Services Section ─── */}
         <section className="py-16 bg-background">
@@ -521,7 +533,7 @@ const CountryPage = () => {
               {relatedCountries.map((relCountry, index) => (
                 <Link
                   key={relCountry.slug}
-                  to={`/countries/${relCountry.slug}`}
+                  to={getCountryPageUrl(relCountry.slug)}
                   className="bg-card rounded-xl border p-5 shadow-soft hover:shadow-elegant hover:-translate-y-1 transition-smooth group animate-fade-in"
                   style={{ animationDelay: `${index * 0.05}s` }}
                 >
@@ -571,14 +583,14 @@ const CountryPage = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a
-                  href="tel:+918800000000"
+                  href="tel:+919211818710"
                   className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-gradient-gold text-secondary-foreground font-bold rounded-xl shadow-gold hover-glow-gold transition-smooth"
                 >
                   <Phone className="w-5 h-5" />
                   Call Now
                 </a>
                 <a
-                  href="https://wa.me/918800000000"
+                  href="https://wa.me/919211818710"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-white/10 backdrop-blur-sm border border-white/25 text-white font-semibold rounded-xl hover:bg-white/20 transition-smooth"
@@ -590,6 +602,7 @@ const CountryPage = () => {
             </div>
           </div>
         </section>
+        <RelatedLinks currentPath={`/countries/${country.slug}`} />
       </main>
 
       <Footer />

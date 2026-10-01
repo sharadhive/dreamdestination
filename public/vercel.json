@@ -1,0 +1,996 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/locations/:slug",
+      "destination": "/:slug",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultancy-in-:slug",
+      "destination": "/study-abroad-consultants-in-:slug",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultant-in-:slug",
+      "destination": "/study-abroad-consultants-in-:slug",
+      "permanent": true
+    },
+    {
+      "source": "/overseas-education-consultants-in-:slug",
+      "destination": "/study-abroad-consultants-in-:slug",
+      "permanent": true
+    },
+    {
+      "source": "/overseas-education-consultant-in-:slug",
+      "destination": "/study-abroad-consultants-in-:slug",
+      "permanent": true
+    },
+    {
+      "source": "/abroad-education-consultants-in-:slug",
+      "destination": "/study-abroad-consultants-in-:slug",
+      "permanent": true
+    },
+    {
+      "source": "/education-loan-in-:slug",
+      "destination": "/study-abroad-consultants-in-:slug",
+      "permanent": true
+    },
+    {
+      "source": "/student-visa-consultants-in-:slug",
+      "destination": "/study-abroad-consultants-in-:slug",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-in-:slug",
+      "destination": "/study-abroad-consultants-in-:slug",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-bangalore",
+      "destination": "/study-abroad-consultants-in-bengaluru",
+      "permanent": true
+    },
+    {
+      "source": "/bangalore",
+      "destination": "/study-abroad-consultants-in-bengaluru",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-mysore",
+      "destination": "/study-abroad-consultants-in-mysuru",
+      "permanent": true
+    },
+    {
+      "source": "/mysore",
+      "destination": "/study-abroad-consultants-in-mysuru",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-mangalore",
+      "destination": "/study-abroad-consultants-in-mangaluru",
+      "permanent": true
+    },
+    {
+      "source": "/mangalore",
+      "destination": "/study-abroad-consultants-in-mangaluru",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-belgaum",
+      "destination": "/study-abroad-consultants-in-belagavi",
+      "permanent": true
+    },
+    {
+      "source": "/belgaum",
+      "destination": "/study-abroad-consultants-in-belagavi",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-bellary",
+      "destination": "/study-abroad-consultants-in-ballari",
+      "permanent": true
+    },
+    {
+      "source": "/bellary",
+      "destination": "/study-abroad-consultants-in-ballari",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-gulbarga",
+      "destination": "/study-abroad-consultants-in-kalaburagi",
+      "permanent": true
+    },
+    {
+      "source": "/gulbarga",
+      "destination": "/study-abroad-consultants-in-kalaburagi",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-shimoga",
+      "destination": "/study-abroad-consultants-in-shivamogga",
+      "permanent": true
+    },
+    {
+      "source": "/shimoga",
+      "destination": "/study-abroad-consultants-in-shivamogga",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-tumkur",
+      "destination": "/study-abroad-consultants-in-tumakuru",
+      "permanent": true
+    },
+    {
+      "source": "/tumkur",
+      "destination": "/study-abroad-consultants-in-tumakuru",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-bijapur",
+      "destination": "/study-abroad-consultants-in-vijayapura",
+      "permanent": true
+    },
+    {
+      "source": "/bijapur",
+      "destination": "/study-abroad-consultants-in-vijayapura",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-chikmagalur",
+      "destination": "/study-abroad-consultants-in-chikkamagaluru",
+      "permanent": true
+    },
+    {
+      "source": "/chikmagalur",
+      "destination": "/study-abroad-consultants-in-chikkamagaluru",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-davangere",
+      "destination": "/study-abroad-consultants-in-davanagere",
+      "permanent": true
+    },
+    {
+      "source": "/davangere",
+      "destination": "/study-abroad-consultants-in-davanagere",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-hubli",
+      "destination": "/study-abroad-consultants-in-hubli-dharwad",
+      "permanent": true
+    },
+    {
+      "source": "/hubli",
+      "destination": "/study-abroad-consultants-in-hubli-dharwad",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-dharwad",
+      "destination": "/study-abroad-consultants-in-hubli-dharwad",
+      "permanent": true
+    },
+    {
+      "source": "/dharwad",
+      "destination": "/study-abroad-consultants-in-hubli-dharwad",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-madras",
+      "destination": "/study-abroad-consultants-in-chennai",
+      "permanent": true
+    },
+    {
+      "source": "/madras",
+      "destination": "/study-abroad-consultants-in-chennai",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-bombay",
+      "destination": "/study-abroad-consultants-in-mumbai",
+      "permanent": true
+    },
+    {
+      "source": "/bombay",
+      "destination": "/study-abroad-consultants-in-mumbai",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-calcutta",
+      "destination": "/study-abroad-consultants-in-kolkata",
+      "permanent": true
+    },
+    {
+      "source": "/calcutta",
+      "destination": "/study-abroad-consultants-in-kolkata",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-new-bombay",
+      "destination": "/study-abroad-consultants-in-navi-mumbai",
+      "permanent": true
+    },
+    {
+      "source": "/new-bombay",
+      "destination": "/study-abroad-consultants-in-navi-mumbai",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-poona",
+      "destination": "/study-abroad-consultants-in-pune",
+      "permanent": true
+    },
+    {
+      "source": "/poona",
+      "destination": "/study-abroad-consultants-in-pune",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-trivandrum",
+      "destination": "/study-abroad-consultants-in-thiruvananthapuram",
+      "permanent": true
+    },
+    {
+      "source": "/trivandrum",
+      "destination": "/study-abroad-consultants-in-thiruvananthapuram",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-calicut",
+      "destination": "/study-abroad-consultants-in-kozhikode",
+      "permanent": true
+    },
+    {
+      "source": "/calicut",
+      "destination": "/study-abroad-consultants-in-kozhikode",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-trichur",
+      "destination": "/study-abroad-consultants-in-thrissur",
+      "permanent": true
+    },
+    {
+      "source": "/trichur",
+      "destination": "/study-abroad-consultants-in-thrissur",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-cochin",
+      "destination": "/study-abroad-consultants-in-kochi",
+      "permanent": true
+    },
+    {
+      "source": "/cochin",
+      "destination": "/study-abroad-consultants-in-kochi",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-cannanore",
+      "destination": "/study-abroad-consultants-in-kannur",
+      "permanent": true
+    },
+    {
+      "source": "/cannanore",
+      "destination": "/study-abroad-consultants-in-kannur",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-alleppey",
+      "destination": "/study-abroad-consultants-in-alappuzha",
+      "permanent": true
+    },
+    {
+      "source": "/alleppey",
+      "destination": "/study-abroad-consultants-in-alappuzha",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-quilon",
+      "destination": "/study-abroad-consultants-in-kollam",
+      "permanent": true
+    },
+    {
+      "source": "/quilon",
+      "destination": "/study-abroad-consultants-in-kollam",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-palghat",
+      "destination": "/study-abroad-consultants-in-palakkad",
+      "permanent": true
+    },
+    {
+      "source": "/palghat",
+      "destination": "/study-abroad-consultants-in-palakkad",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-trichy",
+      "destination": "/study-abroad-consultants-in-tiruchirappalli",
+      "permanent": true
+    },
+    {
+      "source": "/trichy",
+      "destination": "/study-abroad-consultants-in-tiruchirappalli",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-tiruchirapalli",
+      "destination": "/study-abroad-consultants-in-tiruchirappalli",
+      "permanent": true
+    },
+    {
+      "source": "/tiruchirapalli",
+      "destination": "/study-abroad-consultants-in-tiruchirappalli",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-tuticorin",
+      "destination": "/study-abroad-consultants-in-thoothukudi",
+      "permanent": true
+    },
+    {
+      "source": "/tuticorin",
+      "destination": "/study-abroad-consultants-in-thoothukudi",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-tirupur",
+      "destination": "/study-abroad-consultants-in-tiruppur",
+      "permanent": true
+    },
+    {
+      "source": "/tirupur",
+      "destination": "/study-abroad-consultants-in-tiruppur",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-tanjore",
+      "destination": "/study-abroad-consultants-in-thanjavur",
+      "permanent": true
+    },
+    {
+      "source": "/tanjore",
+      "destination": "/study-abroad-consultants-in-thanjavur",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-nellai",
+      "destination": "/study-abroad-consultants-in-tirunelveli",
+      "permanent": true
+    },
+    {
+      "source": "/nellai",
+      "destination": "/study-abroad-consultants-in-tirunelveli",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-udhagamandalam",
+      "destination": "/study-abroad-consultants-in-ooty",
+      "permanent": true
+    },
+    {
+      "source": "/udhagamandalam",
+      "destination": "/study-abroad-consultants-in-ooty",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-ootacamund",
+      "destination": "/study-abroad-consultants-in-ooty",
+      "permanent": true
+    },
+    {
+      "source": "/ootacamund",
+      "destination": "/study-abroad-consultants-in-ooty",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-vizag",
+      "destination": "/study-abroad-consultants-in-visakhapatnam",
+      "permanent": true
+    },
+    {
+      "source": "/vizag",
+      "destination": "/study-abroad-consultants-in-visakhapatnam",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-vishakhapatnam",
+      "destination": "/study-abroad-consultants-in-visakhapatnam",
+      "permanent": true
+    },
+    {
+      "source": "/vishakhapatnam",
+      "destination": "/study-abroad-consultants-in-visakhapatnam",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-rajamahendravaram",
+      "destination": "/study-abroad-consultants-in-rajahmundry",
+      "permanent": true
+    },
+    {
+      "source": "/rajamahendravaram",
+      "destination": "/study-abroad-consultants-in-rajahmundry",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-allahabad",
+      "destination": "/study-abroad-consultants-in-prayagraj",
+      "permanent": true
+    },
+    {
+      "source": "/allahabad",
+      "destination": "/study-abroad-consultants-in-prayagraj",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-banaras",
+      "destination": "/study-abroad-consultants-in-varanasi",
+      "permanent": true
+    },
+    {
+      "source": "/banaras",
+      "destination": "/study-abroad-consultants-in-varanasi",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-benares",
+      "destination": "/study-abroad-consultants-in-varanasi",
+      "permanent": true
+    },
+    {
+      "source": "/benares",
+      "destination": "/study-abroad-consultants-in-varanasi",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-gurgaon",
+      "destination": "/study-abroad-consultants-in-gurugram",
+      "permanent": true
+    },
+    {
+      "source": "/gurgaon",
+      "destination": "/study-abroad-consultants-in-gurugram",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-baroda",
+      "destination": "/study-abroad-consultants-in-vadodara",
+      "permanent": true
+    },
+    {
+      "source": "/baroda",
+      "destination": "/study-abroad-consultants-in-vadodara",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-ahilyanagar",
+      "destination": "/study-abroad-consultants-in-ahmednagar",
+      "permanent": true
+    },
+    {
+      "source": "/ahilyanagar",
+      "destination": "/study-abroad-consultants-in-ahmednagar",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-nasik",
+      "destination": "/study-abroad-consultants-in-nashik",
+      "permanent": true
+    },
+    {
+      "source": "/nasik",
+      "destination": "/study-abroad-consultants-in-nashik",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-sholapur",
+      "destination": "/study-abroad-consultants-in-solapur",
+      "permanent": true
+    },
+    {
+      "source": "/sholapur",
+      "destination": "/study-abroad-consultants-in-solapur",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-simla",
+      "destination": "/study-abroad-consultants-in-shimla",
+      "permanent": true
+    },
+    {
+      "source": "/simla",
+      "destination": "/study-abroad-consultants-in-shimla",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-dharamsala",
+      "destination": "/study-abroad-consultants-in-dharamshala",
+      "permanent": true
+    },
+    {
+      "source": "/dharamsala",
+      "destination": "/study-abroad-consultants-in-dharamshala",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-hardwar",
+      "destination": "/study-abroad-consultants-in-haridwar",
+      "permanent": true
+    },
+    {
+      "source": "/hardwar",
+      "destination": "/study-abroad-consultants-in-haridwar",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-sas-nagar",
+      "destination": "/study-abroad-consultants-in-mohali",
+      "permanent": true
+    },
+    {
+      "source": "/sas-nagar",
+      "destination": "/study-abroad-consultants-in-mohali",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-bhatinda",
+      "destination": "/study-abroad-consultants-in-bathinda",
+      "permanent": true
+    },
+    {
+      "source": "/bhatinda",
+      "destination": "/study-abroad-consultants-in-bathinda",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-ferozepur",
+      "destination": "/study-abroad-consultants-in-firozpur",
+      "permanent": true
+    },
+    {
+      "source": "/ferozepur",
+      "destination": "/study-abroad-consultants-in-firozpur",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-sri-muktsar-sahib",
+      "destination": "/study-abroad-consultants-in-muktsar",
+      "permanent": true
+    },
+    {
+      "source": "/sri-muktsar-sahib",
+      "destination": "/study-abroad-consultants-in-muktsar",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-ganganagar",
+      "destination": "/study-abroad-consultants-in-sri-ganganagar",
+      "permanent": true
+    },
+    {
+      "source": "/ganganagar",
+      "destination": "/study-abroad-consultants-in-sri-ganganagar",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-gauhati",
+      "destination": "/study-abroad-consultants-in-guwahati",
+      "permanent": true
+    },
+    {
+      "source": "/gauhati",
+      "destination": "/study-abroad-consultants-in-guwahati",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-burdwan",
+      "destination": "/study-abroad-consultants-in-bardhaman",
+      "permanent": true
+    },
+    {
+      "source": "/burdwan",
+      "destination": "/study-abroad-consultants-in-bardhaman",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-brahmapur",
+      "destination": "/study-abroad-consultants-in-berhampur",
+      "permanent": true
+    },
+    {
+      "source": "/brahmapur",
+      "destination": "/study-abroad-consultants-in-berhampur",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-baleshwar",
+      "destination": "/study-abroad-consultants-in-balasore",
+      "permanent": true
+    },
+    {
+      "source": "/baleshwar",
+      "destination": "/study-abroad-consultants-in-balasore",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-srirampur",
+      "destination": "/study-abroad-consultants-in-serampore",
+      "permanent": true
+    },
+    {
+      "source": "/srirampur",
+      "destination": "/study-abroad-consultants-in-serampore",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-sri-vijaya-puram",
+      "destination": "/study-abroad-consultants-in-port-blair",
+      "permanent": true
+    },
+    {
+      "source": "/sri-vijaya-puram",
+      "destination": "/study-abroad-consultants-in-port-blair",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-panjim",
+      "destination": "/study-abroad-consultants-in-panaji",
+      "permanent": true
+    },
+    {
+      "source": "/panjim",
+      "destination": "/study-abroad-consultants-in-panaji",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-madgaon",
+      "destination": "/study-abroad-consultants-in-margao",
+      "permanent": true
+    },
+    {
+      "source": "/madgaon",
+      "destination": "/study-abroad-consultants-in-margao",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-vasco",
+      "destination": "/study-abroad-consultants-in-vasco-da-gama",
+      "permanent": true
+    },
+    {
+      "source": "/vasco",
+      "destination": "/study-abroad-consultants-in-vasco-da-gama",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-pimpri",
+      "destination": "/study-abroad-consultants-in-pimpri-chinchwad",
+      "permanent": true
+    },
+    {
+      "source": "/pimpri",
+      "destination": "/study-abroad-consultants-in-pimpri-chinchwad",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-chinchwad",
+      "destination": "/study-abroad-consultants-in-pimpri-chinchwad",
+      "permanent": true
+    },
+    {
+      "source": "/chinchwad",
+      "destination": "/study-abroad-consultants-in-pimpri-chinchwad",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-kalyan",
+      "destination": "/study-abroad-consultants-in-kalyan-dombivli",
+      "permanent": true
+    },
+    {
+      "source": "/kalyan",
+      "destination": "/study-abroad-consultants-in-kalyan-dombivli",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-dombivli",
+      "destination": "/study-abroad-consultants-in-kalyan-dombivli",
+      "permanent": true
+    },
+    {
+      "source": "/dombivli",
+      "destination": "/study-abroad-consultants-in-kalyan-dombivli",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-vasai",
+      "destination": "/study-abroad-consultants-in-vasai-virar",
+      "permanent": true
+    },
+    {
+      "source": "/vasai",
+      "destination": "/study-abroad-consultants-in-vasai-virar",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-virar",
+      "destination": "/study-abroad-consultants-in-vasai-virar",
+      "permanent": true
+    },
+    {
+      "source": "/virar",
+      "destination": "/study-abroad-consultants-in-vasai-virar",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-mira-road",
+      "destination": "/study-abroad-consultants-in-mira-bhayandar",
+      "permanent": true
+    },
+    {
+      "source": "/mira-road",
+      "destination": "/study-abroad-consultants-in-mira-bhayandar",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-bhayandar",
+      "destination": "/study-abroad-consultants-in-mira-bhayandar",
+      "permanent": true
+    },
+    {
+      "source": "/bhayandar",
+      "destination": "/study-abroad-consultants-in-mira-bhayandar",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-orissa",
+      "destination": "/study-abroad-consultants-in-odisha",
+      "permanent": true
+    },
+    {
+      "source": "/orissa",
+      "destination": "/study-abroad-consultants-in-odisha",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-uttaranchal",
+      "destination": "/study-abroad-consultants-in-uttarakhand",
+      "permanent": true
+    },
+    {
+      "source": "/uttaranchal",
+      "destination": "/study-abroad-consultants-in-uttarakhand",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-pondicherry",
+      "destination": "/study-abroad-consultants-in-puducherry",
+      "permanent": true
+    },
+    {
+      "source": "/pondicherry",
+      "destination": "/study-abroad-consultants-in-puducherry",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-delhi-ncr",
+      "destination": "/study-abroad-consultants-in-delhi",
+      "permanent": true
+    },
+    {
+      "source": "/delhi-ncr",
+      "destination": "/study-abroad-consultants-in-delhi",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-new-delhi-ncr",
+      "destination": "/study-abroad-consultants-in-delhi",
+      "permanent": true
+    },
+    {
+      "source": "/new-delhi-ncr",
+      "destination": "/study-abroad-consultants-in-delhi",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-tamilnadu",
+      "destination": "/study-abroad-consultants-in-tamil-nadu",
+      "permanent": true
+    },
+    {
+      "source": "/tamilnadu",
+      "destination": "/study-abroad-consultants-in-tamil-nadu",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-bengal",
+      "destination": "/study-abroad-consultants-in-west-bengal",
+      "permanent": true
+    },
+    {
+      "source": "/bengal",
+      "destination": "/study-abroad-consultants-in-west-bengal",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-himachal",
+      "destination": "/study-abroad-consultants-in-himachal-pradesh",
+      "permanent": true
+    },
+    {
+      "source": "/himachal",
+      "destination": "/study-abroad-consultants-in-himachal-pradesh",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-andhra",
+      "destination": "/study-abroad-consultants-in-andhra-pradesh",
+      "permanent": true
+    },
+    {
+      "source": "/andhra",
+      "destination": "/study-abroad-consultants-in-andhra-pradesh",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-andaman",
+      "destination": "/study-abroad-consultants-in-andaman-and-nicobar-islands",
+      "permanent": true
+    },
+    {
+      "source": "/andaman",
+      "destination": "/study-abroad-consultants-in-andaman-and-nicobar-islands",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-nicobar-islands",
+      "destination": "/study-abroad-consultants-in-andaman-and-nicobar-islands",
+      "permanent": true
+    },
+    {
+      "source": "/nicobar-islands",
+      "destination": "/study-abroad-consultants-in-andaman-and-nicobar-islands",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-dadra-and-nagar-haveli",
+      "destination": "/study-abroad-consultants-in-dadra-and-nagar-haveli-and-daman-and-diu",
+      "permanent": true
+    },
+    {
+      "source": "/dadra-and-nagar-haveli",
+      "destination": "/study-abroad-consultants-in-dadra-and-nagar-haveli-and-daman-and-diu",
+      "permanent": true
+    },
+    {
+      "source": "/study-abroad-consultants-in-daman-and-diu",
+      "destination": "/study-abroad-consultants-in-dadra-and-nagar-haveli-and-daman-and-diu",
+      "permanent": true
+    },
+    {
+      "source": "/daman-and-diu",
+      "destination": "/study-abroad-consultants-in-dadra-and-nagar-haveli-and-daman-and-diu",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/og/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800"
+        }
+      ]
+    },
+    {
+      "source": "/logo.png",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800"
+        }
+      ]
+    },
+    {
+      "source": "/og-image.jpg",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800"
+        }
+      ]
+    },
+    {
+      "source": "/apple-touch-icon.png",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800"
+        }
+      ]
+    },
+    {
+      "source": "/favicon.ico",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800"
+        }
+      ]
+    },
+    {
+      "source": "/favicon.png",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800"
+        }
+      ]
+    },
+    {
+      "source": "/sitemap.xml",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        },
+        {
+          "key": "Content-Type",
+          "value": "application/xml; charset=utf-8"
+        }
+      ]
+    },
+    {
+      "source": "/robots.txt",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "geolocation=(), microphone=(), camera=(), payment=()"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}

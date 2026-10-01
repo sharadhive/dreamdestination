@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, useRef, type ReactNode } from "react";
 
 export interface Language {
   code: string;
@@ -67,9 +67,8 @@ export const COUNTRY_LANGUAGE_MAP: Record<string, string> = {
   iran: "fa",
 };
 
-export const getLanguageByCode = (code: string): Language | undefined => {
-  return LANGUAGES.find((l) => l.code === code);
-};
+export const getLanguageByCode = (code: string): Language | undefined =>
+  LANGUAGES.find((l) => l.code === code);
 
 interface LanguageContextType {
   currentLanguage: Language;
@@ -79,11 +78,30 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-// Inject Google Translate script
+const STORAGE_KEY = "dd-language";
+
+/* ─── localStorage is unavailable in private mode and some embedded views ─── */
+const readStoredCode = (): string | null => {
+  try {
+    return localStorage.getItem(STORAGE_KEY);
+  } catch {
+    return null;
+  }
+};
+
+const writeStoredCode = (code: string) => {
+  try {
+    localStorage.setItem(STORAGE_KEY, code);
+  } catch {
+    /* ignore — the googtrans cookie still carries the choice */
+  }
+};
+
+/* ─── Google Translate plumbing ─── */
+
 const injectGoogleTranslateScript = () => {
   if (document.getElementById("google-translate-script")) return;
 
-  // Add the initialization function
   (window as any).googleTranslateElementInit = () => {
     new (window as any).google.translate.TranslateElement(
       {
@@ -97,79 +115,119 @@ const injectGoogleTranslateScript = () => {
 
   const script = document.createElement("script");
   script.id = "google-translate-script";
-  script.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+  script.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
   script.async = true;
   document.head.appendChild(script);
 };
 
-// Programmatically trigger Google Translate
-const triggerGoogleTranslate = (langCode: string) => {
+/**
+ * Set the hidden Google Translate <select>.
+ * The event must bubble — Google's own handler is bound higher up the tree,
+ * and a non-bubbling event silently does nothing.
+ */
+const triggerGoogleTranslate = (langCode: string): boolean => {
   const select = document.querySelector(".goog-te-combo") as HTMLSelectElement | null;
-  if (select) {
-    select.value = langCode;
-    select.dispatchEvent(new Event("change"));
-    return true;
+  if (!select) return false;
+  select.value = langCode;
+  select.dispatchEvent(new Event("change", { bubbles: true }));
+  return true;
+};
+
+/** Retry until Google's widget has built its <select>. */
+const applyWhenReady = (langCode: string, onDone: () => void) => {
+  let attempts = 0;
+  const tick = () => {
+    if (triggerGoogleTranslate(langCode)) {
+      window.setTimeout(onDone, 1200);
+      return;
+    }
+    if (attempts++ < 30) {
+      window.setTimeout(tick, 400);
+    } else {
+      onDone();
+    }
+  };
+  tick();
+};
+
+const clearGoogTransCookie = () => {
+  const host = window.location.hostname;
+  const expired = "expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  // The cookie can exist under several domain scopes — clear each.
+  document.cookie = `googtrans=; ${expired}`;
+  document.cookie = `googtrans=; ${expired} domain=${host};`;
+  document.cookie = `googtrans=; ${expired} domain=.${host};`;
+  const parts = host.split(".");
+  if (parts.length > 2) {
+    const root = parts.slice(-2).join(".");
+    document.cookie = `googtrans=; ${expired} domain=.${root};`;
   }
-  return false;
 };
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  const [currentLanguage, setCurrentLanguage] = useState<Language>(
-    () => {
-      const saved = localStorage.getItem("dd-language");
-      if (saved) {
-        const found = LANGUAGES.find((l) => l.code === saved);
-        if (found) return found;
-      }
-      return LANGUAGES[0]; // Default English
+  const [currentLanguage, setCurrentLanguage] = useState<Language>(() => {
+    const saved = readStoredCode();
+    if (saved) {
+      const found = LANGUAGES.find((l) => l.code === saved);
+      if (found) return found;
     }
-  );
+    return LANGUAGES[0];
+  });
   const [isTranslating, setIsTranslating] = useState(false);
+  const restoredRef = useRef(false);
 
   useEffect(() => {
     injectGoogleTranslateScript();
   }, []);
 
+  /**
+   * Re-apply the saved language on load.
+   * Without this, a visitor who picked Marathi and refreshed saw the switcher
+   * say "मराठी" while the page sat in English — the state was remembered but
+   * never handed back to Google Translate.
+   */
+  useEffect(() => {
+    if (restoredRef.current) return;
+    restoredRef.current = true;
+    if (currentLanguage.code === "en") return;
+    setIsTranslating(true);
+    applyWhenReady(currentLanguage.code, () => setIsTranslating(false));
+  }, [currentLanguage.code]);
+
   const setLanguage = (lang: Language) => {
     setCurrentLanguage(lang);
-    localStorage.setItem("dd-language", lang.code);
+    writeStoredCode(lang.code);
 
     if (lang.code === "en") {
-      // Reset to English — remove Google Translate
-      const iframe = document.querySelector(".goog-te-banner-frame") as HTMLIFrameElement;
-      if (iframe) {
-        const innerDoc = iframe.contentDocument || iframe.contentWindow?.document;
-        const closeBtn = innerDoc?.querySelector(".goog-close-link") as HTMLAnchorElement;
-        if (closeBtn) closeBtn.click();
-      }
-      // Also try cookie method
-      document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-      document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=." + window.location.hostname;
+      clearGoogTransCookie();
       window.location.reload();
       return;
     }
 
     setIsTranslating(true);
-
-    // Try to translate, with retries for when Google Translate hasn't loaded yet
-    let attempts = 0;
-    const tryTranslate = () => {
-      if (triggerGoogleTranslate(lang.code)) {
-        setTimeout(() => setIsTranslating(false), 1500);
-      } else if (attempts < 20) {
-        attempts++;
-        setTimeout(tryTranslate, 500);
-      } else {
-        setIsTranslating(false);
-      }
-    };
-    tryTranslate();
+    applyWhenReady(lang.code, () => setIsTranslating(false));
   };
 
   return (
     <LanguageContext.Provider value={{ currentLanguage, setLanguage, isTranslating }}>
-      {/* Hidden Google Translate element */}
-      <div id="google_translate_element" style={{ display: "none" }} />
+      {/*
+        Kept in the layout but moved off-screen rather than display:none.
+        Google Translate does not reliably build its <select> inside a
+        display:none container — that was why selecting a language appeared
+        to do nothing at all.
+      */}
+      <div
+        id="google_translate_element"
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          left: "-9999px",
+          top: 0,
+          width: "1px",
+          height: "1px",
+          overflow: "hidden",
+        }}
+      />
       {children}
     </LanguageContext.Provider>
   );

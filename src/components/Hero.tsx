@@ -1,126 +1,182 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Star, Users, DollarSign, CheckCircle } from "lucide-react";
+import { 
+  ArrowRight, Star, Users, DollarSign, CheckCircle2, ShieldCheck, 
+  Sparkles, GraduationCap, Phone, MessageCircle, Clock, Award, Building2
+} from "lucide-react";
 import heroImage from "@/assets/hero-education.jpg";
+import HeroGlobe3D from "@/components/HeroGlobe3D";
+import { CONTACT } from "@/config/site";
+import { openEnquiryPopup } from "@/components/EnquiryPopup";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center bg-gradient-subtle overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute inset-0 bg-gradient-hero opacity-10"></div>
-      <div className="absolute top-20 right-10 w-32 h-32 bg-accent/20 rounded-full blur-3xl floating"></div>
-      <div className="absolute bottom-20 left-10 w-48 h-48 bg-secondary/20 rounded-full blur-3xl floating" style={{ animationDelay: '1s' }}></div>
+    <section className="relative min-h-[90vh] flex items-center pt-24 pb-16 bg-gradient-subtle overflow-hidden">
+      {/* Background Decorative Glow Orbs */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent pointer-events-none" />
+      <div className="absolute top-1/4 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl floating pointer-events-none" />
+      <div className="absolute bottom-10 right-10 w-96 h-96 bg-secondary/15 rounded-full blur-3xl floating pointer-events-none" style={{ animationDelay: '1.5s' }} />
       
-      <div className="container mx-auto px-4 py-20 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Content */}
-          <div className="space-y-8 animate-fade-in">
-            {/* Trust Indicators */}
-            <div className="flex items-center space-x-6 text-sm text-muted-foreground">
-              <div className="flex items-center space-x-1">
-                <Star className="w-4 h-4 text-accent fill-current" />
-                <span>4.9/5 Rating</span>
-              </div>
-              <div className="flex items-center space-x-1">
-                <Users className="w-4 h-4 text-secondary" />
-                <span>50K+ Students</span>
-              </div>
-              <div className="flex items-center space-x-1">
-                <CheckCircle className="w-4 h-4 text-secondary" />
-                <span>ISO Certified</span>
-              </div>
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="grid lg:grid-cols-12 gap-12 items-center">
+          
+          {/* Left Column: Content (7 cols on lg) */}
+          <div className="lg:col-span-7 min-w-0 space-y-8 animate-fade-in">
+            
+            {/* Top Pill Badge */}
+            <div className="inline-flex max-w-full items-center gap-2.5 px-3.5 sm:px-4 py-2 bg-card/80 backdrop-blur-md border border-primary/20 rounded-full shadow-soft">
+              <span className="flex h-2 w-2 shrink-0 rounded-full bg-secondary animate-ping" />
+              <Sparkles className="w-4 h-4 text-secondary fill-secondary shrink-0" />
+              <span className="text-[11px] sm:text-xs md:text-sm font-bold text-foreground tracking-wide truncate sm:whitespace-normal">
+                Study Abroad & Overseas Education Loan Specialists
+              </span>
             </div>
 
-            {/* Main Heading */}
+            {/* Main Headline */}
             <div className="space-y-4">
-              <h1 className="text-5xl lg:text-6xl font-bold leading-tight">
-                <span className="text-gradient-hero">Affordable</span> & 
-                <br />
-                <span className="text-foreground">Hassle-Free</span>
-                <br />
-                <span className="text-gradient-success">Study Abroad</span>
-                <br />
-                <span className="text-foreground">Solutions</span>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.15]">
+                Turn Your <span className="text-gradient-hero">Global Study</span> Dreams Into Reality
               </h1>
               
-              <p className="text-xl text-muted-foreground leading-relaxed max-w-lg">
-                Get transparent, student-focused loans up to ₹1.5 Cr with expert consultancy. 
-                Turn your global education dreams into reality.
+              {/* .hero-summary is referenced by the speakable specification in
+                  the homepage JSON-LD (see Index.tsx) — it is the sentence a
+                  voice assistant reads aloud when answering from this page.
+                  Do not remove the class without removing it there too. */}
+              <p className="hero-summary text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl font-normal">
+                Guiding Indian students through university admissions, <strong className="text-foreground font-semibold">collateral-free education loans</strong>, scholarships and the <strong className="text-foreground font-semibold">student visa process</strong> — end to end, and free to start.
               </p>
             </div>
 
-            {/* Key Benefits */}
-            <div className="grid grid-cols-2 gap-4">
-              <div className="flex items-center space-x-3 p-3 bg-card rounded-lg shadow-soft">
-                <DollarSign className="w-6 h-6 text-secondary" />
-                <div>
-                  <p className="font-semibold">Up to ₹1.5 Cr</p>
-                  <p className="text-sm text-muted-foreground">Loan Amount</p>
+            {/* Key Benefits Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="bg-card/90 backdrop-blur-md p-4 rounded-xl border border-border/80 shadow-soft hover:shadow-elegant transition-all duration-300">
+                <div className="p-2.5 bg-primary/10 rounded-lg w-fit mb-2 text-primary">
+                  <DollarSign className="w-5 h-5" />
                 </div>
+                <p className="font-bold text-base text-foreground">Education Loans</p>
+                <p className="text-xs text-muted-foreground mt-0.5">Secured & collateral-free options</p>
               </div>
-              <div className="flex items-center space-x-3 p-3 bg-card rounded-lg shadow-soft">
-                <CheckCircle className="w-6 h-6 text-accent" />
-                <div>
-                  <p className="font-semibold">No Collateral</p>
-                  <p className="text-sm text-muted-foreground">Required</p>
+
+              <div className="bg-card/90 backdrop-blur-md p-4 rounded-xl border border-border/80 shadow-soft hover:shadow-elegant transition-all duration-300">
+                <div className="p-2.5 bg-secondary/10 rounded-lg w-fit mb-2 text-secondary">
+                  <ShieldCheck className="w-5 h-5" />
                 </div>
+                <p className="font-bold text-base text-foreground">Collateral-Free Route</p>
+                <p className="text-xs text-muted-foreground mt-0.5">Where the lender allows it</p>
+              </div>
+
+              <div className="bg-card/90 backdrop-blur-md p-4 rounded-xl border border-border/80 shadow-soft hover:shadow-elegant transition-all duration-300">
+                <div className="p-2.5 bg-accent/10 rounded-lg w-fit mb-2 text-accent">
+                  <Building2 className="w-5 h-5" />
+                </div>
+                <p className="font-bold text-base text-foreground">22 Countries</p>
+                <p className="text-xs text-muted-foreground mt-0.5">Study destinations covered</p>
               </div>
             </div>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="bg-gradient-gold text-secondary-foreground font-semibold shadow-gold hover-glow-gold text-lg px-8 py-6">
+            {/* CTA Action Buttons */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
+              {/*
+                This used to be <a href="#calculator">, which opened the EMI
+                calculator. A button that says "Apply" has to start an
+                application — sending someone to a calculator instead is a
+                broken promise, and it was the single most prominent CTA on the
+                site. It now opens the enquiry form with the loan purpose
+                already selected. The calculator is still one tap away from the
+                floating button on every page, and from "Estimate My Education
+                Loan" further down this page.
+              */}
+              <Button
+                size="lg"
+                onClick={() => openEnquiryPopup("Education loan — studying abroad")}
+                className="bg-gradient-gold text-secondary-foreground font-bold shadow-gold hover-glow-gold text-base px-8 py-6 rounded-xl w-full sm:w-auto"
+              >
                 Apply for Loan Now
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
-              <Button size="lg" variant="outline" className="border-primary/20 text-primary hover:bg-primary/5 hover-glow-primary text-lg px-8 py-6">
+
+              {/*
+                Was <a href="#contact">. There is no id="contact" on the
+                homepage — the contact section renders on /contact, not here —
+                so this button scrolled nowhere and did nothing. It now opens
+                the enquiry form set to free counselling.
+              */}
+              <Button
+                size="lg"
+                variant="outline"
+                onClick={() => openEnquiryPopup("Free career counselling")}
+                className="border-primary/30 text-primary hover:bg-primary/5 hover-glow-primary font-bold text-base px-8 py-6 rounded-xl w-full sm:w-auto"
+              >
+                <Phone className="w-4 h-4 mr-2" />
                 Get Free Consultation
               </Button>
+
+              <a 
+                href={CONTACT.whatsapp}
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hidden xl:inline-flex items-center justify-center p-3.5 bg-emerald-500/10 text-emerald-600 rounded-xl hover:bg-emerald-500/20 transition-colors border border-emerald-500/20"
+                title="WhatsApp Us"
+              >
+                <MessageCircle className="w-5 h-5" />
+              </a>
             </div>
 
-            {/* Quick Stats */}
-            <div className="flex items-center space-x-8 pt-4 border-t">
-              <div className="text-center">
-                <p className="text-2xl font-bold text-primary">200+</p>
-                <p className="text-sm text-muted-foreground">Universities</p>
+            {/* Trust Indicators & Student Avatars */}
+            <div className="pt-6 border-t border-border/60 flex flex-wrap items-center justify-between gap-6">
+              {/* Avatars + Rating */}
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-secondary/10 rounded-lg text-secondary">
+                  <Star className="w-4 h-4 fill-current" />
+                </div>
+                <div>
+                  <p className="text-sm font-bold text-foreground">Free first consultation</p>
+                  <p className="text-xs text-muted-foreground">No cost, no obligation — talk to a counsellor first</p>
+                </div>
               </div>
-              <div className="text-center">
-                <p className="text-2xl font-bold text-secondary">15+</p>
-                <p className="text-sm text-muted-foreground">Countries</p>
-              </div>
-              <div className="text-center">
-                <p className="text-2xl font-bold text-accent">99%</p>
-                <p className="text-sm text-muted-foreground">Approval Rate</p>
+
+              {/* Quick Stats Badges */}
+              <div className="flex items-center gap-6 text-xs text-muted-foreground font-medium">
+                <div className="flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                  <span>Transparent guidance, no false promises</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <Award className="w-4 h-4 text-secondary" />
+                  <span>RBI-regulated banks & NBFCs</span>
+                </div>
               </div>
             </div>
+
+            {/* Destination Flags Ticker */}
+            <div className="flex max-w-full items-center gap-2 pt-2 text-xs text-muted-foreground overflow-x-auto pb-2 scrollbar-none">
+              <span className="font-semibold text-foreground shrink-0">Popular Destinations:</span>
+              {[
+                { flag: "🇬🇧", name: "UK" },
+                { flag: "🇺🇸", name: "USA" },
+                { flag: "🇨🇦", name: "Canada" },
+                { flag: "🇦🇺", name: "Australia" },
+                { flag: "🇩🇪", name: "Germany" },
+                { flag: "🇯🇵", name: "Japan" },
+                { flag: "🇮🇳", name: "India" },
+                { flag: "🇪🇺", name: "Europe" },
+              ].map((dest, i) => (
+                <span
+                  key={i}
+                  className="px-2.5 py-1 bg-card border border-border/60 rounded-full shrink-0 flex items-center gap-1 hover:border-primary/40 transition-colors cursor-default shadow-xs"
+                >
+                  <span>{dest.flag}</span>
+                  <span className="font-medium">{dest.name}</span>
+                </span>
+              ))}
+            </div>
+
           </div>
 
-          {/* Hero Image */}
-          <div className="relative animate-slide-in-right">
-            <div className="relative rounded-2xl overflow-hidden shadow-elegant">
-              <img
-                src={heroImage}
-                alt="Students celebrating graduation with books and university buildings"
-                className="w-full h-auto object-cover"
-                loading="eager"
-              />
-              <div className="absolute inset-0 bg-gradient-hero opacity-20"></div>
-            </div>
-            
-            {/* Floating Cards */}
-            <div className="absolute -top-6 -right-6 bg-card p-4 rounded-xl shadow-elegant floating">
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 bg-secondary rounded-full"></div>
-                <span className="text-sm font-medium">Instant Approval</span>
-              </div>
-            </div>
-            
-            <div className="absolute -bottom-6 -left-6 bg-card p-4 rounded-xl shadow-elegant floating" style={{ animationDelay: '0.5s' }}>
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 bg-accent rounded-full"></div>
-                <span className="text-sm font-medium">Lowest Rates</span>
-              </div>
-            </div>
+          {/* Right Column: Freely Floating Interactive 3D Earth Globe Model (5 cols on lg) */}
+          <div className="lg:col-span-5 min-w-0 w-full relative lg:animate-slide-in-right flex items-center justify-center">
+            <HeroGlobe3D />
           </div>
+
         </div>
       </div>
     </section>

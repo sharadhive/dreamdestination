@@ -3,29 +3,60 @@ import { ChevronDown, HelpCircle } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 
-const faqData = [
+/**
+ * ── WHY THESE ANSWERS WERE REWRITTEN ──
+ *
+ * The previous version of this block made lender promises in the first person:
+ * "Our interest rates start from 9.5% per annum", "no collateral is required for
+ * loans up to ₹40 Lakhs", "pre-approval within 24 hours", "partnerships with
+ * 200+ universities", "scholarships worth crores".
+ *
+ * Three problems with that, in order of seriousness:
+ *
+ * 1. DreamDestination is not a lender. It has no interest rate, no collateral
+ *    threshold and no approval SLA to offer — those belong to the bank or NBFC.
+ *    Stating them as ours is a misleading financial representation, and lending
+ *    is the most heavily policed category there is.
+ * 2. It contradicted the rest of the site. Every one of the 500+ location pages
+ *    says, correctly, that "approval, amount, interest rate and collateral
+ *    requirements are always the lender's decision — never ours." A visitor who
+ *    read both pages would not know which to believe, and neither would Google.
+ * 3. It is YMYL content. Search quality raters are told to hold pages about
+ *    money and major life decisions to a higher standard of accuracy and
+ *    accountability. Unverifiable figures on a finance page is precisely the
+ *    pattern that suppresses a site rather than a single URL.
+ *
+ * The answers below describe how education lending actually works and attribute
+ * every decision to the party that makes it. Nothing here is a number we cannot
+ * stand behind. If a figure is ever added back, it needs a named public source
+ * and a date — the same bar LOAN_FACTS in LocationPage.tsx is held to.
+ *
+ * Exported because Index.tsx renders it as FAQPage structured data. Do not let
+ * the two drift: the schema must state exactly what the visible page states.
+ */
+export const faqData = [
   {
     category: "Education Loans",
     faqs: [
       {
-        question: "What is the maximum loan amount I can get?",
-        answer: "You can get an education loan up to ₹1.5 Crores for studying abroad. The exact amount depends on your course, university, and financial profile. We offer comprehensive coverage for tuition fees, living expenses, travel costs, and other education-related expenses."
+        question: "How much education loan can I get for studying abroad?",
+        answer: "There is no single figure. Lenders size an education loan against the total cost of your specific course and university, your co-applicant's income and credit history, and whether collateral is offered. A secured loan generally stretches further than an unsecured one. We help you work out what you actually need and what you can realistically expect, before you approach anyone — but the sanctioned amount is always the lender's decision, not ours."
       },
       {
-        question: "Do I need collateral for the education loan?",
-        answer: "No, for loans up to ₹40 Lakhs, no collateral is required. For higher amounts, we may require collateral or a co-signer depending on your profile. Our team will guide you through the best options available for your situation."
+        question: "Do I need collateral for an education loan?",
+        answer: "It depends on the amount, the destination, the institution and your co-applicant. Unsecured education loans do exist and are common, but they are normally capped lower than secured ones and rest almost entirely on the co-applicant's income and credit record. For a course inside India at a covered institution, PM-Vidyalaxmi is specifically collateral-free and guarantor-free. We go through which route fits your file before you apply."
       },
       {
-        question: "What are the interest rates?",
-        answer: "Our interest rates start from 9.5% per annum and vary based on the loan amount, course, university, and your credit profile. We offer competitive rates with transparent pricing - no hidden charges or processing fees."
+        question: "What interest rate will I pay?",
+        answer: "We are not a lender and we have no rate to quote you. Rates are set by each bank or NBFC and vary by loan amount, whether it is secured, the destination, the institution and your co-applicant's profile — and they move. We help you compare live offers side by side on the total cost of borrowing rather than the headline rate alone, and we take no commission from any lender."
       },
       {
-        question: "How long does the approval process take?",
-        answer: "Pre-approval can be obtained within 24 hours of submitting complete documents. Final approval typically takes 7-10 working days after verification. We have streamlined the process to ensure quick turnaround times."
+        question: "How long does an education loan take to be sanctioned?",
+        answer: "It varies by lender and by route, and the biggest variable is usually the file rather than the bank. A complete application — offer letter, academics, KYC, co-applicant income proof and collateral papers ready together — moves far faster than one assembled in pieces. Secured loans take longer than unsecured ones because the property or deposit has to be valued and verified. Start as soon as you have an offer letter, not after you book a visa appointment."
       },
       {
-        question: "When do I start repaying the loan?",
-        answer: "Loan repayment typically starts 6 months after course completion or 12 months after the loan is fully disbursed, whichever is earlier. We offer flexible repayment options including moratorium periods during your studies."
+        question: "When does repayment start?",
+        answer: "Most education loans include a moratorium covering the course plus a period after it, so repayment usually begins after the course ends rather than during it. The exact length, and whether interest accrues or is serviced during the moratorium, is set in your loan agreement — read that clause specifically, because it changes the total you repay considerably. We will go through it with you before you sign."
       }
     ]
   },
@@ -33,20 +64,20 @@ const faqData = [
     category: "Study Abroad",
     faqs: [
       {
-        question: "Which countries do you provide services for?",
-        answer: "We provide comprehensive services for 15+ countries including USA, UK, Canada, Australia, Germany, Ireland, New Zealand, Singapore, Sweden, Netherlands, France, and more. Our counselors have expertise in specific regions and can guide you accordingly."
+        question: "Which countries do you help students apply to?",
+        answer: "Twenty-two destinations in all, including the UK, USA, Canada, Australia, New Zealand, Germany, Ireland, France, Italy, the Netherlands, Switzerland, Spain, Singapore, Malaysia, Dubai/UAE and Mauritius — and we also advise students staying in India. Each has its own entry requirements, visa route and funding picture, and we will tell you plainly when the one you have in mind is a poor fit for your profile."
       },
       {
         question: "How do you help with university selection?",
-        answer: "Our expert counselors assess your academic background, career goals, and preferences to recommend suitable universities and programs. We have partnerships with 200+ universities worldwide and provide detailed insights about admission requirements, campus life, and career prospects."
+        answer: "We start from your academic record, budget and what you want to do afterwards, then build a shortlist with genuine ambitious, target and fallback options rather than encouraging you to apply everywhere. We will show you universities we earn nothing from, and we compare offers on total cost and post-study work rights, not on ranking alone."
       },
       {
         question: "Do you help with scholarship applications?",
-        answer: "Yes, we provide comprehensive scholarship guidance including identifying relevant scholarships, application support, and follow-up. Our team has helped students secure scholarships worth crores, significantly reducing their education costs."
+        answer: "Yes — screening which university, government and external awards you genuinely qualify for, then working on the application itself. Timing matters more than most students expect: several of the larger scholarships close before the university's own deadline, so waiting for an offer letter means missing them. A scholarship reduces what you have to borrow, which is why we look at awards before the loan."
       },
       {
         question: "What is included in visa assistance?",
-        answer: "Our visa assistance includes document checklist, application form completion, interview preparation, mock interviews, and tracking until visa approval. We have a high success rate and provide personalized guidance based on the destination country's requirements."
+        answer: "A document checklist for your exact destination and visa category, preparation of the financial evidence, a full review of the application before submission, and interview practice where the destination requires one. Financial evidence is where most files come unstuck — funds not held long enough, an undocumented sponsor, or a sanction letter that does not match the offer letter — so we check it against the rule in force for your destination. Visa decisions rest with the immigration authority; we cannot guarantee an outcome."
       }
     ]
   },
@@ -54,20 +85,20 @@ const faqData = [
     category: "Process & Documentation",
     faqs: [
       {
-        question: "What documents are required for loan application?",
-        answer: "Basic documents include academic transcripts, admission letter/offer letter, income proof of parents/co-applicant, bank statements, identity proofs, and passport. Our team provides a detailed checklist and helps with document preparation."
+        question: "What documents are required for a loan application?",
+        answer: "Typically: the admission or offer letter with the full fee structure, academic records, an English test scorecard where the course needs one, KYC for the student and co-applicant, co-applicant income proof such as salary slips, Form 16 or ITRs and bank statements, collateral papers for a secured loan, and a written breakdown of the total cost against what you are funding yourself. Individual lenders add their own requirements, so we confirm the list against the specific lender before you start."
       },
       {
-        question: "Can I apply before getting university admission?",
-        answer: "Yes, you can apply for pre-approval before getting university admission. This helps you understand your loan eligibility and plan your applications accordingly. Final approval will be completed once you receive the admission offer."
+        question: "Can I apply before I have an admission offer?",
+        answer: "Some lenders will assess eligibility in principle before an offer letter, which is useful for planning how much to borrow and which universities are realistically affordable. It is an indication, not a sanction — the actual loan is processed once the admission offer and fee structure are in hand, and the final terms can differ."
       },
       {
-        question: "Is there any processing fee?",
-        answer: "No, we don't charge any processing fees for loan applications. Our service is transparent with no hidden charges. You only pay the agreed interest rate and any applicable government charges or third-party fees."
+        question: "Do you charge a fee for education loan help?",
+        answer: "No. Education loan guidance is part of the counselling we already provide, and the first consultation is free. We are not a lending agent and we take no percentage of your loan. Lenders may levy their own processing charges — those are theirs, disclosed in their sanction letter. If anyone asks you for a fee to 'get your loan approved', treat that as a warning sign."
       },
       {
         question: "How is the loan amount disbursed?",
-        answer: "The loan is typically disbursed directly to the university for tuition fees and to your account for living expenses. Disbursement happens in stages - first installment before travel and subsequent installments as per academic terms."
+        answer: "Usually in stages rather than as a lump sum: tuition normally goes directly to the institution against its fee demand, with living-expense components released to you or in instalments across academic terms. The schedule is set by the lender and written into the sanction letter, so it is worth matching it against your fee deadlines early — a disbursement that lands after a fee due date is a common and avoidable problem."
       }
     ]
   }
@@ -79,7 +110,7 @@ const FAQ = () => {
   const currentFAQs = faqData.find(category => category.category === selectedCategory)?.faqs || [];
 
   return (
-    <section className="py-20 bg-gradient-subtle">
+    <section id="faq" className="py-20 bg-gradient-subtle">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className="text-center mb-16 animate-fade-in">

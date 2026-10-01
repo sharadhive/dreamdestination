@@ -7,9 +7,15 @@ import {
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
+import CountryHeroBanner from "@/components/CountryHeroBanner";
 import { countriesData } from "@/data/countryData";
+import { getCountryUrl, getCountryAbsoluteUrl } from "@/lib/countryUrl";
 
-const SITE_DOMAIN = "https://dreamdestinations.co.in";
+const SITE_DOMAIN = "https://www.dreamdestinationstudyabroad.com";
+const COUNTRY_COUNT = countriesData.length;
+
+// URL logic lives in @/lib/countryUrl so header, footer, home and this page never drift apart.
+const getCountryPageUrl = getCountryUrl;
 
 const CountriesIndex = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -17,10 +23,10 @@ const CountriesIndex = () => {
 
   const regions: { label: string; filter: (slug: string) => boolean }[] = [
     { label: "All", filter: () => true },
-    { label: "Europe", filter: (slug) => ["uk", "ireland", "france", "germany", "switzerland", "spain", "netherlands", "italy"].includes(slug) },
+    { label: "Europe", filter: (slug) => ["uk", "ireland", "france", "germany", "switzerland", "spain", "netherlands", "italy", "russia", "ukraine"].includes(slug) },
     { label: "North America", filter: (slug) => ["usa", "canada"].includes(slug) },
-    { label: "Asia Pacific", filter: (slug) => ["australia", "new-zealand", "singapore", "malaysia", "india"].includes(slug) },
-    { label: "Middle East & Africa", filter: (slug) => ["uae", "mauritius"].includes(slug) },
+    { label: "Asia Pacific", filter: (slug) => ["australia", "new-zealand", "singapore", "malaysia", "india", "china", "japan"].includes(slug) },
+    { label: "Middle East & Africa", filter: (slug) => ["uae", "mauritius", "iran"].includes(slug) },
   ];
 
   const activeRegion = regions.find((r) => r.label.toLowerCase().replace(/\s+/g, "-") === selectedRegion) || regions[0];
@@ -38,12 +44,12 @@ const CountriesIndex = () => {
     {
       "@context": "https://schema.org",
       "@type": "CollectionPage",
-      "name": "Study Abroad Countries | DreamDestinations",
-      "description": "Explore 17+ study abroad destinations. Find top universities, education loans, visa assistance, and scholarship guidance for each country.",
+      "name": "Study Abroad Countries | DreamDestination",
+      "description": `Explore ${COUNTRY_COUNT}+ study abroad destinations. Find top universities, education loans, visa assistance, and scholarship guidance for each country.`,
       "url": `${SITE_DOMAIN}/countries`,
       "isPartOf": {
         "@type": "WebSite",
-        "name": "DreamDestinations",
+        "name": "DreamDestination",
         "url": SITE_DOMAIN,
       },
       "breadcrumb": {
@@ -63,16 +69,20 @@ const CountriesIndex = () => {
         "@type": "ListItem",
         "position": i + 1,
         "name": `Study in ${c.name}`,
-        "url": `${SITE_DOMAIN}/countries/${c.slug}`,
+        "url": getCountryAbsoluteUrl(c.slug, SITE_DOMAIN),
       })),
     },
   ];
 
   return (
     <div className="min-h-screen">
+      {/* Title was 82 characters. Google truncated it at "…for Indian" and the
+          brand, which was doing the work, never appeared. Google appends the
+          site name itself, so repeating it inside the title spends the
+          characters that decide whether the result gets clicked. */}
       <SEOHead
-        title="Study Abroad Countries | Top Destinations for Indian Students | DreamDestinations"
-        description="Explore 17+ study abroad destinations including USA, UK, Canada, Australia, Germany & more. Find top universities, education loans, visa assistance, and scholarship guidance for each country."
+        title="Study Abroad Destinations for Indian Students"
+        description={`Compare ${COUNTRY_COUNT}+ study destinations — USA, UK, Canada, Australia, Germany and more. Universities, costs, education loans, visas and scholarships for each.`}
         keywords={[
           "study abroad countries", "study abroad destinations", "best countries to study abroad",
           "study abroad from india", "countries for higher education", "overseas education destinations",
@@ -84,42 +94,30 @@ const CountriesIndex = () => {
       <Header />
 
       <main className="pt-20">
-        {/* Breadcrumb */}
-        <div className="bg-gradient-subtle border-b">
-          <div className="container mx-auto px-4 py-3">
-            <nav className="flex items-center gap-2 text-sm text-muted-foreground" aria-label="Breadcrumb">
-              <Link to="/" className="hover:text-primary transition-smooth">Home</Link>
-              <ChevronRight className="w-3 h-3" />
-              <span className="text-foreground font-medium">Countries</span>
-            </nav>
-          </div>
-        </div>
-
-        {/* Hero */}
-        <section className="bg-gradient-hero text-white relative overflow-hidden">
-          <div className="absolute inset-0 pointer-events-none overflow-hidden">
-            <div className="absolute top-10 right-20 w-64 h-64 bg-white/5 rounded-full blur-3xl animate-float" />
-            <div className="absolute bottom-10 left-10 w-48 h-48 bg-white/5 rounded-full blur-3xl" />
-          </div>
-
-          <div className="container mx-auto px-4 py-16 md:py-20 relative z-10">
-            <div className="max-w-3xl animate-fade-in">
-              <div className="flex items-center gap-3 mb-4">
-                <GraduationCap className="w-8 h-8 opacity-80" />
-                <span className="text-sm font-medium uppercase tracking-wider opacity-80">
-                  {countriesData.length} Destinations Available
-                </span>
-              </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
-                Choose Your Study <br />Abroad Destination
-              </h1>
-              <p className="text-lg opacity-90 max-w-2xl leading-relaxed">
-                Explore top study destinations worldwide. Each country page includes university listings,
-                education loan details, visa guidance, and FAQs tailored for Indian students.
-              </p>
-            </div>
-          </div>
-        </section>
+        {/* Country Hero Banner */}
+        <CountryHeroBanner
+          countryName="All Study Destinations"
+          flag="🌐"
+          badgeText={`${COUNTRY_COUNT}+ Top Global Study Destinations`}
+          heading="Choose Your Study Abroad Destination"
+          subheading="Explore Top Global Destinations for Higher Education"
+          description="Compare top study destinations worldwide. Each country page includes university listings, education loan details, visa guidance, post-study work options, and scholarships for Indian students."
+          valueProposition="Independent guidance on admissions, student visas and education loans — we take no commission from any lender."
+          cta1Text="Get Free Counseling"
+          cta1Href="/contact"
+          cta2Text="Explore Destinations"
+          cta2Href="#destinations-list"
+          breadcrumb={[
+            { label: "Home", to: "/" },
+            { label: "Countries" }
+          ]}
+          stats={{
+            universities: "Public & private",
+            avgCost: "Compare per country",
+            workPermit: "Varies by country",
+            visaSuccessRate: "Route-by-route guidance"
+          }}
+        />
 
         {/* Search & Filter Bar */}
         <section className="sticky top-[73px] z-30 bg-card/95 backdrop-blur-md border-b shadow-soft">
@@ -183,7 +181,7 @@ const CountriesIndex = () => {
                 {filteredCountries.map((country, index) => (
                   <Link
                     key={country.slug}
-                    to={`/countries/${country.slug}`}
+                    to={getCountryPageUrl(country.slug)}
                     className="group bg-card rounded-2xl border shadow-soft hover:shadow-elegant transition-smooth hover:-translate-y-2 overflow-hidden animate-fade-in"
                     style={{ animationDelay: `${index * 0.04}s` }}
                   >
@@ -286,7 +284,7 @@ const CountriesIndex = () => {
                 your budget, career goals, and preferences.
               </p>
               <a
-                href="/#contact"
+                href="/contact"
                 className="inline-flex items-center gap-2 px-8 py-3.5 bg-gradient-gold text-secondary-foreground font-bold rounded-xl shadow-gold hover-glow-gold transition-smooth"
               >
                 Get Free Country Recommendation <ArrowRight className="w-5 h-5" />

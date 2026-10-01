@@ -1,21 +1,33 @@
 import { useState } from "react";
-import { Calculator, DollarSign, Calendar, TrendingDown } from "lucide-react";
+import { Calculator, CheckCircle2, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { sendLeadToWhatsApp } from "@/lib/leadToWhatsApp";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-const LoanCalculator = () => {
-  const [loanAmount, setLoanAmount] = useState(1000000);
-  const [duration, setDuration] = useState(84);
-  const [interestRate, setInterestRate] = useState(10.5);
-  const [showResults, setShowResults] = useState(false);
+/**
+ * The EMI estimator itself, with no section chrome around it.
+ *
+ * This used to be a full-width homepage section. It now lives inside the
+ * floating calculator dialog (see FloatingCalculator.tsx), reachable from every
+ * page rather than only from the homepage, so the panel must size itself to a
+ * dialog instead of to a page.
+ */
+export const LoanCalculatorPanel = () => {
+  const [loanAmount, setLoanAmount] = useState(2500000); // Default ₹25 Lakhs
+  const [duration, setDuration] = useState(84); // Default 7 Years
+  const [interestRate, setInterestRate] = useState(9.5); // Default 9.5%
 
+  // Real-time calculation on state change
   const calculateEMI = () => {
     const principal = loanAmount;
     const monthlyRate = interestRate / 12 / 100;
     const months = duration;
     
+    if (monthlyRate === 0) {
+      return { emi: Math.round(principal / months), totalAmount: principal, totalInterest: 0 };
+    }
+
     const emi = (principal * monthlyRate * Math.pow(1 + monthlyRate, months)) / 
                 (Math.pow(1 + monthlyRate, months) - 1);
     
@@ -30,52 +42,32 @@ const LoanCalculator = () => {
   };
 
   const results = calculateEMI();
-
-  const handleCalculate = () => {
-    setShowResults(true);
-  };
+  const principalPercentage = Math.round((loanAmount / results.totalAmount) * 100);
+  const interestPercentage = 100 - principalPercentage;
 
   return (
-    <section id="calculator" className="py-20 bg-gradient-subtle">
-      <div className="container mx-auto px-4">
-        {/* Section Header */}
-        <div className="text-center mb-16 animate-fade-in">
-          <h2 className="text-4xl lg:text-5xl font-bold mb-6">
-            <span className="text-gradient-warm">Loan Calculator</span>
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Calculate your monthly EMI and plan your education loan repayment with our 
-            interactive calculator. Get instant results with transparent calculations.
-          </p>
-        </div>
-
-        <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-          {/* Calculator Form */}
-          <div className="bg-card p-8 rounded-2xl shadow-elegant animate-slide-in-left">
-            <div className="flex items-center space-x-3 mb-8">
-              <div className="p-3 bg-gradient-warm rounded-xl">
-                <Calculator className="w-6 h-6 text-white" />
+    <div className="grid lg:grid-cols-12 gap-6 items-start">
+          
+          {/* Left Column: Calculator Inputs (7 cols) */}
+          <div className="lg:col-span-7 bg-card p-5 sm:p-6 rounded-2xl border border-border/80">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="p-3 bg-gradient-hero rounded-xl text-white">
+                <Calculator className="w-6 h-6" />
               </div>
-              <h3 className="text-2xl font-bold">Education Loan Calculator</h3>
+              <div>
+                <h3 className="text-xl font-bold text-foreground">Calculate EMI</h3>
+                <p className="text-xs text-muted-foreground">Adjust sliders to see live monthly EMI</p>
+              </div>
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-5">
               {/* Loan Amount */}
               <div>
-                <Label className="text-base font-medium mb-3 block">Loan Amount</Label>
-                <div className="relative">
-                  <DollarSign className="absolute left-3 top-3 w-5 h-5 text-muted-foreground" />
-                  <Input 
-                    type="number"
-                    value={loanAmount}
-                    onChange={(e) => setLoanAmount(Number(e.target.value))}
-                    className="pl-10 py-6 text-lg"
-                    placeholder="Enter loan amount"
-                  />
-                </div>
-                <div className="flex justify-between mt-2 text-sm text-muted-foreground">
-                  <span>Min: ₹1,00,000</span>
-                  <span>Max: ₹1,50,00,000</span>
+                <div className="flex items-center justify-between mb-2">
+                  <Label className="text-sm font-bold text-foreground">Loan Amount Required</Label>
+                  <span className="text-lg font-extrabold text-primary">
+                    ₹{loanAmount.toLocaleString('en-IN')}
+                  </span>
                 </div>
                 <input 
                   type="range"
@@ -84,18 +76,25 @@ const LoanCalculator = () => {
                   step="100000"
                   value={loanAmount}
                   onChange={(e) => setLoanAmount(Number(e.target.value))}
-                  className="w-full mt-3 accent-primary"
+                  className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer accent-primary"
                 />
-                <p className="text-center mt-2 font-semibold text-lg">
-                  ₹{loanAmount.toLocaleString('en-IN')}
-                </p>
+                <div className="flex justify-between mt-2 text-xs text-muted-foreground font-medium">
+                  <span>Min: ₹1 Lakh</span>
+                  <span>₹50 Lakhs</span>
+                  <span>Max: ₹1.5 Cr</span>
+                </div>
               </div>
 
               {/* Loan Duration */}
               <div>
-                <Label className="text-base font-medium mb-3 block">Loan Duration (Months)</Label>
+                <div className="flex items-center justify-between mb-2">
+                  <Label className="text-sm font-bold text-foreground">Repayment Tenure</Label>
+                  <span className="text-sm font-bold text-foreground">
+                    {duration / 12} Years ({duration} Months)
+                  </span>
+                </div>
                 <Select value={duration.toString()} onValueChange={(value) => setDuration(Number(value))}>
-                  <SelectTrigger className="py-6 text-lg">
+                  <SelectTrigger className="py-5 text-sm font-medium">
                     <SelectValue placeholder="Select duration" />
                   </SelectTrigger>
                   <SelectContent>
@@ -111,160 +110,140 @@ const LoanCalculator = () => {
 
               {/* Interest Rate */}
               <div>
-                <Label className="text-base font-medium mb-3 block">Interest Rate (% per annum)</Label>
-                <div className="relative">
-                  <TrendingDown className="absolute left-3 top-3 w-5 h-5 text-muted-foreground" />
-                  <Input 
-                    type="number"
-                    step="0.1"
-                    value={interestRate}
-                    onChange={(e) => setInterestRate(Number(e.target.value))}
-                    className="pl-10 py-6 text-lg"
-                    placeholder="Interest rate"
-                  />
+                <div className="flex items-center justify-between mb-2">
+                  <Label className="text-sm font-bold text-foreground">Estimated Interest Rate (% p.a.)</Label>
+                  <span className="text-sm font-bold text-emerald-600">
+                    {interestRate}% p.a.
+                  </span>
                 </div>
-                <p className="text-sm text-muted-foreground mt-2">
-                  Our rates start from 9.5% per annum
+                <input 
+                  type="range"
+                  min="8.5"
+                  max="15.0"
+                  step="0.1"
+                  value={interestRate}
+                  onChange={(e) => setInterestRate(Number(e.target.value))}
+                  className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer accent-emerald-500"
+                />
+                <p className="text-xs text-muted-foreground mt-2">
+                  Partner bank interest rates range between 8.5% - 11.5% depending on co-applicant & university.
                 </p>
               </div>
 
-              {/* Calculate Button */}
-              <Button 
-                onClick={handleCalculate}
-                className="w-full py-6 text-lg bg-gradient-gold text-secondary-foreground font-semibold shadow-gold hover-glow-gold"
-              >
-                <Calculator className="w-5 h-5 mr-2" />
-                Calculate EMI
-              </Button>
+              {/* Quick Feature Badges */}
+              <div className="pt-4 border-t border-border/40 grid grid-cols-2 gap-3 text-xs">
+                <div className="flex items-center gap-1.5 text-muted-foreground">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <span>Moratorium Period Included</span>
+                </div>
+                <div className="flex items-center gap-1.5 text-muted-foreground">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <span>No Prepayment Penalty</span>
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Results */}
-          <div className="bg-card p-8 rounded-2xl shadow-elegant animate-slide-in-right">
-            <div className="flex items-center space-x-3 mb-8">
-              <div className="p-3 bg-gradient-success rounded-xl">
-                <DollarSign className="w-6 h-6 text-white" />
+          {/* Right Column: Live Results Display (5 cols) */}
+          <div className="lg:col-span-5 bg-card p-5 sm:p-6 rounded-2xl border border-border/80 flex flex-col justify-between gap-5">
+            <div>
+              <div className="flex items-center gap-2 mb-6">
+                <span className="px-2.5 py-1 bg-emerald-500/10 text-emerald-600 text-xs font-bold rounded-full">
+                  Live Calculation
+                </span>
+                <span className="text-xs text-muted-foreground">Instant Estimate</span>
               </div>
-              <h3 className="text-2xl font-bold">Calculation Results</h3>
-            </div>
 
-            {showResults ? (
-              <div className="space-y-6 animate-bounce-in">
-                {/* EMI Amount */}
-                <div className="p-6 bg-gradient-subtle rounded-xl border-l-4 border-primary">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-muted-foreground mb-1">Monthly EMI</p>
-                      <p className="text-3xl font-bold text-primary">
-                        ₹{results.emi.toLocaleString('en-IN')}
-                      </p>
-                    </div>
-                    <Calendar className="w-8 h-8 text-primary" />
-                  </div>
+              {/* Monthly EMI Card */}
+              <div className="p-5 sm:p-6 bg-gradient-hero rounded-2xl text-white shadow-elegant mb-6">
+                <p className="text-xs uppercase tracking-wider opacity-85 mb-1 font-semibold">
+                  Estimated Monthly EMI
+                </p>
+                <div className="flex items-baseline justify-between gap-2">
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-extrabold truncate">
+                    ₹{results.emi.toLocaleString('en-IN')}
+                  </h3>
+                  <span className="text-xs opacity-90 font-medium shrink-0">/ month</span>
+                </div>
+              </div>
+
+              {/* Summary Metrics */}
+              <div className="space-y-3 sm:space-y-4">
+                <div className="flex flex-wrap items-center justify-between gap-1 p-3 sm:p-3.5 bg-gradient-subtle rounded-xl border border-border/40 text-xs sm:text-sm">
+                  <span className="text-muted-foreground">Principal Loan Amount</span>
+                  <span className="font-bold text-foreground">₹{loanAmount.toLocaleString('en-IN')}</span>
                 </div>
 
-                {/* Total Amount */}
-                <div className="p-6 bg-gradient-subtle rounded-xl border-l-4 border-secondary">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-muted-foreground mb-1">Total Amount Payable</p>
-                      <p className="text-2xl font-bold text-secondary">
-                        ₹{results.totalAmount.toLocaleString('en-IN')}
-                      </p>
-                    </div>
-                    <DollarSign className="w-8 h-8 text-secondary" />
-                  </div>
+                <div className="flex flex-wrap items-center justify-between gap-1 p-3 sm:p-3.5 bg-gradient-subtle rounded-xl border border-border/40 text-xs sm:text-sm">
+                  <span className="text-muted-foreground">Total Interest Payable</span>
+                  <span className="font-bold text-amber-600">₹{results.totalInterest.toLocaleString('en-IN')}</span>
                 </div>
 
-                {/* Total Interest */}
-                <div className="p-6 bg-gradient-subtle rounded-xl border-l-4 border-accent">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-muted-foreground mb-1">Total Interest</p>
-                      <p className="text-2xl font-bold text-accent">
-                        ₹{results.totalInterest.toLocaleString('en-IN')}
-                      </p>
-                    </div>
-                    <TrendingDown className="w-8 h-8 text-accent" />
-                  </div>
+                <div className="flex flex-wrap items-center justify-between gap-1 p-3 sm:p-3.5 bg-gradient-subtle rounded-xl border border-border/40 text-xs sm:text-sm">
+                  <span className="text-muted-foreground">Total Payment</span>
+                  <span className="font-bold text-primary">₹{results.totalAmount.toLocaleString('en-IN')}</span>
                 </div>
 
-                {/* Breakdown Chart */}
-                <div className="p-6 bg-gradient-subtle rounded-xl">
-                  <h4 className="font-semibold mb-4">Payment Breakdown</h4>
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-muted-foreground">Principal Amount</span>
-                      <span className="font-semibold">
-                        {((loanAmount / results.totalAmount) * 100).toFixed(1)}%
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-muted-foreground">Interest Amount</span>
-                      <span className="font-semibold">
-                        {((results.totalInterest / results.totalAmount) * 100).toFixed(1)}%
-                      </span>
-                    </div>
+                {/* Progress Bar Breakdown */}
+                <div className="pt-2">
+                  <div className="flex justify-between text-xs text-muted-foreground mb-1.5 font-medium">
+                    <span>Principal: {principalPercentage}%</span>
+                    <span>Interest: {interestPercentage}%</span>
                   </div>
-                  <div className="mt-4 h-2 bg-muted rounded-full overflow-hidden">
+                  <div className="h-3 w-full bg-amber-500/20 rounded-full overflow-hidden flex">
                     <div 
-                      className="h-full bg-gradient-success rounded-full"
-                      style={{ width: `${(loanAmount / results.totalAmount) * 100}%` }}
-                    ></div>
+                      className="h-full bg-primary transition-all duration-300"
+                      style={{ width: `${principalPercentage}%` }}
+                    />
+                    <div 
+                      className="h-full bg-amber-500 transition-all duration-300"
+                      style={{ width: `${interestPercentage}%` }}
+                    />
                   </div>
                 </div>
-
-                {/* CTA */}
-                <div className="pt-4 border-t">
-                  <Button className="w-full py-4 bg-gradient-hero hover-glow-primary">
-                    Apply for This Loan
-                  </Button>
-                  <Button variant="outline" className="w-full mt-3 py-4 hover-glow-secondary">
-                    Get Expert Consultation
-                  </Button>
-                </div>
               </div>
-            ) : (
-              <div className="flex flex-col items-center justify-center py-12 text-center animate-fade-in">
-                <div className="p-6 bg-gradient-subtle rounded-full mb-6">
-                  <Calculator className="w-12 h-12 text-muted-foreground" />
-                </div>
-                <h4 className="text-xl font-semibold mb-2">Calculate Your EMI</h4>
-                <p className="text-muted-foreground max-w-xs">
-                  Enter your loan details and click calculate to see your monthly EMI and total payment breakdown.
-                </p>
-              </div>
-            )}
-          </div>
-        </div>
+            </div>
 
-        {/* Features */}
-        <div className="grid md:grid-cols-3 gap-8 mt-16 animate-fade-in">
-          <div className="text-center">
-            <div className="p-4 bg-gradient-hero rounded-xl inline-block mb-4">
-              <DollarSign className="w-8 h-8 text-white" />
+            {/*
+              Action CTA.
+
+              This used to be <a href="#contact">, which only worked on the
+              homepage — the calculator is now reachable from every page, so on
+              a country or location page that anchor pointed at nothing.
+
+              It now sends the figures the student just worked out straight to
+              WhatsApp, the same route every other form on the site uses, so the
+              counsellor opens the chat already knowing the amount, tenure and
+              rate being discussed.
+            */}
+            <div className="pt-4 border-t border-border/40">
+              <Button
+                size="lg"
+                onClick={() =>
+                  sendLeadToWhatsApp("Education Loan EMI Calculator", {
+                    loanAmount: `₹${loanAmount.toLocaleString("en-IN")}`,
+                    tenure: `${duration / 12} years (${duration} months)`,
+                    interestRate: `${interestRate}% p.a. (assumed)`,
+                    estimatedEmi: `₹${results.emi.toLocaleString("en-IN")} per month`,
+                    totalPayable: `₹${results.totalAmount.toLocaleString("en-IN")}`,
+                    message: "I used the EMI calculator on your website. Please help me with an education loan.",
+                  })
+                }
+                className="w-full bg-gradient-gold text-secondary-foreground font-bold shadow-gold hover-glow-gold py-6 rounded-xl text-sm md:text-base"
+              >
+                Send These Figures to a Counsellor
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+              <p className="text-[11px] text-center text-muted-foreground mt-2">
+                Opens WhatsApp with your numbers filled in. An estimate only — the
+                lender sets the actual rate and amount.
+              </p>
             </div>
-            <h4 className="font-bold text-lg mb-2">Competitive Rates</h4>
-            <p className="text-muted-foreground">Interest rates starting from 9.5% per annum</p>
+
           </div>
-          <div className="text-center">
-            <div className="p-4 bg-gradient-success rounded-xl inline-block mb-4">
-              <Calendar className="w-8 h-8 text-white" />
-            </div>
-            <h4 className="font-bold text-lg mb-2">Flexible Tenure</h4>
-            <p className="text-muted-foreground">Choose repayment period from 5 to 15 years</p>
-          </div>
-          <div className="text-center">
-            <div className="p-4 bg-gradient-warm rounded-xl inline-block mb-4">
-              <TrendingDown className="w-8 h-8 text-white" />
-            </div>
-            <h4 className="font-bold text-lg mb-2">No Hidden Charges</h4>
-            <p className="text-muted-foreground">Transparent pricing with no processing fees</p>
-          </div>
-        </div>
-      </div>
-    </section>
+
+    </div>
   );
 };
 
-export default LoanCalculator;
+export default LoanCalculatorPanel;

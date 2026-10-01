@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { CONTACT } from "@/config/site";
 import { MapPin, Phone, Mail, Clock, Send, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 
+import { sendLeadToWhatsApp, LEAD_CONFIRMATION } from "@/lib/leadToWhatsApp";
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -29,46 +31,56 @@ const Contact = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      toast({
-        title: "Message Sent Successfully!",
-        description: "Thank you for contacting us. Our team will get back to you within 24 hours.",
-      });
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        country: "",
-        course: "",
-        loanPartner: "",
-        message: ""
-      });
-    }, 2000);
+
+    /*
+     * This form used to be a two-second setTimeout that showed
+     * "Message Sent Successfully!" and then cleared everything the student had
+     * typed. Nothing was ever sent anywhere — the enquiry was discarded and the
+     * visitor was told it had arrived. It now hands the lead to WhatsApp like
+     * every other form on the site.
+     *
+     * The confirmation wording comes from LEAD_CONFIRMATION so it stays honest:
+     * it says WhatsApp is opening, not that the message has been received,
+     * because it has not been until the student presses send.
+     */
+    sendLeadToWhatsApp("Homepage Contact Form", formData);
+
+    setIsSubmitting(false);
+    toast({
+      title: LEAD_CONFIRMATION.title,
+      description: LEAD_CONFIRMATION.body,
+    });
+    setFormData({
+      name: "",
+      email: "",
+      phone: "",
+      country: "",
+      course: "",
+      loanPartner: "",
+      message: ""
+    });
   };
 
   return (
-    <section id="contact" className="py-20 bg-background">
+    <section id="contact" className="py-12 sm:py-16 lg:py-20 bg-background">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className="text-center mb-16 animate-fade-in">
-          <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">
             Get in <span className="text-gradient-hero">Touch</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             Ready to start your international education journey? Contact our expert counselors 
             for personalized guidance and support.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 max-w-6xl mx-auto">
           {/* Contact Form */}
-          <div className="bg-card p-8 rounded-2xl shadow-elegant animate-slide-in-left">
+          <div className="bg-card p-5 sm:p-8 rounded-2xl shadow-elegant animate-slide-in-left">
             <div className="flex items-center space-x-3 mb-8">
               <div className="p-3 bg-gradient-hero rounded-xl">
                 <Send className="w-6 h-6 text-white" />
@@ -123,7 +135,7 @@ const Contact = () => {
                     onChange={handleInputChange}
                     required
                     className="py-6 text-lg"
-                    placeholder="+91 9876543210"
+                    placeholder="+91 00000 00000"
                   />
                 </div>
               </div>
@@ -244,7 +256,7 @@ const Contact = () => {
                   <div>
                     <h4 className="font-bold text-lg">Call Us</h4>
                     <p className="text-muted-foreground">Speak with our experts</p>
-                    <p className="font-semibold text-secondary">+91 9876-543-210</p>
+                    <a href={`tel:${CONTACT.phone}`} className="font-semibold text-secondary hover:underline">{CONTACT.phoneDisplay}</a>
                   </div>
                 </div>
               </div>
@@ -255,9 +267,13 @@ const Contact = () => {
                     <Mail className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-lg">Email Us</h4>
+                    <h4 className="font-bold text-lg">{CONTACT.emailVerified && CONTACT.email ? "Email Us" : "WhatsApp Us"}</h4>
                     <p className="text-muted-foreground">Get detailed information</p>
-                    <p className="font-semibold text-accent">info@dreamdestinations.com</p>
+                    {CONTACT.emailVerified && CONTACT.email ? (
+                      <a href={`mailto:${CONTACT.email}`} className="font-semibold text-accent hover:underline break-all">{CONTACT.email}</a>
+                    ) : (
+                      <a href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer" className="font-semibold text-accent hover:underline">Message us on WhatsApp</a>
+                    )}
                   </div>
                 </div>
               </div>
@@ -281,22 +297,21 @@ const Contact = () => {
               <h3 className="text-2xl font-bold mb-6">Visit Our Office</h3>
               
               <div className="space-y-4 mb-6">
-                <div className="flex items-start space-x-3">
-                  <MapPin className="w-5 h-5 text-primary mt-1" />
-                  <div>
-                    <p className="font-semibold">Corporate Office</p>
-                    <p className="text-muted-foreground">
-                      123, Education Hub, Connaught Place<br />
-                      New Delhi - 110001, India
-                    </p>
+                {CONTACT.addressVerified && CONTACT.address && (
+                  <div className="flex items-start space-x-3">
+                    <MapPin className="w-5 h-5 text-primary mt-1" />
+                    <div>
+                      <p className="font-semibold">Office</p>
+                      <p className="text-muted-foreground">{CONTACT.address}</p>
+                    </div>
                   </div>
-                </div>
+                )}
                 
                 <div className="flex items-center space-x-3">
                   <Clock className="w-5 h-5 text-secondary" />
                   <div>
                     <p className="font-semibold">Office Hours</p>
-                    <p className="text-muted-foreground">Mon - Sat: 9:00 AM - 8:00 PM</p>
+                    <p className="text-muted-foreground">{CONTACT.officeHours}</p>
                   </div>
                 </div>
               </div>
@@ -313,24 +328,18 @@ const Contact = () => {
 
             {/* Emergency Contact */}
             <div className="bg-gradient-hero p-6 rounded-xl text-white">
-              <h4 className="font-bold text-lg mb-2">Emergency Support</h4>
+              <h4 className="font-bold text-lg mb-2">Already Studying Abroad?</h4>
               <p className="opacity-90 mb-4">
-                Need urgent assistance? Our emergency helpline is available 24/7 
-                for students studying abroad.
+                Students we have placed can reach us on the same number for help with
+                accommodation, visa compliance or anything urgent.
               </p>
-              <Button className="bg-gradient-gold text-secondary-foreground font-semibold shadow-gold hover-glow-gold">
-                Emergency Helpline: +91 9999-888-777
+              <Button className="bg-gradient-gold text-secondary-foreground font-semibold shadow-gold hover-glow-gold" asChild>
+                <a href={`tel:${CONTACT.phone}`}>Call {CONTACT.phoneDisplay}</a>
               </Button>
             </div>
           </div>
         </div>
 
-        {/* WhatsApp Floating Button */}
-        <div className="fixed bottom-6 right-6 z-50 animate-bounce-in">
-          <button className="w-16 h-16 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-elegant hover-glow-success flex items-center justify-center transition-smooth">
-            <MessageSquare className="w-8 h-8" />
-          </button>
-        </div>
       </div>
     </section>
   );

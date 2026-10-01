@@ -1,0 +1,118 @@
+# Netlify build configuration for dreamdestinationstudyabroad.com
+#
+# WHY THIS FILE EXISTS
+# Netlify can build this site without any configuration, but three things would
+# be wrong if it did:
+#
+#   1. Node version. Netlify's default build image Node version moves over time.
+#      Vite 5 and this dependency set need Node 18+. Pinning it means a build
+#      that works today still works in six months.
+#   2. Headers. public/.htaccess carries the cache and security headers for
+#      Apache/cPanel hosting. Netlify ignores .htaccess completely, so the same
+#      rules have to be declared here or the site ships with none.
+#   3. Build command. `npm run build` is what runs the full chain — sitemap
+#      generation, the Vite build, then BOTH prerender passes. Running
+#      `vite build` alone would skip the sitemap and every page's meta tags.
+#   4. Puppeteer's browser cache. The second prerender pass opens every route in
+#      headless Chrome and writes the rendered HTML into the build, which is what
+#      makes the site readable to crawlers that do not run JavaScript — most AI
+#      assistants. That pass is deliberately non-fatal: if Chrome cannot start,
+#      the build still succeeds with metadata-only pages.
+#
+# REDIRECTS ARE NOT HERE ON PURPOSE
+# The SPA fallback lives in public/_redirects, which Vite copies into dist/.
+# Keeping it in one place avoids two sources of truth. Netlify applies
+# netlify.toml redirects before _redirects, so duplicating the rule here would
+# make it unclear which one is actually in effect.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  # Pinned deliberately — see note 1 above.
+  NODE_VERSION = "20"
+  # Vite only inlines variables prefixed VITE_; nothing secret is needed to build.
+  NPM_FLAGS = "--no-audit --no-fund"
+  # Puppeteer downloads its own Chrome (~170MB) on install. Pointing its cache at
+  # /opt/build/cache means Netlify keeps it between builds instead of
+  # re-downloading every deploy. Without this the browser lands in a path that is
+  # wiped, which is the usual cause of "Could not find Chrome" on Netlify.
+  PUPPETEER_CACHE_DIR = "/opt/build/cache/puppeteer"
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Caching
+#
+# Vite fingerprints everything in /assets/ with a content hash, so those files
+# can be cached forever — a change produces a new filename. HTML must never be
+# cached hard, or visitors keep seeing an old page after a deploy.
+# ─────────────────────────────────────────────────────────────────────────────
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Images and fonts in public/ are not fingerprinted, so they get a shorter life.
+[[headers]]
+  for = "/og/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/*.jpg"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+# HTML: always revalidate. Without this a deploy can take hours to reach people
+# who already visited.
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Crawlers should always see the current sitemap, not a cached one.
+[[headers]]
+  for = "/sitemap.xml"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+    Content-Type = "application/xml; charset=utf-8"
+
+[[headers]]
+  for = "/robots.txt"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Security headers
+#
+# Deliberately conservative. No Content-Security-Policy is set here: the site
+# loads Google Tag Manager, Google Analytics, Microsoft Clarity and Google
+# Fonts, and a CSP written without testing those would silently break analytics
+# or the page itself. Add one later, in report-only mode first.
+# ─────────────────────────────────────────────────────────────────────────────
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=(), payment=()"

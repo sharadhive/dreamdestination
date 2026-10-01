@@ -71,7 +71,8 @@ const LanguagePopup = ({ countrySlug, countryName, countryFlag }: LanguagePopupP
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[60] animate-fade-in"
+        /* No backdrop-blur: see the note in EnquiryPopup.tsx. */
+        className="fixed inset-0 bg-black/55 z-[60] animate-fade-in"
         onClick={handleDismiss}
         style={{ animationDuration: "0.2s" }}
       />

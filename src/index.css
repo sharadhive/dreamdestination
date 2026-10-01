@@ -141,8 +141,13 @@
     @apply border-border;
   }
 
+  html {
+    overflow-x: hidden;
+  }
+
   body {
     @apply bg-background text-foreground font-sans;
+    overflow-x: hidden;
   }
 }
 
@@ -287,14 +292,22 @@ body {
   position: static !important;
 }
 
-.skiptranslate {
-  display: none !important;
-  height: 0 !important;
+/*
+ * Do NOT blanket-hide .skiptranslate.
+ * Google Translate wraps its own <select> (.goog-te-combo) in a .skiptranslate
+ * container. Hiding every .skiptranslate with display:none removed that select
+ * from the layout, so choosing a language did nothing at all.
+ * Hide the banner specifically (see `body > .skiptranslate` below) and move the
+ * gadget off-screen instead of removing it.
+ */
+.goog-te-gadget,
+#google_translate_element {
+  position: absolute !important;
+  left: -9999px !important;
+  top: 0 !important;
+  width: 1px !important;
+  height: 1px !important;
   overflow: hidden !important;
-}
-
-.goog-te-gadget {
-  display: none !important;
 }
 
 /* Fix Google Translate body shift */
@@ -305,4 +318,70 @@ body > .skiptranslate {
 html.translated-ltr body,
 html.translated-rtl body {
   top: 0 !important;
+}
+
+/* ─── 3D Showcase & Marquee Utilities ─── */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.perspective-2000 {
+  perspective: 2000px;
+}
+
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+@keyframes marquee-3d-scroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee-3d {
+  animation: marquee-3d-scroll 35s linear infinite;
+}
+
+.animate-marquee-3d:hover {
+  animation-play-state: paused;
+}
+
+@keyframes float-tilt {
+  0%, 100% {
+    transform: translateY(0px) rotateX(0deg) rotateY(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotateX(2deg) rotateY(-2deg);
+  }
+}
+
+.animate-float-tilt {
+  animation: float-tilt 4s ease-in-out infinite;
+}
+
+.shadow-3d-card {
+  box-shadow: 
+    0 15px 35px -5px rgba(0, 0, 0, 0.1),
+    0 5px 15px -3px rgba(0, 0, 0, 0.05),
+    0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+}
+
+.shadow-3d-hover {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.shadow-3d-hover:hover {
+  transform: translateY(-8px) scale(1.03) rotateY(3deg);
+  box-shadow: 
+    -10px 20px 40px -10px hsl(var(--primary) / 0.25),
+    0 10px 20px -5px hsl(var(--secondary) / 0.2),
+    0 0 25px hsl(var(--primary) / 0.15);
 }
